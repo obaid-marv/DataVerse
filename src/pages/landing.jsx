@@ -1,9 +1,14 @@
 import Landingnav from "../components/landingnav";
 import model from "../assets/model.png";
+import Track from "../components/track";
+import icon1 from "../assets/track1.svg"
+import icon2 from "../assets/track2.svg"
+import icon3 from "../assets/track3.svg"
+
 
 const Landing = ()=> {
     return (
-        <div className="container bg-blue-500">
+        <div className="container bg-white">
             <div className="container flex flex-col max-w-full mx-auto h-screen bg-themeblack">
                     <Landingnav/>
                     <div className="container max-w-screen-lg mx-auto h-full flex items-center mt-8">
@@ -25,6 +30,25 @@ const Landing = ()=> {
 
 
                     </div>
+            </div>
+            <div className="container max-w-screen-lg mx-auto flex flex-col  items-center h-screen">
+                <p className="text-3xl font-bold font-poppins text-black mt-8">LEARNING TRACKS TAILORED FOR NOVICE </p>
+                <p className="text-lg font-poppins text-black mt-4">We provide practical skills to novice users aiming to excel in the most growing fields.</p>
+                <div className="flex items-center justify-between w-full mt-12 px-4">
+
+                    <div className="flex flex-col items-center justify-between h-96 p-4">
+                        <Track icon={icon1} textcolor="white" bgIcon="white" bgColor="themeblack" head="EASY ACCESS" text="Access premium facilities tailored for skillful learning ML and Data Science."/>
+                        <div className="h-2 w-20 bg-themeblack rounded-full shadow-md"></div>
+                    </div>
+                    <div className="flex flex-col items-center justify-between h-96 p-4">
+                        <Track icon={icon2} textcolor="black" bgIcon="themeblack" bgColor="trackgrey" head="FLEXIBLE" text="Code anywhere you want need not to worry about environment for coding."/>
+                        <div className="h-2 w-20 bg-trackgrey rounded-full shadow-md"></div>
+                    </div>
+                    <div className="flex flex-col items-center justify-between h-96 p-4">
+                        <Track icon={icon3} textcolor="white" bgIcon="white" bgColor="themeblack" head="Best Tracks" text="Easy learning tracks for to enhance users skills with a practical approach"/>
+                        <div className="h-2 w-20 bg-themeblack rounded-full shadow-md"></div>
+                    </div>
+                </div>            
             </div>
 
         </div>
