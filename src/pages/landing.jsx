@@ -4,6 +4,10 @@ import Track from "../components/track";
 import icon1 from "../assets/track1.svg"
 import icon2 from "../assets/track2.svg"
 import icon3 from "../assets/track3.svg"
+import Feature from "../components/feature";
+import profile1 from "../assets/profile1.svg";
+import calender from "../assets/calender.svg";
+import imagesec from "../assets/imagesec.png";
 
 
 const Landing = ()=> {
@@ -49,6 +53,28 @@ const Landing = ()=> {
                         <div className="h-2 w-20 bg-themeblack rounded-full shadow-md"></div>
                     </div>
                 </div>            
+            </div>
+
+            <div className="contianer max-w-screen-lg mx-auto flex flex-col h-screen">
+                <div className="flex items-center mt-12">
+                    <p className="text-2xl font-medium font-poppins">Here's <span className="text-theme">What</span>  you can do </p>
+                    <div className="w-24 h-1 rounded-full bg-theme ml-4 shadow-md"></div>
+                </div>
+                <div className="flex w-full h-4/5"> 
+                    <div className="flex flex-1 flex-col justify-around px-4 py-8">
+                        <Feature icon={profile1} head="Collaborate" text="Create projects in collaboration with fellows."/>
+                        <Feature icon={calender} head="Job Board" text="Get contacted by industries based on performance"/>
+                        <Feature icon={calender} head="Featured News" text="Get latest news related to industry and level up."/>
+                    </div>
+                    <div className="flex flex-1 justify-end items-center">
+                        <img src={imagesec} alt="img here" className="h-4/5 w-11/12" />
+                    </div>
+                </div>
+                <div className="flex">
+                    <div className="w-24 h-2 bg-theme rounded-full shadow-md"></div>
+                    <div className="w-12 h-2 bg-themeblack rounded-full ml-4 shadow-md"></div>
+                    <div className="w-12 h-2 bg-themeblack rounded-full ml-4 shadow-md"></div>                   
+                </div>
             </div>
 
         </div>
