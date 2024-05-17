@@ -16,7 +16,14 @@ export default {
       },
       colors:{
         'theme':'#2D9CDB'
-      }
+      },
+      transitionProperty: {
+        'height': 'height',
+      },
+      maxHeight: {
+        '0': '0',
+        'full': '1000px',
+      },
     },
   },
   plugins: [],

@@ -8,6 +8,15 @@ import Feature from "../components/feature";
 import profile1 from "../assets/profile1.svg";
 import calender from "../assets/calender.svg";
 import imagesec from "../assets/imagesec.png";
+import Faqs from "../components/faqs";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+
+// Add all brand icons to the library
+library.add(fab);
+
 
 
 const Landing = ()=> {
@@ -77,8 +86,51 @@ const Landing = ()=> {
                 </div>
             </div>
 
+            <div className="container max-w-screen-lg mx-auto">
+                <Faqs/>
+            </div>
+            
+            <div className="h-screen pt-40">
+                <div className="relative z-10 bg-theme flex flex-col text-white py-16 px-32 rounded-lg w-full md:w-2/3 mx-auto -mb-32 shadow-2xl">
+                    <h2 className="text-4xl font-bold font-scp text-center">Start upgrading your <br/> skills free for this month</h2>
+                    <form className="mt-4 flex justify-center">
+                    <input type="email" placeholder="Submit your email here" className="p-2 w-64 text-sm border-none text-white placeholder-white font-poppins bg-white bg-opacity-50" />
+                    <button type="submit" className="bg-black text-sm text-white px-4 ml-4 font-abeezee">Get started <span><FontAwesomeIcon icon={faExternalLinkAlt} className="text-white" /></span></button>
+                    </form>
+                </div>
+                <div className="bg-themeblack pt-32">
+                    <div className="container max-w-screen-lg mx-auto py-12 text-center">
+                        <div className="text-white flex flex-col p-4">
+                            <div className="flex justify-between pb-4 items-center px-4 border-b border-gray">
+                                <h1 className="text-2xl font-abeezee font-medium">DataVerse</h1>
+                                <div className="flex justify-center font-abeezee space-x-12 mt-4">
+                                    <a href="#" className="text-white italic">Courses</a>
+                                    <a href="#" className="text-white italic">Career Paths</a>
+                                    <a href="#" className="text-white italic">Jobs</a>
+                                    <a href="#" className="text-white italic">News</a>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex justify-between items-center">
+                                    <div className="mt-8 flex justify-center space-x-4">
+                                        <a href="#" className="text-white"><FontAwesomeIcon icon={['fab', 'facebook-f']} className="h-5 w-5 text-gray-300" /></a>
+                                        <a href="#" className="text-white"><FontAwesomeIcon icon={['fab', 'instagram']} className="h-5 w-5 text-gray-300" /></a>
+                                        <a href="#" className="text-white"><FontAwesomeIcon icon={['fab', 'linkedin']} className="h-5 w-5 text-gray-300" /></a>
+                                        <a href="#" className="text-white"><FontAwesomeIcon icon={['fab', 'x-twitter']} className="h-5 w-5 text-gray-300" /></a>
+                                
+                                    </div>
+                                    <p className="mt-8 text-white italic">&copy; 2024 Copyright. <span className="text-blue-400 text-abeezee not-italic">DataVerse</span></p>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
         </div>
     )
 }
+
 
 export default Landing;
