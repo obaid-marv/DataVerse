@@ -1,5 +1,6 @@
 import { BrowserRouter , Route, Routes} from 'react-router-dom';
 import Landing from './pages/landing.jsx'
+import Profiling from './pages/profiling.jsx';
 import './App.css'
 
 const App = ()=>  {
@@ -8,6 +9,8 @@ const App = ()=>  {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing/>} />
+        <Route path="/register" element={<Profiling/>}/>
+        
       </Routes>
     </BrowserRouter>
   )

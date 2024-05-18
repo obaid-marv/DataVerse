@@ -1,5 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 
 const Landingnav = () =>{
+
+    const navigate = useNavigate();
+
+    const handleSignin = ()=>{
+        navigate("/register")
+    }
     return(
         <div className="container mx-auto flex justify-between items-center max-w-screen-lg mt-6">
             <div className="flex flex-1">
@@ -13,8 +20,8 @@ const Landingnav = () =>{
                 
             </div>
             <div className="flex flex-1 items-center justify-end">
-                <button className="text-md font-medium text-white font-abeezee hover:text-theme mr-10 transform-all duration-200">Log in</button>
-                <button className="text-md font-medium text-white font-abeezee bg-theme bg-opacity-30 hover:bg-opacity-100 py-3 px-8 rounded-lg transform-all duration-200">Sign Up</button>
+                <button className="text-md font-medium text-white font-abeezee hover:text-theme mr-10 transform-all duration-200" onClick={handleSignin}>Log in</button>
+                <button className="text-md font-medium text-white font-abeezee bg-theme bg-opacity-30 hover:bg-opacity-100 py-3 px-8 rounded-lg transform-all duration-200" onClick={handleSignin}s>Sign Up</button>
             </div>
         </div>
     )

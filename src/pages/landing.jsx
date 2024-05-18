@@ -66,7 +66,7 @@ const Landing = ()=> {
 
             <div className="contianer max-w-screen-lg mx-auto flex flex-col h-screen">
                 <div className="flex items-center mt-12">
-                    <p className="text-2xl font-medium font-poppins">Here's <span className="text-theme">What</span>  you can do </p>
+                    <p className="text-2xl font-medium font-poppins">Here is <span className="text-theme">What</span>  you can do </p>
                     <div className="w-24 h-1 rounded-full bg-theme ml-4 shadow-md"></div>
                 </div>
                 <div className="flex w-full h-4/5"> 
