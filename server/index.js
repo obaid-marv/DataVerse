@@ -24,7 +24,7 @@ mongoose.connection.on("disconnected", ()=>{
   console.log("mongodb Disconnected");
 })
 
-const allowedOrigins = ['http://localhost:5173/', 'https://data-verse-zeta.vercel.app/'];
+const allowedOrigins = ['http://localhost:5173', 'https://data-verse-zeta.vercel.app/'];
 
 // CORS configuration
 const corsOptions = {
