@@ -2,7 +2,7 @@
 const Dashboard = ()=>{
     return(
         <div>
-            You are logged in
+            You are logged in!!
         </div>
     )
 }
