@@ -17,7 +17,8 @@ export default {
       },
       colors:{
         'theme':'#2D9CDB',
-        'textgrey':'#4F4F4F'
+        'textgrey':'#4F4F4F',
+        'trackgrey':'#F2F2F2'
       },
       transitionProperty: {
         'height': 'height',
