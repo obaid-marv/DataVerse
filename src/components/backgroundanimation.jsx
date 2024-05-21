@@ -1,5 +1,5 @@
 // BackgroundAnimation.js
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import anime from 'animejs';
 
 const BackgroundAnimation = () => {
@@ -12,10 +12,10 @@ const BackgroundAnimation = () => {
         for (let j = 0; j < 10; j++) {
           const gridItem = document.createElement('div');
           gridItem.className = 'grid-item';
-          gridItem.style.width = '104px';
-          gridItem.style.height = '104px';
+          gridItem.style.width = '116px';
+          gridItem.style.height = '116px';
           gridItem.style.backgroundColor = '#001c27';
-          gridItem.style.margin = '1px';
+          gridItem.style.margin = '';
           gridContainer.appendChild(gridItem);
         }
       }
@@ -25,7 +25,7 @@ const BackgroundAnimation = () => {
 
     anime({
       targets: '.grid-item',
-      loop: true,
+      loop: false,
       scale: [
         {value: .1, easing: 'easeOutSine', duration: 1200},
         {value: 1, easing: 'easeInOutQuad', duration: 1200}

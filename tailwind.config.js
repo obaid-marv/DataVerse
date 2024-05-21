@@ -12,10 +12,12 @@ export default {
       backgroundColor: {
         'themeblack': '#001C27',
         'theme':'#2D9CDB',
-        'trackgrey':'#F2F2F2'
+        'trackgrey':'#F2F2F2',
+        
       },
       colors:{
-        'theme':'#2D9CDB'
+        'theme':'#2D9CDB',
+        'textgrey':'#4F4F4F'
       },
       transitionProperty: {
         'height': 'height',

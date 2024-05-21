@@ -3,6 +3,7 @@ import Landing from './pages/landing.jsx'
 import Profiling from './pages/profiling.jsx';
 import './App.css'
 import Dashboard from './pages/dashboard.jsx';
+import Catalog from './pages/coursecatalog.jsx';
 
 const App = ()=>  {
 
@@ -12,6 +13,7 @@ const App = ()=>  {
         <Route path="/" element={<Landing/>} />
         <Route path="/register" element={<Profiling/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/course/catalog" element={<Catalog/>}/>
         
       </Routes>
     </BrowserRouter>

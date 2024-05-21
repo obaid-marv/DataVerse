@@ -18,23 +18,23 @@ const Profiling = () => {
     const [password, setPassword] = useState('');
     const [username, setusername] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
-    
+    const [error, setError] = useState('');
+
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log(email,password);
+        console.log(email, password);
         try {
             const response = await axios.post(`${API_BASE__URL}/auth/login`, {
                 email,
                 password
-            }, {withCredentials: true});
-        
+            }, { withCredentials: true });
+
             if (response.status === 200) {
                 setShowSuccess(true);
-                setTimeout(()=>{
+                setTimeout(() => {
                     setShowSuccess(false);
-                    navigate('/dashboard'); 
+                    navigate('/dashboard');
                 }, 2000)
-                       
             } else {
                 console.log("Incorrect email or password");
             }
@@ -43,33 +43,41 @@ const Profiling = () => {
         }
     }
 
-
-    const handleSignUp = async (e) =>{
+    const handleSignUp = async (e) => {
         e.preventDefault();
-        console.log(username, email, password);
-        try{
+
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            setError('Password must be at least 8 characters long, contain at least one uppercase letter and one special character.');
+            return;
+        }
+
+        try {
             const response = await axios.post(`${API_BASE__URL}/auth/register`, {
                 username,
                 email,
                 password
             })
-            if(response.status===200){
-                console.log("Signup Successfull")
+            if (response.status === 200) {
+                console.log("Signup Successful");
+                setError('');
                 toggle(true);
+                setEmail('');
+                setPassword('');
+            } else {
+                setError('Error signing up');
             }
-            else{
-                console.log("error signing up");
-            }
-        }
-        catch(err){
+        } catch (err) {
             console.log(err);
+            setError('Error signing up');
         }
     }
 
     return (
         <div className="relative h-screen">
-            <div className="absolute w-12 z-50 top-6 left-6 h-12 bg-theme text-white rounded-lg flex items-center justify-center ">
-                <button onClick={back}><FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6 cursor-pointer"/></button>
+            <div className="absolute w-12 z-50 top-6 left-6 h-12 bg-theme text-white rounded-lg flex items-center justify-center">
+                <button onClick={back}><FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6 cursor-pointer" /></button>
             </div>
 
             <BackgroundAnimation />
@@ -81,9 +89,10 @@ const Profiling = () => {
                         </div>
                         <Components.Form>
                             <Components.Title>Create Account</Components.Title>
-                            <Components.Input type='text' placeholder='username' value={username} onChange={(e)=>setusername(e.target.value)} />
-                            <Components.Input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
-                            <Components.Input type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            <Components.Input type='text' placeholder='Username' value={username} onChange={(e) => setusername(e.target.value)} />
+                            <Components.Input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <Components.Input type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                            {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
                             <Components.Button onClick={handleSignUp}>Sign Up</Components.Button>
                         </Components.Form>
                     </Components.SignUpContainer>
@@ -94,8 +103,8 @@ const Profiling = () => {
                         </div>
                         <Components.Form>
                             <Components.Title>Sign in</Components.Title>
-                            <Components.Input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
-                            <Components.Input type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            <Components.Input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <Components.Input type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
                             <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
                             <Components.Button onClick={handleLogin}>Sign In</Components.Button>
                         </Components.Form>
@@ -127,7 +136,7 @@ const Profiling = () => {
                 </Components.Container>
             </div>
             {showSuccess && (
-                <div className="absolute top-20 left-1/2 transform-all -translate-x-1/2 z-50 duration-200 bg-green-500 text-white px-4 py-2 rounded">
+                <div className="absolute top-20 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-4 py-2 rounded">
                     Login successful!
                 </div>
             )}
@@ -136,4 +145,3 @@ const Profiling = () => {
 }
 
 export default Profiling;
-``
