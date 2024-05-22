@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
 
-const ProgressBar = ({ progress }) => {
+const ProgressBar = ({ progress, label, width, containerHeight, containerWidth }) => {
   const option = {
     xAxis: {
       max: 100,
@@ -24,9 +24,9 @@ const ProgressBar = ({ progress }) => {
           color: '#2D9CDB',
           borderRadius: [10, 10, 10, 10]
         },
-        barWidth: '50%',
+        barWidth: width,
         label: {
-          show: true,
+          show: label,
           position: 'inside',
           formatter: '{c}%',
           color: '#fff',
@@ -42,7 +42,7 @@ const ProgressBar = ({ progress }) => {
     }
   };
 
-  return <ReactECharts option={option} style={{ height: '50px', width: '100%' }} />;
+  return <ReactECharts option={option} style={{ height: containerHeight, width: containerWidth }} />;
 };
 
 

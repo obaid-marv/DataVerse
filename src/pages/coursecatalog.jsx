@@ -4,14 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Coursetile from "../components/coursetile";
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import coursecover from "../assets/coursecover.png";
+import { useNavigate } from "react-router-dom";
 
 const Catalog = ()=> {
+    
+    const navigate = useNavigate();
     return (
         <div>
             <Navbar/>
             <div className="container max-w-screen-6xl mx-auto h-max font-poppins p-8">
                 <div className="flex items-center ml-2">
-                    <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6 hover:scale-125 transition duration-200 cursor-pointer"/>
+                    <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6 hover:scale-125 transition duration-200 cursor-pointer" onClick={()=>navigate('/courses')}/>
                     <p className="text-2xl font-medium">Catalog</p>
                 </div>
                 

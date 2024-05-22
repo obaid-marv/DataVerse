@@ -10,7 +10,7 @@ const UserProfile = () =>{
         <div >
             <Navbar/>
 
-            <div className="container max-w-screen-lg h-max font-poppins p-8 mt-8 ml-8 shadow-lg border-2 border-grey-300 rounded-lg">
+            <div className="container max-w-screen-lg h-max font-poppins p-8 mt-8 ml-8 shadow-lg border-2 border-grey-300 rounded-lg bg-themeblack text-white">
                 <div className="flex flex-col">
                     <div className="flex justify-between w-full">
                         <p className="text-xl font-semibold">Profile Card</p>
@@ -20,7 +20,7 @@ const UserProfile = () =>{
                             </div>
                             <div className="flex flex-col items-start ml-2">
                                 <p className="font-medium">OBAID</p>
-                                <FontAwesomeIcon icon={faEdit} className="text-gray-600 hover:text-gray-800 cursor-pointer" />
+                                <FontAwesomeIcon icon={faEdit} className="hover:text-theme cursor-pointer" />
                             </div>
                         </div>
                     </div>
