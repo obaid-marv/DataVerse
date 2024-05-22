@@ -4,6 +4,9 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import authRoute from './routes/auth.js';
+
+import datasetRoute from './routes/dataset.js';
+
 // const userRoutes = require('./routes/userRoutes');
 import cors from 'cors';
 
@@ -36,6 +39,7 @@ app.use(bodyParser.json());
 // Routes
 // app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoute);
+app.use('/api/dataset', datasetRoute);
 app.get('/', (req,res)=>{
     res.send("Hello Api");
 })

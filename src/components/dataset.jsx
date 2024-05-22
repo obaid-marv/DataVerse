@@ -1,7 +1,7 @@
 
 const Dataset = () =>{
     return(
-        <div >
+        <div className="text">
 
         </div>
     )

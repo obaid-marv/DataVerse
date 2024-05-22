@@ -1,0 +1,34 @@
+
+import { createError } from "../utils/error.js";
+
+import Dataset from "../models/Dataset.js";
+
+export const uploadDataset = async(req,res,next)=>{
+    try{
+        const newDataset = new Dataset({ 
+            url:req.body.url,
+            imgurl:req.body.imgurl,
+            title:req.body.title,
+        });
+        await newDataset.save();
+        res.status(200).json("Dataset record has been saved");
+    }
+    catch(err){
+        next(err);
+    }
+}
+
+export const getAllDatasets = async(req,res,next)=>{
+    try{
+        const Datasets = await Dataset.find();
+        if(!Datasets) 
+        return next(createError(404,"No Datasets found not found"));
+        
+        res.status(200).json(Datasets);
+        
+        
+    }
+    catch(err){
+        next(err);
+    }
+}
