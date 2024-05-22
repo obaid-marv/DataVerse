@@ -17,7 +17,6 @@ const Catalog = ()=> {
                     <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6 hover:scale-125 transition duration-200 cursor-pointer" onClick={()=>navigate('/courses')}/>
                     <p className="text-2xl font-medium">Catalog</p>
                 </div>
-                
                 <div className="relative p-4 ml-4">
                         <input
                         type="text"

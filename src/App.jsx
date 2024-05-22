@@ -6,6 +6,7 @@ import Dashboard from './pages/dashboard.jsx';
 import Catalog from './pages/coursecatalog.jsx';
 import Courses from './pages/courses.jsx';
 import UserProfile from './pages/userprofile.jsx';
+import DatasetsScree from './pages/Datasets/DatasetsScree.jsx';
 
 const App = ()=>  {
 
@@ -18,6 +19,7 @@ const App = ()=>  {
         <Route path="/courses" element={<Courses/>}/>
         <Route path="/courses/catalog" element={<Catalog/>}/>
         <Route path="/userprofile" element={<UserProfile/>}/>
+        <Route path="/datasets" element={<DatasetsScree/>}/>
       </Routes>
     </BrowserRouter>
   )
