@@ -9,9 +9,9 @@ import Dashcourse from "../components/dashcourse";
 
 const Dashboard = ()=>{
     return(
-        <div className="container">
+        <div className="">
             <Navbar/>
-            <div className="container max-w-screen-lg h-max mx-auto mt-8 p-4 font-poppins">
+            <div className="max-w-screen-lg h-max mx-auto mt-8 p-4 font-poppins">
                 <p className="text-2xl font-medium font-poppins">Dashboard</p>
                 <p className="text-xl font-base font-poppins">OVERVIEW</p>
                 <div className="flex items-center p-4 space-x-12">

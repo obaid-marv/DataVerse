@@ -6,13 +6,13 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container w-full h-20 bg-themeblack p-4 flex items-center justify-between">
+    <div className="w-full h-20 bg-themeblack p-4 flex items-center justify-between">
       <p className="text-xl font-abeezee font-medium text-white">DataVerse</p>
       <div className="flex">
         <button className="text-md font-medium font-abeezee text-white mr-4 h-full px-4 hover:text-theme transform-all duration-200" onClick={()=>navigate('/dashboard')}>Home</button>
         <button className="text-md font-medium font-abeezee text-white mr-4 h-full px-4 hover:text-theme transform-all duration-200" onClick={()=>navigate('/courses')}>Learning</button>
-        <button className="text-md font-medium font-abeezee text-white mr-4 h-full px-4 hover:text-theme transform-all duration-200">Jobs</button>
-        <button className="text-md font-medium font-abeezee text-white mr-4 h-full px-4 hover:text-theme transform-all duration-200">Datasets</button>
+        <button className="text-md font-medium font-abeezee text-white mr-4 h-full px-4 hover:text-theme transform-all duration-200" onClick={()=>navigate('/jobs')}>Jobs</button>
+        <button className="text-md font-medium font-abeezee text-white mr-4 h-full px-4 hover:text-theme transform-all duration-200" onClick={()=>navigate('/datasets')}>Datasets</button>
       </div>
       <div className="relative">
         <input
