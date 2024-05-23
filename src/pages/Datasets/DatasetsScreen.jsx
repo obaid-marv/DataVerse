@@ -7,6 +7,8 @@ import CustomInput from "../../components/Datasets/CustomInput"
 import DataSetcategorySection from '../../components/Datasets/DataSetcategorySection/DataSetcategorySection';
 import DataSetcategorySection2 from '../../components/Datasets/DataSetcategorySection2/DataSetcategorySection2';
 import { DATASETSDATA, TAGS } from '../../constants/datasets';
+import { getAlldatasets } from '../../api/dataset';
+import DatasetCard from '../../components/Datasets/DataSetcategorySection/components/DatasetCard';
 
 const DatasetsScreen = () => {
 
@@ -23,23 +25,25 @@ const DatasetsScreen = () => {
         }
     }
 
+    const [fetcheddatasetsarr, setFetcheddatasetarr] = useState([]);
+
     const [filter, setFilter] = useState(false);
     const [filterarr, setFiltersArr] = useState([]);
 
     const getSelectedTag = (tagdata) => {
         const arr = filterarr;
 
-        if(arr?.includes(tagdata?.title)){
-            if(tagdata.activestatus == false){
+        if (arr?.includes(tagdata?.title)) {
+            if (tagdata.activestatus == false) {
                 arr.splice(arr.indexOf(tagdata?.title), 1);
             }
-        }else{
-            if(tagdata?.activestatus){
+        } else {
+            if (tagdata?.activestatus) {
                 arr.push(tagdata?.title);
             }
         }
 
-        if(arr.length > 0){
+        if (arr.length > 0) {
             setFilter(true);
         }
 
@@ -52,11 +56,18 @@ const DatasetsScreen = () => {
         // } else {
         //     setFiltersArr([...filterarr, tagdata?.title]);
         // }
+
         console.log("filter array is : ", arr)
     }
 
-    useEffect(() => {
+    const handleGetAllDatasets = async () => {
+        const resp = await getAlldatasets();
+        console.log("resp in data is  : ", resp)
+        setFetcheddatasetarr(resp);
+    }
 
+    useEffect(() => {
+        handleGetAllDatasets();
     }, [])
 
 
@@ -84,18 +95,18 @@ const DatasetsScreen = () => {
                             </div>
                         </div>
                         <div>
-                            <CustomButton label={"Reset Filters"} clickaction={() =>{setFiltersArr([])}} />
+                            <CustomButton label={"Reset Filters"} clickaction={() => { setFiltersArr([]) }} />
                         </div>
                     </div>
 
                     <div className="flex py-10 flex-col">
-                        
+                        {/*                         
                         {filter ? filterarr?.map((filterval) => {
                             return DATASETSDATA?.map((item, index) => {
                                 if (item.heading == filterval) {
                                     return (
                                         <>
-                                            <DataSetcategorySection2 key={index} data={item} />
+                                            <DataSetcategorySection2 key={item.heading} data={item} />
                                             <div className='w-full h-[0.1px] bg-black/20 my-14 rounded-l'></div>
                                         </>
                                     )
@@ -106,7 +117,7 @@ const DatasetsScreen = () => {
                             DATASETSDATA?.map((item, index) => {
                                 return (
                                     <>
-                                        <DataSetcategorySection key={index} data={item} />
+                                        <DataSetcategorySection key={item.heading} data={item} />
                                         <div className='w-full h-[0.1px] bg-black/20 my-14 rounded-l'></div>
                                     </>
                                 )
@@ -121,7 +132,15 @@ const DatasetsScreen = () => {
                                 )
                             })
                         
+                        } */}
+
+                        {/* {fetcheddatasetsarr.map((item, index) =>{ */}
+                        {/* return( <DataSetcategorySection data={item} key={index} /> ) */}
+                        {fetcheddatasetsarr?.length > 0 &&
+                            <DataSetcategorySection data={fetcheddatasetsarr} />
                         }
+
+
                     </div>
                     <div className='pb-20'>
                         <div className='flex flex-col gap-4 items-center justify-center text-center'>
