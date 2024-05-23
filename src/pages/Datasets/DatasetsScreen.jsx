@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaPlus } from "react-icons/fa";
 import Navbar from '../../components/navbar';
 import Tag from '../../components/Datasets/Tag';
@@ -6,183 +6,59 @@ import CustomButton from "../../components/Datasets/CustomButton"
 import CustomInput from "../../components/Datasets/CustomInput"
 import DataSetcategorySection from '../../components/Datasets/DataSetcategorySection/DataSetcategorySection';
 import DataSetcategorySection2 from '../../components/Datasets/DataSetcategorySection2/DataSetcategorySection2';
-import { IMAGES } from '../../constants/images';
-import { MdAutoGraph } from 'react-icons/md';
+import { DATASETSDATA, TAGS } from '../../constants/datasets';
 
 const DatasetsScreen = () => {
 
     const [searchText, setSearchText] = useState('');
     const [tileView, setTileView] = useState(false);
 
-    const handleSearchClick = (val) =>{
+    const handleSearchClick = (val) => {
         console.log('searchText', searchText);
         setSearchText(val);
-        if(val){
+        if (val) {
             setTileView(true);
+        } else if (val?.length == 0) {
+            setTileView(false);
         }
     }
 
-    const tags = [
-        {
-            title: "All datasets",
-            active: false
-        },
-        {
-            title: "Computer Science",
-            active: false
-        },
-        {
-            title: "All datasets",
-            active: false
-        },
-        {
-            title: "All datasets",
-            active: false
-        },
-        {
-            title: "All datasets",
-            active: false
-        },
-        {
-            title: "All datasets",
-            active: false
-        },
-    ]
+    const [filter, setFilter] = useState(false);
+    const [filterarr, setFiltersArr] = useState([]);
 
-    const datasetcarddata = [
-        {
-            heading: "Trending",
-            icon: <MdAutoGraph size={34} />,
-            datasets: [
-                {
-                    title: "Shein Footware Datast",
-                    description: "",
-                    image: IMAGES.solar,
-                    size: "347 KB",
-                    files: 2,
-                    filetypes: [
-                        "CSV", "json"
-                    ],
-                    usability: 10,
-                    author: "Athrava Taras",
-                    authorProfileLink: "https://www.dataverse.com/atharvataras",
-                    upvotes: 5,
-                    time: "Updated 18 hours ago"
-                },
-                {
-                    title: "Dataset for renewable energy systems",
-                    description: "",
-                    image: IMAGES.solar,
-                    size: "874 KB",
-                    files: 1,
-                    filetypes: [
-                        "CSV"
-                    ],
-                    usability: 8.7,
-                    author: "Afroz",
-                    authorProfileLink: "https://www.dataverse.com/atharvataras",
-                    upvotes: 9,
-                    time: "Updated 5 days ago"
-                },
-                {
-                    title: "Shein Footware Datast",
-                    description: "",
-                    image: IMAGES.solar,
-                    size: "347 KB",
-                    files: 2,
-                    filetypes: [
-                        "CSV", "json"
-                    ],
-                    usability: 10,
-                    author: "Athrava Taras",
-                    authorProfileLink: "https://www.dataverse.com/atharvataras",
-                    upvotes: 5,
-                    time: "Updated 18 hours ago"
-                },
-                {
-                    title: "Dataset for renewable energy systems",
-                    description: "",
-                    image: IMAGES.solar,
-                    size: "874 KB",
-                    files: 1,
-                    filetypes: [
-                        "CSV"
-                    ],
-                    usability: 8.7,
-                    author: "Afroz",
-                    authorProfileLink: "https://www.dataverse.com/atharvataras",
-                    upvotes: 9,
-                    time: "Updated 5 days ago"
-                },
-            ]
-        },
-        {
-            heading: "Music",
-            icon: <MdAutoGraph size={34} />,
-            datasets: [
-                {
-                    title: "Shein Footware Datast",
-                    description: "",
-                    image: IMAGES.solar,
-                    size: "347 KB",
-                    files: 2,
-                    filetypes: [
-                        "CSV", "json"
-                    ],
-                    usability: 10,
-                    author: "Athrava Taras",
-                    authorProfileLink: "https://www.dataverse.com/atharvataras",
-                    upvotes: 5,
-                    time: "Updated 18 hours ago"
-                },
-                {
-                    title: "Dataset for renewable energy systems",
-                    description: "",
-                    image: IMAGES.solar,
-                    size: "874 KB",
-                    files: 1,
-                    filetypes: [
-                        "CSV"
-                    ],
-                    usability: 8.7,
-                    author: "Afroz",
-                    authorProfileLink: "https://www.dataverse.com/atharvataras",
-                    upvotes: 9,
-                    time: "Updated 5 days ago"
-                },
-                {
-                    title: "Shein Footware Datast",
-                    description: "",
-                    image: IMAGES.solar,
-                    size: "347 KB",
-                    files: 2,
-                    filetypes: [
-                        "CSV", "json"
-                    ],
-                    usability: 10,
-                    author: "Athrava Taras",
-                    authorProfileLink: "https://www.dataverse.com/atharvataras",
-                    upvotes: 5,
-                    time: "Updated 18 hours ago"
-                },
-                {
-                    title: "Dataset for renewable energy systems",
-                    description: "",
-                    image: IMAGES.solar,
-                    size: "874 KB",
-                    files: 1,
-                    filetypes: [
-                        "CSV"
-                    ],
-                    usability: 8.7,
-                    author: "Afroz",
-                    authorProfileLink: "https://www.dataverse.com/atharvataras",
-                    upvotes: 9,
-                    time: "Updated 5 days ago"
-                },
-            ]
-        },
-    ]
+    const getSelectedTag = (tagdata) => {
+        const arr = filterarr;
+
+        if(arr?.includes(tagdata?.title)){
+            if(tagdata.activestatus == false){
+                arr.splice(arr.indexOf(tagdata?.title), 1);
+            }
+        }else{
+            if(tagdata?.activestatus){
+                arr.push(tagdata?.title);
+            }
+        }
+
+        if(arr.length > 0){
+            setFilter(true);
+        }
+
+        setFilter(arr);
+
+
+        // setFilter(filterarr?.length > 0);
+        // if (arr.includes(tagdata?.title)) {
+        //     console.log("tag data : ", tagdata);
+        // } else {
+        //     setFiltersArr([...filterarr, tagdata?.title]);
+        // }
+        console.log("filter array is : ", arr)
+    }
+
+    useEffect(() => {
+
+    }, [])
+
 
     return (
         <div className={""}>
@@ -200,35 +76,52 @@ const DatasetsScreen = () => {
                         <div className='flex flex-col gap-2'>
                             <CustomInput onchangetext={(val) => handleSearchClick(val)} />
                             <div className='flex gap-2 items-center'>
-                                {tags.map((item) => {
+                                {TAGS.map((item) => {
                                     return (
-                                        <Tag title={item.title} active={item.active} />
+                                        <Tag title={item.title} active={item.active} onclick={getSelectedTag} />
                                     )
                                 })}
                             </div>
                         </div>
+                        <div>
+                            <CustomButton label={"Reset Filters"} clickaction={() =>{setFiltersArr([])}} />
+                        </div>
                     </div>
 
                     <div className="flex py-10 flex-col">
-                        {!tileView?
-                        datasetcarddata?.map((item, index) => {
-                            return (
-                                <>
-                                    <DataSetcategorySection key={index} data={item} />
-                                    <div className='w-full h-[0.1px] bg-black/20 my-14 rounded-l'></div>
-                                </>
-                            )
-                        })
-                    :
-                        datasetcarddata?.map((item, index) => {
-                            return (
-                                <>
-                                    <DataSetcategorySection2 key={index} data={item} />
-                                    <div className='w-full h-[0.1px] bg-black/20 my-14 rounded-l'></div>
-                                </>
-                            )
-                        })
-                    }
+                        
+                        {filter ? filterarr?.map((filterval) => {
+                            return DATASETSDATA?.map((item, index) => {
+                                if (item.heading == filterval) {
+                                    return (
+                                        <>
+                                            <DataSetcategorySection2 key={index} data={item} />
+                                            <div className='w-full h-[0.1px] bg-black/20 my-14 rounded-l'></div>
+                                        </>
+                                    )
+                                }
+                            })
+                        }) : 
+                        !tileView ?
+                            DATASETSDATA?.map((item, index) => {
+                                return (
+                                    <>
+                                        <DataSetcategorySection key={index} data={item} />
+                                        <div className='w-full h-[0.1px] bg-black/20 my-14 rounded-l'></div>
+                                    </>
+                                )
+                            })
+                            :
+                            DATASETSDATA?.map((item, index) => {
+                                return (
+                                    <>
+                                        <DataSetcategorySection2 key={index} data={item} />
+                                        <div className='w-full h-[0.1px] bg-black/20 my-14 rounded-l'></div>
+                                    </>
+                                )
+                            })
+                        
+                        }
                     </div>
                     <div className='pb-20'>
                         <div className='flex flex-col gap-4 items-center justify-center text-center'>

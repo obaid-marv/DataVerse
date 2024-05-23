@@ -21,7 +21,7 @@ library.add(fab);
 
 const Landing = ()=> {
     return (
-        <div className="container bg-white">
+        <div className=" bg-white">
             <div className="container flex flex-col max-w-full mx-auto h-screen bg-themeblack">
                     <Landingnav/>
                     <div className="container max-w-screen-lg mx-auto h-full flex items-center mt-8">

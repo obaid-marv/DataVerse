@@ -2,11 +2,11 @@ import React from 'react'
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import { MdOutlineArrowDropUp } from 'react-icons/md';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import {IMAGES} from "../../../../constants/images"
+import { IMAGES } from "../../../../constants/images"
 import { PiDotLight } from "react-icons/pi"
 
 
-const DatasetCard = ({item}) => {
+const DatasetCard = ({ item }) => {
 
     return (
         <div className='flex flex-col gap-0 rounded-xl bg-white border w-80 h-96'>
@@ -25,8 +25,8 @@ const DatasetCard = ({item}) => {
                         <p>Updated 5 days ago</p>
                     </div>
                     <div className='flex flex-col text-sm gap-1'>
-                        <p className={"flex items-center"}>Usability <span className='font-bold'>{item?.usability} </span> <PiDotLight /> <span>{item?.size} </span> </p>
-                        <p><span>{item?.filetypes?.length}</span> Files ({item?.filetypes?.map((item) => ( <span>{item} &nbsp;</span> ))})</p>
+                        <p className={"flex items-center"}>Usability &nbsp;<span className='font-bold'>{item?.usability} </span> <PiDotLight /> <span>{item?.size} </span> </p>
+                        <p><span>{item?.filetypes?.length}</span> Files ({item?.filetypes?.map((item) => (<span>{item} &nbsp;</span>))})</p>
                     </div>
                 </div>
                 <div className='flex justify-between items-center flex-1 border-t border-black/20 py-2 px-6'>

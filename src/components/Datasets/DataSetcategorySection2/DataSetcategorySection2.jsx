@@ -8,7 +8,7 @@ const DataSetcategorySection2 = ({ data }) => {
             <div className='flex justify-between pb-10 items-center'>
                 <div className='flex items-center gap-2'>
                     <p><MdAutoGraph size={34} /></p>
-                    <p className='text-black text-4xl font-semibold'>Trending</p>
+                    <p className='text-black text-4xl font-semibold'>{data?.heading} </p>
                 </div>
                 <div className=''>
                     <p className='cursor-pointer py-2 px-8 rounded-3xl hover:bg-black/5'>See All</p>
