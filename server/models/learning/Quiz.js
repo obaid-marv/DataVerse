@@ -1,0 +1,40 @@
+import mongoose from "mongoose";
+
+const QuizQuestionSchema = new mongoose.Schema(
+    {
+      title:{
+        type: String,
+        required: true
+      },
+      question: {
+        type: String,
+        required: true,
+      },
+      type: {
+        type: String,
+        enum: ["multiple-choice", "coding"],
+        required: true,
+      },
+      choices: {
+        type: [String],
+      }, 
+      correctAnswer: {
+        type: Number,
+      },
+      codeTemplate: {
+        type: String,
+      }, 
+      correctCode: {
+        type: String,
+      },
+      codeAnswer:{
+        type: String
+      },
+      hints: {
+        type: [String],
+      }, 
+    },
+    { timestamps: true }
+  );
+
+  export default mongoose.model("Quiz", QuizQuestionSchema);

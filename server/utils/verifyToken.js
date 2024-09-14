@@ -4,7 +4,7 @@ import { createError } from "./error.js";
 export const verifyToken = (req,res,next)=>{
     const token = req.cookies.access_token;
     if(!token)
-    return next(createError(401,"you are not authenticated"));
+        return next(createError(401,"you are not authenticated"));
 
     jwt.verify(token,process.env.JWT, (err,user)=>{
         if(err)
@@ -16,7 +16,7 @@ export const verifyToken = (req,res,next)=>{
 }
 
 export const verifyUser = (req,res,next)=>{
-    verifyToken(req,res, next,  ()=>{
+    verifyToken(req,res,next,  ()=>{
         if(req.user.id == req.params.id || req.user.isAdmin){
             next();
         }
