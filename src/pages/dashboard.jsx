@@ -37,7 +37,7 @@ const Dashboard = ()=>{
                             <p className="text-md font-medium ml-2">Weekly Points</p>
                             
                         </div>  
-                        <p className="text-4xl font-medium">250</p>
+                        <p className="text-4xl font-medium">200</p>
                     </div>
                 </div>
 
