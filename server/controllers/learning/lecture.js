@@ -99,3 +99,19 @@ export const lectureCompleted = async (req, res, next) => {
     next(err);
   }
 };
+
+
+export const getLecture = async (req, res, next) => {
+  const lectureId = req.params.lectureId
+  try{
+    const lecture = await Lecture.findById(lectureId);
+
+    if(!lecture)
+      return res.status(404).json({ message: "Lecture not found!"});
+
+    res.status(200).json(lecture);
+  }
+  catch(err){
+    next(err)
+  }
+}
