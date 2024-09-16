@@ -12,13 +12,13 @@ import { useNavigate } from "react-router-dom";
 
 const Courses = () => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
     return (
         <div >
-            <Navbar/>
+            {/* <Navbar/> */}
             <div className="container max-w-6xl mx-auto h-max font-poppins mt-8">
                 <p className="text-2xl font-medium">MY LEARNING</p>
-                <div className="flex">
+                <div className="flex">w
                     <div className="w-2/3 p-4">
                         <div className="flex flex-col">
                             <div className="flex flex-col text-white p-8 bg-themeblack rounded-xl shadow-lg">
@@ -46,7 +46,7 @@ const Courses = () => {
                             <div className="flex flex-col w-full h-max p-2 mt-8">
                                 <div className="flex items-center justify-between">
                                     <p className="text-xl font-semibold">Enrolled Courses</p>
-                                    <button className="py-2 px-4 text-sm font-medium w-max bg-theme text-white items-center justify-between hover:scale-105 transform-all duration-200 rounded shadow-md flex px-2" onClick={()=>navigate('/courses/catalog')}><span><img src={hat} alt="icon" className="w-6 h-6 mr-2"/></span>COURSE CATALOG</button>
+                                    <button className="py-2 px-4 text-sm font-medium w-max bg-theme text-white items-center justify-between hover:scale-105 transform-all duration-200 rounded shadow-md flex" onClick={()=>navigate('/app/courses/catalog')}><span><img src={hat} alt="icon" className="w-6 h-6 mr-2"/></span>COURSE CATALOG</button>
                                 </div>
                                 <div className="flex flex-col">
                                     <CourseProgress title="Introduction to Data Science" progress={30}/>

@@ -11,7 +11,7 @@ const Profiling = () => {
     const navigate = useNavigate();
 
     const back = () => {
-        navigate('/');
+        navigate('/app');
     }
     const [signIn, toggle] = useState(true);
     const [email, setEmail] = useState('');
@@ -33,7 +33,7 @@ const Profiling = () => {
                 setShowSuccess(true);
                 setTimeout(() => {
                     setShowSuccess(false);
-                    navigate('/dashboard');
+                    navigate('/app/dashboard');
                 }, 2000)
             } else {
                 console.log("Incorrect email or password");

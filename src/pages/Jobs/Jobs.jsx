@@ -5,7 +5,7 @@ const Jobs = () => {
   return (
     <div>
       <div>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className='px-10 py-10'>
             <p className='text-4xl'>Jobs </p>
         </div>

@@ -11,10 +11,10 @@ const Catalog = ()=> {
     const navigate = useNavigate();
     return (
         <div>
-            <Navbar/>
+            {/* <Navbar/> */}
             <div className="container max-w-screen-6xl mx-auto h-max font-poppins p-8">
                 <div className="flex items-center ml-2">
-                    <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6 hover:scale-125 transition duration-200 cursor-pointer" onClick={()=>navigate('/courses')}/>
+                    <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6 hover:scale-125 transition duration-200 cursor-pointer" onClick={()=>navigate('/app/courses')}/>
                     <p className="text-2xl font-medium">Catalog</p>
                 </div>
                 <div className="relative p-4 ml-4">

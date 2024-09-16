@@ -19,6 +19,7 @@ const DatasetsScreen = () => {
         console.log('searchText', searchText);
         setSearchText(val);
         if (val) {
+            <Navbar/>
             setTileView(true);
         } else if (val?.length == 0) {
             setTileView(false);
@@ -73,7 +74,7 @@ const DatasetsScreen = () => {
 
     return (
         <div className={""}>
-            <Navbar />
+            {/* <Navbar /> */}
             <div className={`  font-poppins p-8 mt-8 mx-8  `}>
                 <div className='flex flex-col gap-4'>
                     <div className={""}>
