@@ -2,8 +2,12 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { sidebar_links } from "../../constants/sidebarLinks";
 import { IoMenu } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/auth/AuthSlice";
 
 export default function Sidebar({ collapsed, toggleSidebar }) {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.token);
   return (
     <div
       className={`text-lightGrey1 min-h-screen bg-customDarkBlue mt-16 border-gray-200 transition-all ${
@@ -28,6 +32,10 @@ export default function Sidebar({ collapsed, toggleSidebar }) {
           <SidebarLink key={item.key} item={item} collapsed={collapsed} />
         ))}
       </div>
+      {isAuthenticated?<div>
+        <button onClick={()=> dispatch(logout())} className="px-3 py-1 ml-4 bg-theme transform-all duration-200 text-white rounded-md text-sm hover:scale-110">Logout</button>
+      </div>:<></>}
+
     </div>
   );
 }

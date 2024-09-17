@@ -4,16 +4,19 @@ import clock from "../assets/clock.svg";
 import flag from "../assets/flag.svg";
 import LearningHeatmap from "../components/heatmap";
 import Dashcourse from "../components/dashcourse";
-
-
+import { useSelector } from "react-redux";
 
 const Dashboard = ()=>{
+    const user = useSelector((state) => state.auth.user);
     return(
         <div className="">
             {/* <Navbar/> */}
             <div className="max-w-screen-lg mt-4 h-max mx-auto p-4 font-poppins">
                 <p className="text-2xl font-medium font-poppins">Dashboard</p>
-                <p className="text-xl font-base font-poppins">OVERVIEW</p>
+                {user?
+                <p className="text-xl font-base font-poppins">{`HEY ${user} !`}</p>:
+                <></>
+                }
                 <div className="flex items-center p-4 space-x-12">
                     <div className="w-60 h-40 border-2 text-textgrey shadow-md flex flex-col justify-around rounded-xl p-4">
                         <div className="flex items-center">

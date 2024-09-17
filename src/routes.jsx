@@ -1,9 +1,72 @@
+// import React from "react";
+// import "./index.css";
+// import {
+//     createBrowserRouter,
+//     RouterProvider,
+//   } from "react-router-dom";
+// import GlobalLayout from "./layout/GlobalLayout";
+// import Landing from "./pages/landing";
+// import Profiling from "./pages/profiling";
+// import Dashboard from "./pages/dashboard";
+// import Courses from "./pages/courses";
+// import Catalog from "./pages/coursecatalog";
+// import UserProfile from "./pages/userprofile";
+// import Jobs from "./pages/Jobs/Jobs";
+// import DatasetsScreen from "./pages/Datasets/DatasetsScreen";
+// import CourseScreen from "./pages/courseScreen";
+
+// export const routes = createBrowserRouter([
+//     { 
+//       path: "/app",
+//       element: <GlobalLayout/>,
+//       children: [
+//         {
+//           path: "/app/landing",
+//           element: <Landing/>,
+//         },
+//         {
+//           path: "/app/register",
+//           element: <Profiling/>,
+//         },
+//         {
+//           path: "/app/dashboard",
+//           element: <Dashboard/>,
+//         },
+//         {
+//           path: "/app/courses",
+//           element: <Courses/>,
+//         },
+//         {
+//           path: "/app/courses/catalog",
+//           element: <Catalog/>,
+//         },
+//         {
+//           path: "/app/courses/course-screen",
+//           element: <CourseScreen/>,
+//         },
+//         {
+//           path: "/app/userprofile",
+//           element: <UserProfile/>,
+//         },
+//         {
+//           path: "/app/jobs",
+//           element: <Jobs/>,
+//         },
+//         {
+//           path: "/app/datasets",
+//           element: <DatasetsScreen/>,
+//         },
+//       ]
+//     },
+    
+//   ]);
+
 import React from "react";
 import "./index.css";
 import {
     createBrowserRouter,
     RouterProvider,
-  } from "react-router-dom";
+} from "react-router-dom";
 import GlobalLayout from "./layout/GlobalLayout";
 import Landing from "./pages/landing";
 import Profiling from "./pages/profiling";
@@ -14,49 +77,78 @@ import UserProfile from "./pages/userprofile";
 import Jobs from "./pages/Jobs/Jobs";
 import DatasetsScreen from "./pages/Datasets/DatasetsScreen";
 import CourseScreen from "./pages/courseScreen";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export const routes = createBrowserRouter([
-    { 
+    {
       path: "/app",
       element: <GlobalLayout/>,
       children: [
-        {
-          path: "/app/landing",
-          element: <Landing/>,
-        },
-        {
-          path: "/app/register",
-          element: <Profiling/>,
-        },
+        
         {
           path: "/app/dashboard",
-          element: <Dashboard/>,
+          element: (
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/app/courses",
-          element: <Courses/>,
+          element: (
+            <ProtectedRoute>
+              <Courses />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/app/courses/catalog",
-          element: <Catalog/>,
+          element: (
+            <ProtectedRoute>
+              <Catalog />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/app/courses/course-screen",
-          element: <CourseScreen/>,
+          element: (
+            <ProtectedRoute>
+              <CourseScreen />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/app/userprofile",
-          element: <UserProfile/>,
+          element: (
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/app/jobs",
-          element: <Jobs/>,
+          element: (
+            <ProtectedRoute>
+              <Jobs />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/app/datasets",
-          element: <DatasetsScreen/>,
+          element: (
+            <ProtectedRoute>
+              <DatasetsScreen />
+            </ProtectedRoute>
+          ),
         },
       ]
     },
-    
-  ]);
+    {
+      path: "/",
+      element: <Landing />,
+    },
+    {
+      path: "/register",
+      element: <Profiling />,
+    },
+]);
