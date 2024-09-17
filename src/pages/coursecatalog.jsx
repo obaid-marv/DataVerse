@@ -12,16 +12,16 @@ const Catalog = ()=> {
     return (
         <div>
             {/* <Navbar/> */}
-            <div className="container max-w-screen-6xl mx-auto h-max font-poppins p-8">
+            <div className="container max-w-screen-6xl mx-auto h-max font-poppins p-5">
                 <div className="flex items-center ml-2">
                     <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6 hover:scale-125 transition duration-200 cursor-pointer" onClick={()=>navigate('/app/courses')}/>
-                    <p className="text-2xl font-medium">Catalog</p>
+                    <p className="text-2xl font-medium ml-4">Catalog</p>
                 </div>
-                <div className="relative p-4 ml-4">
+                <div className="relative p-4 ml-4 ">
                         <input
                         type="text"
                         placeholder="search"
-                        className="p-2 pl-8 w-96 text-sm border-2 border-textgrey text-textgrey placeholder-textgrey font-poppins bg-white  rounded-full focus:outline-none"
+                        className="p-2 pl-10 w-96 text-sm border-2 border-textgrey text-textgrey placeholder-textgrey font-poppins bg-white  rounded-full focus:outline-none"
                         />
                         <FontAwesomeIcon
                         icon={faSearch}
@@ -31,13 +31,13 @@ const Catalog = ()=> {
 
                 <div className="flex items-center text-textgrey space-x-2 px-4 ml-4">
                     <div className="w-max rounded-full flex items-center h-8 border-theme border px-4">
-                        <p className="text-theme">ALL</p>
+                        <p className="text-theme">All</p>
                     </div>
 
-                    <div className="w-max rounded-full flex items-center h-8 border-textgrey border px-4">
-                        <p>Machine Learning</p>
+                    <div className="w-max rounded-full flex items-center h-8 border-textgrey hover:text-theme hover:border-theme border px-4 cursor-pointer">
+                        <p >Machine Learning</p>
                     </div>
-                    <div className="w-max rounded-full flex items-center h-8 border-textgrey border px-4">
+                    <div className="w-max rounded-full flex items-center h-8 border-textgrey hover:text-theme hover:border-theme border px-4 cursor-pointer">
                         <p>Data Science</p>
                     </div>
                 </div>

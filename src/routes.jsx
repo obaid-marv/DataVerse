@@ -13,6 +13,7 @@ import Catalog from "./pages/coursecatalog";
 import UserProfile from "./pages/userprofile";
 import Jobs from "./pages/Jobs/Jobs";
 import DatasetsScreen from "./pages/Datasets/DatasetsScreen";
+import CourseScreen from "./pages/courseScreen";
 
 export const routes = createBrowserRouter([
     { 
@@ -52,6 +53,10 @@ export const routes = createBrowserRouter([
           element: <DatasetsScreen/>,
         },
       ]
+    },
+    {
+      path: "/courses/couresScreen",
+      element: <CourseScreen/>,
     },
     
   ]);

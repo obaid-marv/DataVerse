@@ -17,8 +17,8 @@ const Courses = () => {
         <div >
             {/* <Navbar/> */}
             <div className="container max-w-6xl mx-auto h-max font-poppins mt-8">
-                <p className="text-2xl font-medium">MY LEARNING</p>
-                <div className="flex">w
+                <p className="text-2xl font-medium ml-6">MY LEARNING</p>
+                <div className="flex">
                     <div className="w-2/3 p-4">
                         <div className="flex flex-col">
                             <div className="flex flex-col text-white p-8 bg-themeblack rounded-xl shadow-lg">
