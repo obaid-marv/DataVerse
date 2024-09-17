@@ -41,6 +41,10 @@ export const routes = createBrowserRouter([
           element: <Catalog/>,
         },
         {
+          path: "/app/courses/course-screen",
+          element: <CourseScreen/>,
+        },
+        {
           path: "/app/userprofile",
           element: <UserProfile/>,
         },
@@ -53,10 +57,6 @@ export const routes = createBrowserRouter([
           element: <DatasetsScreen/>,
         },
       ]
-    },
-    {
-      path: "/courses/couresScreen",
-      element: <CourseScreen/>,
     },
     
   ]);
