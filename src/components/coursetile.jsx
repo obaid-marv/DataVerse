@@ -5,7 +5,16 @@ const Coursetile = ({cover,title , tutor, lessons, quiz})=>{
     const navigate = useNavigate();
 
     const handleStartCourse = () => {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        navigate("/app/courses/courseScreen");
+=======
         navigate("/app/courses/course-screen");
+>>>>>>> f22e685f2d8e1ba1ef3e839f738f64e1580d582f
+=======
+
+        navigate("/app/courses/course-screen");
+>>>>>>> 50eb44769712e85c743f31f07b6c9447dd1727b0
       };
     return(
         <div className="container w-60 h-72 font-poppins mt-4 shadow-md cursor-pointer rounded-xl">
