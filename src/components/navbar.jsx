@@ -7,12 +7,12 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation(); 
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => location.pathname.includes(path);
 
   return (
     <div className="w-screen h-[65px] bg-white flex items-center border-b-[1px] border-gray-300 px-6 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]">
       
-      <div className="flex items-center">
+      <div className="flex items-center cursor-pointer" onClick={() => navigate('/app/dashboard')}>
         <img src={Logo} alt="DataVerse Logo" className="h-10 w-10 mr-2" />
         <p className="text-xl font-semibold text-customDarkBlue">DataVerse</p>
       </div>
@@ -23,31 +23,31 @@ const Navbar = () => {
           className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
             isActive('/app/dashboard') ? 'bg-customDarkBlue text-white font-semibold' : 'bg-transparent text-customDarkBlue'
           }`}
-          onClick={() => navigate('/dashboard')}
+          onClick={() => navigate('/app/dashboard')}
         >
           Home
         </button>
         <button
           className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
-            isActive('/courses') ? 'bg-customDarkBlue text-white font-semibold' : 'bg-transparent text-customDarkBlue'
+            isActive('/app/courses') ? 'bg-customDarkBlue text-white font-semibold' : 'bg-transparent text-customDarkBlue'
           }`}
-          onClick={() => navigate('/courses')}
+          onClick={() => navigate('/app/courses')}
         >
           Learning
         </button>
         <button
           className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
-            isActive('/jobs') ? 'bg-customDarkBlue text-white font-semibold' : 'bg-transparent text-customDarkBlue'
+            isActive('/app/jobs') ? 'bg-customDarkBlue text-white font-semibold' : 'bg-transparent text-customDarkBlue'
           }`}
-          onClick={() => navigate('/jobs')}
+          onClick={() => navigate('/app/jobs')}
         >
           Jobs
         </button>
         <button
           className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
-            isActive('/datasets') ? 'bg-customDarkBlue text-white font-semibold' : 'bg-transparent text-customDarkBlue'
+            isActive('/app/datasets') ? 'bg-customDarkBlue text-white font-semibold' : 'bg-transparent text-customDarkBlue'
           }`}
-          onClick={() => navigate('/datasets')}
+          onClick={() => navigate('/app/datasets')}
         >
           Datasets
         </button>
