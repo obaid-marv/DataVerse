@@ -77,11 +77,8 @@ import UserProfile from "./pages/userprofile";
 import Jobs from "./pages/Jobs/Jobs";
 import DatasetsScreen from "./pages/Datasets/DatasetsScreen";
 import CourseScreen from "./pages/courseScreen";
-<<<<<<< HEAD
-import LessonScreen from "./pages/lessonScreen";
-=======
 import ProtectedRoute from "./components/ProtectedRoute";
->>>>>>> f22e685f2d8e1ba1ef3e839f738f64e1580d582f
+import LessonScreen from "./pages/lessonScreen";
 
 export const routes = createBrowserRouter([
     {
@@ -151,15 +148,13 @@ export const routes = createBrowserRouter([
         },
       ]
     },
-    
     {
-<<<<<<< HEAD
       path: "/courses/lessonScreen",
       element: <LessonScreen/>,
-=======
+    },
+     {
       path: "/",
       element: <Landing />,
->>>>>>> f22e685f2d8e1ba1ef3e839f738f64e1580d582f
     },
     {
       path: "/register",
