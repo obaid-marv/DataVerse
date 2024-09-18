@@ -14,6 +14,7 @@ import UserProfile from "./pages/userprofile";
 import Jobs from "./pages/Jobs/Jobs";
 import DatasetsScreen from "./pages/Datasets/DatasetsScreen";
 import CourseScreen from "./pages/courseScreen";
+import LessonScreen from "./pages/lessonScreen";
 
 export const routes = createBrowserRouter([
     { 
@@ -41,6 +42,10 @@ export const routes = createBrowserRouter([
           element: <Catalog/>,
         },
         {
+          path: "/app/courses/courseScreen",
+          element: <CourseScreen/>,
+        },
+        {
           path: "/app/userprofile",
           element: <UserProfile/>,
         },
@@ -54,9 +59,10 @@ export const routes = createBrowserRouter([
         },
       ]
     },
+    
     {
-      path: "/courses/couresScreen",
-      element: <CourseScreen/>,
+      path: "/courses/lessonScreen",
+      element: <LessonScreen/>,
     },
     
   ]);

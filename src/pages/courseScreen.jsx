@@ -43,7 +43,7 @@ const CourseScreen = () => {
     }
   };
   return (
-    <div className="container max-w-screen-lg mx-auto my-10 p-6 bg-gray-50 shadow-lg rounded-lg">
+    <div className="container max-w-screen-lg mx-auto mb-5 p-6 bg-gray-50 shadow-lg rounded-lg">
       {/* Back Button */}
       <div className="flex items-center mb-8">
         <FontAwesomeIcon
@@ -74,7 +74,7 @@ const CourseScreen = () => {
           </p>
           <div className="mt-6">
             <button
-              onClick={() => navigate("/courses/lesson/1")}
+              onClick={() => navigate("/courses/lessonScreen")}
               className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 transform hover:scale-105"
             >
               Start First Lesson
