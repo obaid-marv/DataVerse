@@ -9,7 +9,11 @@ const CourseSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
-    }, 
+    },
+    instructor: {
+      type: String,
+      required: true,
+    },
     lectures: [
       {
         type: mongoose.Schema.Types.ObjectId,
