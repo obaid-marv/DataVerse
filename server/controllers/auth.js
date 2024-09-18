@@ -41,8 +41,8 @@ export const login = async(req,res,next)=>{
 
 
         res.cookie("access_token",token,{
-            httpOnly:true
-        }).status(200).json({...otherdetails});
+            httpOnly:false
+        }).status(200).json({...otherdetails,token});
     }
     catch(err){
         next(err);
@@ -88,4 +88,22 @@ export const forgotPassword = async(req,res,next)=>{
     } catch (error) {
         res.status(500).json({ error: 'Server error', error });
     }
+}
+
+
+export const fetchUserByToken = async (req, res, next)=>{
+
+    try{
+        const user = await User.findById(req.user.id);
+
+        if(!user)
+            return res.status(404).json({ message: "User not found!"})
+
+        res.status(200).json(user);
+
+    }
+    catch(err){
+        next(err)
+    }
+
 }

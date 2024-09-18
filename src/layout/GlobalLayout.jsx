@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Navbar from "../components/navbar";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserDetails } from "../redux/auth/AuthSlice";
 
 export default function GlobalLayout() {
+  const { token, status, user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (token && status === 'idle' && !user ) {
+      dispatch(fetchUserDetails());
+    }
+  }, [dispatch]);
+
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleSidebar = () => {
@@ -19,7 +30,7 @@ export default function GlobalLayout() {
       <div className={`flex flex-col flex-grow transition-all`}>
         {/* Navbar */}
         <div
-          className="fixed top-0 left-0 right-0 h-[64px] flex bg-white transition-all"   
+          className="fixed top-0 left-0 right-0 h-[64px] flex bg-white transition-all"
         >
           <Navbar />
         </div>
