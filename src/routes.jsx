@@ -78,6 +78,7 @@ import Jobs from "./pages/Jobs/Jobs";
 import DatasetsScreen from "./pages/Datasets/DatasetsScreen";
 import CourseScreen from "./pages/courseScreen";
 import ProtectedRoute from "./components/ProtectedRoute";
+import LessonScreen from "./pages/lessonScreen";
 
 export const routes = createBrowserRouter([
     {
@@ -118,6 +119,10 @@ export const routes = createBrowserRouter([
           ),
         },
         {
+          path: "/app/courses/courseScreen",
+          element: <CourseScreen/>,
+        },
+        {
           path: "/app/userprofile",
           element: (
             <ProtectedRoute>
@@ -144,6 +149,10 @@ export const routes = createBrowserRouter([
       ]
     },
     {
+      path: "/courses/lessonScreen",
+      element: <LessonScreen/>,
+    },
+     {
       path: "/",
       element: <Landing />,
     },
