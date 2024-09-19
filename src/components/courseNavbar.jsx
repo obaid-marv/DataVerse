@@ -54,8 +54,8 @@ const CourseNavbar = () => {
       <div className="flex flex-row space-x-4 items-center">
         <div className="flex flex-row space-x-2 items-center bg-gray-200 p-2 rounded-2xl">
           <FaTrophy />
-          <p className="font-medium">
-            Daily XP <span className="text-red-400">50</span>
+          <p className="font-medium text-sm">
+            Daily XP <span className="text-theme font-semibold text-sm">50</span>
           </p>
         </div>
         <FaVideo className="cursor-pointer" />
