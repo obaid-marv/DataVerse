@@ -88,7 +88,7 @@ const DatasetsScreen = () => {
                         <div className='flex flex-col gap-2'>
                             <CustomInput onchangetext={(val) => handleSearchClick(val)} />
                             <div className='flex gap-2 items-center flex-wrap'>
-                                {TAGS.map((item) => {
+                                {TAGS?.map((item) => {
                                     return (
                                         <Tag title={item.title} active={item.active} onclick={getSelectedTag} />
                                     )

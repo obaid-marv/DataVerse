@@ -5,6 +5,7 @@ const axiosInstance = axios.create({
   withCredentials: true, 
 });
 
+export const API_BASE__URL = "http://localhost:4000/api"
 
 axiosInstance.interceptors.request.use((config) => {
   return config;

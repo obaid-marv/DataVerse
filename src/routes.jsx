@@ -74,11 +74,11 @@ import Dashboard from "./pages/dashboard";
 import Courses from "./pages/courses";
 import Catalog from "./pages/coursecatalog";
 import UserProfile from "./pages/userprofile";
-import Jobs from "./pages/Jobs/Jobs";
 import DatasetsScreen from "./pages/Datasets/DatasetsScreen";
 import CourseScreen from "./pages/courseScreen";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LessonScreen from "./pages/lessonScreen";
+import JobBoardLanding from "./pages/Jobs/JobBoardLanding";
 
 export const routes = createBrowserRouter([
     {
@@ -131,18 +131,18 @@ export const routes = createBrowserRouter([
           ),
         },
         {
-          path: "/app/jobs",
-          element: (
-            <ProtectedRoute>
-              <Jobs />
-            </ProtectedRoute>
-          ),
-        },
-        {
           path: "/app/datasets",
           element: (
             <ProtectedRoute>
               <DatasetsScreen />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/app/jobs",
+          element: (
+            <ProtectedRoute>
+              <JobBoardLanding />
             </ProtectedRoute>
           ),
         },
