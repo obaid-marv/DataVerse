@@ -5,4 +5,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
   
+  .loader {
+    @apply inline-block w-5 h-5 border-2 border-t-2 border-t-blue-500 border-gray-300 rounded-full;
+    animation: spin 1s linear infinite;
+  }

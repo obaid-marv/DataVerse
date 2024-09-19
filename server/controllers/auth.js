@@ -94,12 +94,30 @@ export const forgotPassword = async(req,res,next)=>{
 export const fetchUserByToken = async (req, res, next)=>{
 
     try{
-        const user = await User.findById(req.user.id);
+        const user = await User.findById(req.user.id).populate('enrolledCourses');
 
         if(!user)
             return res.status(404).json({ message: "User not found!"})
 
         res.status(200).json(user);
+
+    }
+    catch(err){
+        next(err)
+    }
+
+}
+
+export const fetchUserProgress = async (req, res, next)=>{
+
+    try{
+        const user = await User.findById(req.user.id).populate('enrolledCourses.courseId');
+
+        if(!user)
+            return res.status(404).json({ message: "User not found!"})
+
+
+        res.status(200).json({enrolledCourses: user.enrolledCourses});
 
     }
     catch(err){
