@@ -1,44 +1,103 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import coursecover from '../assets/coursecover.png'; // Example course cover
+import React, { useState } from "react"; // Combined import for React and useState
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowLeft,
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { modules } from "../constants/modules"; // Assuming modules import
+import { FaPen, FaTrophy, FaVideo } from "react-icons/fa";
+import { RiFeedbackFill } from "react-icons/ri";
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
 
-const CourseNavbar = ({ courseModules }) => {
+const CourseNavbar = () => {
   const navigate = useNavigate();
   const [showOverview, setShowOverview] = useState(false);
+  const [open, setOpen] = useState(false); // Remove React.useState for consistency
 
+  const handleOpen = () => setOpen(!open);
   const handleToggleOverview = () => {
     setShowOverview(!showOverview);
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 flex items-center justify-between">
+    <div className="bg-white shadow-md rounded-lg p-4 flex items-center justify-between w-full">
       <FontAwesomeIcon
         icon={faArrowLeft}
         className="w-6 h-6 text-gray-700 cursor-pointer"
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/app/courses/course-screen")}
       />
-      <div className="flex items-center">
-        <button
-          className="p-2 border rounded-full bg-gray-200 hover:bg-gray-300 transition"
-          onClick={() => handleToggleOverview()}
-        >
+      <div className="flex items-center ml-44">
+        <button className="mr-2 border-2 border-gray-500 hover:bg-gray-300 px-2 py-1">
           <FontAwesomeIcon icon={faChevronLeft} className="text-gray-700" />
-          <span className="mx-2 text-gray-700">Course Overview</span>
+        </button>
+        <button
+          className="px-2 py-1 border-2 border-gray-500 bg-gray-100 hover:bg-gray-300 transition"
+          onClick={() => handleOpen()}
+        >
+          <span className="mx-2 font-medium text-gray-700">
+            Course Overview
+          </span>
+        </button>
+        <button className="ml-2 border-2 border-gray-500 hover:bg-gray-300 px-2 py-1">
           <FontAwesomeIcon icon={faChevronRight} className="text-gray-700" />
         </button>
       </div>
 
+      <div className="flex flex-row space-x-4 items-center">
+        <div className="flex flex-row space-x-2 items-center bg-gray-200 p-2 rounded-2xl">
+          <FaTrophy />
+          <p className="font-medium">
+            Daily XP <span className="text-red-400">50</span>
+          </p>
+        </div>
+        <FaVideo className="cursor-pointer" />
+        <FaPen size={15} className="cursor-pointer"/>
+        <RiFeedbackFill className="cursor-pointer"/>
+      </div>
+
+      <Dialog size="lg" open={open} handler={handleOpen}>
+        <DialogHeader>Course Overview</DialogHeader>
+        <DialogBody>
+        {modules.map((module, index) => (
+                <li key={index} className="mb-2">
+                  <strong>{module.title}:</strong> {module.description} (
+                  {module.contentType})
+                </li>
+              ))}
+        </DialogBody>
+        <DialogFooter>
+          {/* <Button
+            variant="text"
+            color="red"
+            onClick={handleOpen}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button> */}
+          <Button variant="filled" color="blue" onClick={handleOpen}>
+            <span>Close</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
+
       {/* Course Overview Popup */}
-      {showOverview && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      {/* {showOverview && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-md">
             <h2 className="text-2xl font-semibold mb-4">Course Modules</h2>
             <ul className="list-disc list-inside text-gray-700">
-              {courseModules.map((module, index) => (
+              {modules.map((module, index) => (
                 <li key={index} className="mb-2">
-                  <strong>{module.title}:</strong> {module.description} ({module.type})
+                  <strong>{module.title}:</strong> {module.description} (
+                  {module.contentType})
                 </li>
               ))}
             </ul>
@@ -50,7 +109,7 @@ const CourseNavbar = ({ courseModules }) => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

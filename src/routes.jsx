@@ -78,7 +78,13 @@ import DatasetsScreen from "./pages/Datasets/DatasetsScreen";
 import CourseScreen from "./pages/courseScreen";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LessonScreen from "./pages/lessonScreen";
+
 import JobBoardLanding from "./pages/Jobs/JobBoardLanding";
+
+import CourseLayout from "./layout/CourseLayout";
+import VideoScreen from "./pages/videoScreen";
+import CodeScreen from "./pages/codeScreen";
+
 
 export const routes = createBrowserRouter([
     {
@@ -119,7 +125,7 @@ export const routes = createBrowserRouter([
           ),
         },
         {
-          path: "/app/courses/courseScreen",
+          path: "/app/courses/course-screen",
           element: <CourseScreen/>,
         },
         {
@@ -149,7 +155,7 @@ export const routes = createBrowserRouter([
       ]
     },
     {
-      path: "/courses/lessonScreen",
+      path: "/courses/lesson-screen",
       element: <LessonScreen/>,
     },
      {
@@ -160,4 +166,18 @@ export const routes = createBrowserRouter([
       path: "/register",
       element: <Profiling />,
     },
+    {
+      path: "/course-started",
+      element: <CourseLayout />,
+      children: [
+        {
+          path: "/course-started/video-screen",
+          element: <VideoScreen />,
+        },
+        {
+          path: "/course-started/code-screen",
+          element: <CodeScreen />,
+        }
+      ]
+    }
 ]);

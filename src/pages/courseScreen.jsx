@@ -74,7 +74,7 @@ const CourseScreen = () => {
           </p>
           <div className="mt-6">
             <button
-              onClick={() => navigate("/courses/lessonScreen")}
+              onClick={() => navigate("/course-started/video-screen")}
               className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 transform hover:scale-105"
             >
               Start First Lesson
@@ -133,12 +133,12 @@ const CourseScreen = () => {
                   <div className="p-4 bg-gray-50 text-gray-600">
                     {module.description}
                     <div className="mt-4">
-                      <button
+                      {/* <button
                         onClick={() => navigate(`/courses/lesson/${module.id}`)}
                         className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
                       >
                         Start Lesson
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 )}
