@@ -10,13 +10,13 @@ import { fetchUserProgress } from "../redux/course/ProgressSlice";
 import Loader from "../components/Loader";
 
 
-// import illustration from "../assets/illustration-learning.svg"; // Your image here
+import illustration from "../assets/dashboard-learning.svg";
 import { Link } from "react-router-dom";
 
 const NoCoursesEnrolled = () => {
     return (
         <div className="flex flex-col items-center justify-center text-center space-y-4 p-6">
-            <img src={""} alt="Start Learning" className="w-64 h-64"/>
+            <img src={illustration} alt="Start Learning" className="w-64 h-64"/>
             <h2 className="text-2xl font-semibold">You haven't enrolled in any courses yet!</h2>
             <p className="text-lg text-gray-600">Start your learning journey by exploring our wide range of courses.</p>
             <Link to="/courses" className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
@@ -89,7 +89,7 @@ const Dashboard = ()=>{
 
                 </div>
                 <div className="max-w-screen-lg h-max p-4">
-                    <p className="text-lg font-semibold">Continue ...</p>
+                    <p className="text-lg font-semibold">LEARNING</p>
                     <div className="flex flex-wrap items-center justify-around mt-4">
                     {
                         progress?.length === 0 ? <NoCoursesEnrolled /> : (
