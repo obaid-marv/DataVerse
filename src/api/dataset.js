@@ -1,5 +1,5 @@
 import axios from "axios"
-import API_BASE__URL from "../config/api"
+import {API_BASE__URL} from "../config/api"
 
 export const getAlldatasets = async() =>{
     try {
