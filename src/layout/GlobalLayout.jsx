@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import Navbar from "../components/navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserDetails } from "../redux/auth/AuthSlice";
+import {useOverLay} from "../contexts/OverlayContext";
 
 export default function GlobalLayout() {
   const { token, status, user } = useSelector((state) => state.auth);
@@ -21,6 +22,8 @@ export default function GlobalLayout() {
     setCollapsed(!collapsed);
   };
 
+  const { isOverlayEnable } = useOverLay();
+
   return (
     <div className="h-screen w-screen flex flex-row bg-white overflow-hidden">
       {/* Sidebar Section */}
@@ -34,6 +37,10 @@ export default function GlobalLayout() {
         >
           <Navbar />
         </div>
+
+        {isOverlayEnable && (
+          <div className="bg-black fixed inset-0 opacity-50"></div>
+        )}
 
         {/* Page Content Below Navbar */}
         <div className="flex flex-col mt-16 p-4 overflow-auto h-full no-scrollbar">

@@ -84,6 +84,8 @@ import JobBoardLanding from "./pages/Jobs/JobBoardLanding";
 import CourseLayout from "./layout/CourseLayout";
 import VideoScreen from "./pages/videoScreen";
 import CodeScreen from "./pages/codeScreen";
+import SettingsScreen from "./pages/settingsScreen";
+import EditProfile from "./pages/editProfileScreen";
 
 
 export const routes = createBrowserRouter([
@@ -149,6 +151,22 @@ export const routes = createBrowserRouter([
           element: (
             <ProtectedRoute>
               <JobBoardLanding />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/app/settings",
+          element: (
+            <ProtectedRoute>
+              <SettingsScreen />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/app/edit-profile",
+          element: (
+            <ProtectedRoute>
+              <EditProfile />
             </ProtectedRoute>
           ),
         },
