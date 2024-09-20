@@ -5,18 +5,19 @@ export const createQuiz = async (req, res) => {
   try {
     const {
       title,
-      question,
+      excercise,
       type,
       choices,
       correctAnswer,
+      instructions,
       codeTemplate,
       correctCode,
       codeAnswer,
       hints,
     } = req.body;
 
-    if (!question || !type || !title) {
-      return res.status(400).json({ message: 'Question and type, title are required' });
+    if (!excercise || !type || !title || !instructions) {
+      return res.status(400).json({ message: 'Question and type, title, instructions are required' });
     }
 
     if (type === 'multiple-choice') {
@@ -46,13 +47,14 @@ export const createQuiz = async (req, res) => {
 
     const newQuestion = new Quiz({
       title,
-      question,
+      excercise,
       type,
       choices,
       correctAnswer,
       codeTemplate,
       correctCode,
       codeAnswer,
+      instructions,
       hints,
     });
 

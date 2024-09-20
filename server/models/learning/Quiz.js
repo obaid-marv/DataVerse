@@ -6,13 +6,17 @@ const QuizQuestionSchema = new mongoose.Schema(
         type: String,
         required: true
       },
-      question: {
+      excercise: {
         type: String,
         required: true,
       },
       type: {
         type: String,
         enum: ["multiple-choice", "coding"],
+        required: true,
+      },
+      instructions:{
+        type: [String],
         required: true,
       },
       choices: {
