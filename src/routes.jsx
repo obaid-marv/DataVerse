@@ -16,7 +16,7 @@
 // import CourseScreen from "./pages/courseScreen";
 
 // export const routes = createBrowserRouter([
-//     { 
+//     {
 //       path: "/app",
 //       element: <GlobalLayout/>,
 //       children: [
@@ -58,15 +58,12 @@
 //         },
 //       ]
 //     },
-    
+
 //   ]);
 
 import React from "react";
 import "./index.css";
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GlobalLayout from "./layout/GlobalLayout";
 import Landing from "./pages/landing";
 import Profiling from "./pages/profiling";
@@ -86,116 +83,139 @@ import VideoScreen from "./pages/videoScreen";
 import CodeScreen from "./pages/codeScreen";
 import SettingsScreen from "./pages/settingsScreen";
 import EditProfile from "./pages/editProfileScreen";
-
+import PostScreen from "./pages/Connections/PostScreen";
+import ConnectionScreen from "./pages/Connections/ConnectionScreen";
+import ConnectionLayout from "./layout/ConnectionLayout";
 
 export const routes = createBrowserRouter([
-    {
-      path: "/app",
-      element: <GlobalLayout/>,
-      children: [
-        
-        {
-          path: "/app/dashboard",
-          element: (
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "/app/courses",
-          element: (
-            <ProtectedRoute>
-              <Courses />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "/app/courses/catalog",
-          element: (
-            <ProtectedRoute>
-              <Catalog />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "/app/courses/course-screen",
-          element: (
-            <ProtectedRoute>
-              <CourseScreen />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "/app/courses/course-screen",
-          element: <CourseScreen/>,
-        },
-        {
-          path: "/app/userprofile",
-          element: (
-            <ProtectedRoute>
-              <UserProfile />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "/app/datasets",
-          element: (
-            <ProtectedRoute>
-              <DatasetsScreen />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "/app/jobs",
-          element: (
-            <ProtectedRoute>
-              <JobBoardLanding />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "/app/settings",
-          element: (
-            <ProtectedRoute>
-              <SettingsScreen />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "/app/edit-profile",
-          element: (
-            <ProtectedRoute>
-              <EditProfile />
-            </ProtectedRoute>
-          ),
-        },
-      ]
-    },
-    {
-      path: "/courses/lesson-screen",
-      element: <LessonScreen/>,
-    },
-     {
-      path: "/",
-      element: <Landing />,
-    },
-    {
-      path: "/register",
-      element: <Profiling />,
-    },
-    {
-      path: "/course-started",
-      element: <CourseLayout />,
-      children: [
-        {
-          path: "/course-started/video-screen",
-          element: <VideoScreen />,
-        },
-        {
-          path: "/course-started/code-screen",
-          element: <CodeScreen />,
-        }
-      ]
-    }
+  {
+    path: "/app",
+    element: <GlobalLayout />,
+    children: [
+      {
+        path: "/app/dashboard",
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/courses",
+        element: (
+          <ProtectedRoute>
+            <Courses />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/courses/catalog",
+        element: (
+          <ProtectedRoute>
+            <Catalog />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/courses/course-screen",
+        element: (
+          <ProtectedRoute>
+            <CourseScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/connection-screen",
+        element: (
+          <ProtectedRoute>
+            <ConnectionScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/userprofile",
+        element: (
+          <ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/datasets",
+        element: (
+          <ProtectedRoute>
+            <DatasetsScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/jobs",
+        element: (
+          <ProtectedRoute>
+            <JobBoardLanding />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/settings",
+        element: (
+          <ProtectedRoute>
+            <SettingsScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/edit-profile",
+        element: (
+          <ProtectedRoute>
+            <EditProfile />
+          </ProtectedRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/courses/lesson-screen",
+    element: <LessonScreen />,
+  },
+  {
+    path: "/",
+    element: <Landing />,
+  },
+  {
+    path: "/register",
+    element: <Profiling />,
+  },
+  {
+    path: "/course-started",
+    element: <CourseLayout />,
+    children: [
+      {
+        path: "/course-started/video-screen",
+        element: <VideoScreen />,
+      },
+      {
+        path: "/course-started/code-screen",
+        element: <CodeScreen />,
+      },
+    ],
+  },
+  {
+    path: "/connection",
+    element: (
+      <ProtectedRoute>
+        <ConnectionLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/connection/post-screen",
+        element: (
+          <ProtectedRoute>
+            <PostScreen />
+          </ProtectedRoute>
+        ),
+      },
+    ],
+  },
 ]);

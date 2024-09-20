@@ -4,5 +4,19 @@ export const IMAGES = {
   lockColored_icon: new URL("./lockColored_icon.png", import.meta.url).href,
   logoutColored_icon: new URL("./logoutColored_icon.png", import.meta.url).href,
   student_avatar: new URL("./studentAvatar.png", import.meta.url).href,
+  settingsColored_icon: new URL("./settingsColored_icon.png", import.meta.url)
+  .href,
+  avatar: new URL("./avatar.png", import.meta.url).href,
+  avatar3: new URL("./avatar3.png", import.meta.url).href,
+  avatar4: new URL("./avatar4.png", import.meta.url).href,
+  avatar5: new URL("./avatar5.png", import.meta.url).href,
+  avatar6: new URL("./avatar6.png", import.meta.url).href,
+  avatar7: new URL("./avatar7.png", import.meta.url).href,
+  avatar8: new URL("./avatar8.png", import.meta.url).href,
+  avatar9: new URL("./avatar9.png", import.meta.url).href,
+  avatar10: new URL("./avatar10.png", import.meta.url).href,
+  avatar11: new URL("./avatar11.png", import.meta.url).href,
+  avatar12: new URL("./avatar12.png", import.meta.url).href,
+  cartoon_avatar: new URL("./cartoon_avatar.png", import.meta.url).href,
 
 };

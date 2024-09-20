@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserEdit, faLock, faFileAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { MdEditDocument } from "react-icons/md";
 
 const SettingsScreen = () => {
   const navigate = useNavigate();
@@ -34,72 +35,101 @@ const SettingsScreen = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
-      <div className="flex flex-col items-center space-y-4 mb-12 ">
+    <>
+      <div
+        className={`flex items-center justify-center p-2 rounded-tl-3xl bg-white rounded-bl-3xl h-full w-full space-y-4`}
+      >
+        <div className="flex flex-col w-[360px] py-6 px-3 rounded-3xl bg-gray-100 font-sans font-semibold text-customDarkBlue">
+          {/* Heading  */}
+          <div className="flex justify-center text-xl mb-10">My Profile</div>
+
+          {/* Pic and Details */}
+          <div className="flex flex-col items-center space-y-4 mb-12 ">
             <div className="flex-1 flex justify-center">
               <img
-                src={user?.photo || IMAGES.student_avatar}
+                src= {IMAGES.student_avatar}
                 alt="Avatar"
-                
                 className={`w-20 h-20 rounded-full cursor-pointer block`}
-                // onLoad={handleImageLoad}
               />
+{/* 
+              <img
+                src={IMAGES.edit_icon}
+                alt="Edit Icon"
+                onClick={() => toggleEditModal(user)}
+                className="w-5 h-5 absolute mt-16 ml-14 cursor-pointer "
+              ></img> */}
             </div>
             <div className="flex flex-col items-center">
-              <p className="text-lg">{user?.name}</p>
-              <p className="font-normal text-xs">{user?.email}</p>
+              <p className="text-lg">Zaki Mazhar</p>
+              <p className="font-normal text-sm">zakimazharsultan@gmail.com</p>
             </div>
           </div>
-      
-      <div className="w-full max-w-md bg-white shadow-md rounded-md p-6 space-y-4">
-        {/* Edit Profile */}
-        <div 
-          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer"
-          onClick={handleEditProfile}
-        >
-          <div className="flex items-center space-x-3">
-            <FontAwesomeIcon icon={faUserEdit} className="text-blue-500 w-5 h-5" />
-            <p className="font-medium">Edit Profile</p>
-          </div>
-        </div>
 
-        {/* Privacy and Policy */}
-        <div 
-          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer"
-          onClick={handlePrivacyPolicy}
-        >
-          <div className="flex items-center space-x-3">
-            <FontAwesomeIcon icon={faLock} className="text-blue-500 w-5 h-5" />
-            <p className="font-medium">Privacy Policy</p>
-          </div>
-        </div>
-
-        {/* Terms and Conditions */}
-        <div 
-          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer"
-          onClick={handleTermsConditions}
-        >
-          <div className="flex items-center space-x-3">
-            <FontAwesomeIcon icon={faFileAlt} className="text-blue-500 w-5 h-5" />
-            <p className="font-medium">Terms and Conditions</p>
-          </div>
-        </div>
-
-        {/* Log Out */}
-        <div 
-          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-red-50 cursor-pointer"
-          onClick={handleLogout}
-        >
-          <div className="flex items-center space-x-3">
-            <FontAwesomeIcon icon={faSignOutAlt} className="text-red-500 w-5 h-5" />
-            <p className="font-medium text-red-500">Log Out</p>
+          {/* Buttons  */}
+          <div className="px-5">
+            <p className="mb-3 ml-2">Account</p>
+            <div>
+                <div
+                  onClick={handleEditProfile}
+                  className="flex items-center space-x-3 rounded-lg hover:bg-slate-200 p-2 cursor-pointer"
+                >
+                  <div className={`bg-customPurpleShade p-3 rounded-lg`}>
+                    <MdEditDocument color="purple"/>
+                  </div>
+                  <p className="text-customGray font-medium text-sm">
+                    Edit Profile
+                  </p>
+                </div>
+                <div
+                  onClick={handlePrivacyPolicy}
+                  className="flex items-center space-x-3 rounded-lg hover:bg-slate-200 p-2 cursor-pointer"
+                >
+                  <div className={`bg-customLightBlueShade p-3 rounded-lg`}>
+                    <img
+                      src={IMAGES.lockColored_icon}
+                      alt={`Lock icon`}
+                      className="w-4 h-4"
+                    />
+                  </div>
+                  <p className="text-customGray font-medium text-sm">
+                    Privacy and Policy
+                  </p>
+                </div>
+                <div
+                  onClick={handleTermsConditions}
+                  className="flex items-center space-x-3 rounded-lg hover:bg-slate-200 p-2 cursor-pointer"
+                >
+                  <div className={`bg-customLightYellowShade p-3 rounded-lg`}>
+                    <img
+                      src={IMAGES.termsColored_icon}
+                      alt={`Tems icon`}
+                      className="w-4 h-4"
+                    />
+                  </div>
+                  <p className="text-customGray font-medium text-sm">
+                    Terms & Conditions
+                  </p>
+                </div>
+                <div
+                  onClick={handleLogout}
+                  className="flex items-center space-x-3 rounded-lg hover:bg-slate-200 p-2 cursor-pointer"
+                >
+                  <div className={`bg-customLightRedShade p-3 rounded-lg`}>
+                    <img
+                      src={IMAGES.logoutColored_icon}
+                      alt={`Logout icon`}
+                      className="w-4 h-4"
+                    />
+                  </div>
+                  <p className="text-customGray font-medium text-sm">
+                    Log Out
+                  </p>
+                </div>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Toast Notification Container */}
-      <ToastContainer />
-    </div>
+    </>
   );
 };
 
