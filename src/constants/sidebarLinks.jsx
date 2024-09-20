@@ -36,7 +36,7 @@ export const sidebar_links = [
     path: "/admin/students",
   },  
   {
-    key: "learn",
+    key: "courses",
     label: "Learn",
     icon: <PiGraduationCapDuotone size={20} />,
     path: "/app/courses",
@@ -45,13 +45,13 @@ export const sidebar_links = [
     key: "discussion",
     label: "Discussion",
     icon: <GoCommentDiscussion size={20} />,
-    path: "/admin/students",
+    path: "/app/dicsussion",
   },  
   {
     key: "news",
     label: "News & Updates",
     icon:<GiNewspaper size={20} />,
-    path: "/admin/students",
+    path: "/apps/news",
   },  
   {
     key: "settings",

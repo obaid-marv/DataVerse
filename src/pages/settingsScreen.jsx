@@ -11,7 +11,7 @@ const SettingsScreen = () => {
   const navigate = useNavigate();
 
   const handleEditProfile = () => {
-    navigate("/app/edit-profile"); // Route to Edit Profile screen
+    navigate("/app/settings/edit-profile"); // Route to Edit Profile screen
   };
 
   const handlePrivacyPolicy = () => {
