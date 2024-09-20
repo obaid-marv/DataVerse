@@ -86,6 +86,9 @@ import EditProfile from "./pages/editProfileScreen";
 import PostScreen from "./pages/Connections/PostScreen";
 import ConnectionScreen from "./pages/Connections/ConnectionScreen";
 import ConnectionLayout from "./layout/ConnectionLayout";
+import NetworkScreen from "./pages/Connections/NetworkScreen";
+import MessagingScreen from "./pages/Connections/MessagingScreen";
+import NotificationScreen from "./pages/Connections/NotificationScreen";
 
 export const routes = createBrowserRouter([
   {
@@ -213,6 +216,30 @@ export const routes = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <PostScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/connection/networks-screen",
+        element: (
+          <ProtectedRoute>
+            <NetworkScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/connection/messaging-screen",
+        element: (
+          <ProtectedRoute>
+            <MessagingScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/connection/notifications-screen",
+        element: (
+          <ProtectedRoute>
+            <NotificationScreen />
           </ProtectedRoute>
         ),
       },
