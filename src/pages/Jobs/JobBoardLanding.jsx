@@ -5,7 +5,7 @@ export default function JobBoardLanding() {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-themeblack to-theme text-white py-20 px-8">
+      <div className="bg-gradient-to-r from-customDarkBlue to-theme text-white py-20 px-8">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl font-bold mb-4">Find Your Dream Job in Data Science</h1>
           <p className="text-lg mb-6">Explore thousands of job listings from top companies worldwide.</p>
@@ -27,7 +27,7 @@ export default function JobBoardLanding() {
 
       {/* Featured Jobs */}
       <div className="max-w-7xl mx-auto mt-16 px-8">
-        <h2 className="text-2xl font-bold text-themeblack mb-6">Featured Jobs</h2>
+        <h2 className="text-2xl font-bold text-customDarkBlue mb-6">Featured Jobs</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Job Card */}
           {[1, 2, 3, 4, 5, 6].map((job) => (
@@ -48,7 +48,7 @@ export default function JobBoardLanding() {
       </div>
 
       {/* Statistics Section */}
-      <div className="bg-themeblack text-white py-16 mt-16">
+      <div className="bg-customDarkBlue text-white py-16 mt-16">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">Over 10,000 Jobs Available Worldwide</h2>
           <p className="text-lg mb-6">Our job board has helped thousands of professionals find their dream data science roles.</p>
@@ -77,7 +77,7 @@ export default function JobBoardLanding() {
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">Looking to Hire Talented Data Scientists?</h2>
           <p className="text-lg mb-6">Post your job listing and find the perfect candidate today!</p>
-          <button className="bg-white text-themeblack px-6 py-3 rounded-md font-semibold">
+          <button className="bg-white text-customDarkBlue px-6 py-3 rounded-md font-semibold">
             Post a Job
           </button>
         </div>
@@ -85,7 +85,7 @@ export default function JobBoardLanding() {
 
       {/* Testimonials Section */}
       <div className="max-w-7xl mx-auto mt-16 px-8">
-        <h2 className="text-2xl font-bold text-themeblack mb-6 text-center">What Our Users Say</h2>
+        <h2 className="text-2xl font-bold text-customDarkBlue mb-6 text-center">What Our Users Say</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Testimonial Card */}
           {[1, 2, 3].map((testimonial) => (

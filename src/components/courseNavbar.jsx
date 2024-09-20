@@ -28,7 +28,7 @@ const CourseNavbar = () => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 flex items-center justify-between w-full">
+    <div className="bg-white shadow-md p-4 flex items-center justify-between w-full">
       <FontAwesomeIcon
         icon={faArrowLeft}
         className="w-6 h-6 text-gray-700 cursor-pointer"

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import your custom video player
+import CustomVideoPlayer from '../components/CustomVideoPlayer';
+import introVideo from "../assets/introVideo.mp4";
 
 const VideoScreen = () => {
   const [showTranscript, setShowTranscript] = useState(false);
@@ -12,18 +14,16 @@ const VideoScreen = () => {
     (the rest of the transcript would go here).
   `;
 
-  // Handler for toggling transcript
   const handleShowTranscript = () => {
     setShowTranscript(!showTranscript);
   };
 
-  // Handler for 'Got It' button
   const handleGotIt = () => {
-    navigate('/course-started/code-screen'); // Adjust the path based on your routing
+    navigate('/course-started/code-screen');
   };
 
   return (
-    <div className="flex flex-row h-screen">
+    <div className="flex flex-row h-screen bg-gray-200">
       {showTranscript && (
         <div className="w-1/4 p-4 bg-gray-100 overflow-y-scroll">
           <h2 className="text-lg font-semibold mb-2">Transcript</h2>
@@ -31,27 +31,22 @@ const VideoScreen = () => {
         </div>
       )}
 
-      <div className={`flex-1 ${showTranscript ? 'w-3/4' : 'w-full'} p-4`}>
-        {/* Video Section */}
-        <div className="aspect-w-16 aspect-h-9">
-          <video width="100%" controls className='h-[450px]'>
-            <source src="https://example.com/video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
+      <div className={`flex-1 ${showTranscript ? 'w-3/4' : 'w-full'} flex items-center flex-col justify-center p-4`}>
+        {/* Replace default video tag with Custom Video Player */}
+        <CustomVideoPlayer videoSrc={introVideo} />
 
         {/* Buttons */}
-        <div className="mt-4 flex justify-between">
+        <div className="mt-4 w-3/4 flex items-center justify-between">
           <button
             onClick={handleShowTranscript}
-            className="px-4 py-2 bg-blue-500 text-white rounded"
+            className="px-4 py-2 bg-white text-customDarkBlue border-2 border-gray-400 rounded-sm"
           >
             {showTranscript ? 'Hide Transcript' : 'Show Transcript'}
           </button>
 
           <button
             onClick={handleGotIt}
-            className="px-4 py-2 bg-green-500 text-white rounded"
+            className="px-4 py-2 bg-theme text-white rounded"
           >
             Got It
           </button>

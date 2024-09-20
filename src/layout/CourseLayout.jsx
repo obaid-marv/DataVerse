@@ -15,7 +15,7 @@ export default function CourseLayout() {
             </div>
     
             {/* Page Content Below Navbar */}
-            <div className="flex flex-col mt-16 p-4 overflow-auto h-full no-scrollbar">
+            <div className="flex flex-col mt-16 overflow-auto h-full no-scrollbar">
               <Outlet />
             </div>
           </div>

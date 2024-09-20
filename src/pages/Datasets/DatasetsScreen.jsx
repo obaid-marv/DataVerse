@@ -75,7 +75,7 @@ const DatasetsScreen = () => {
     return (
         <div className={""}>
             {/* <Navbar /> */}
-            <div className={`  font-poppins p-8 mt-8 mx-8  `}>
+            <div className={`  font-poppins p-8  `}>
                 <div className='flex flex-col gap-4'>
                     <div className={""}>
                         <p className="text-3xl" >Datasets</p>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import EditProfileModal from "../../components/Profile/EditProfileModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faUserFriends, faEnvelope, faBell, faThumbsUp, faComment, faShare } from "@fortawesome/free-solid-svg-icons";
+
 import { IMAGES } from "../../assets";
 import { MdGroups } from "react-icons/md";
 import { postsContent } from "../../constants/postsContent";
