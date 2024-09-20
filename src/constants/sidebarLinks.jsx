@@ -18,16 +18,16 @@ export const sidebar_links = [
     path: "/app/dashboard",
   },
   {
-    key: "connections",
+    key: "connection",
     label: "Connections",
     icon: <PiUsers size={20}/>,
-    path: "/student/chats",
+    path: "/app/connection-screen",
   },
   {
     key: "datasets",
     label: "Datasets",
     icon: <BsClipboardData size={20}/>,
-    path: "/admin/teachers",
+    path: "/app/datasets",
   },
   {
     key: "code",
@@ -39,7 +39,7 @@ export const sidebar_links = [
     key: "learn",
     label: "Learn",
     icon: <PiGraduationCapDuotone size={20} />,
-    path: "/admin/students",
+    path: "/app/courses",
   },  
   {
     key: "discussion",
@@ -57,6 +57,6 @@ export const sidebar_links = [
     key: "settings",
     label: "Settings",
     icon: <IoMdSettings size={20} />,
-    path: "/admin/settings",
+    path: "/app/settings",
   },
 ];
