@@ -28,6 +28,10 @@ export default {
         customDarkBlue: "#001C27",
         textgrey: "#4F4F4F",
         trackgrey: "#F2F2F2",
+        customLightBlueShade: "#008BD91A",
+        customLightYellowShade: "#FFCC471A",
+        customLightRedShade: "#F445451A",
+        customPurpleShade: "#D9D9D9",
       },
       transitionProperty: {
         height: "height",
