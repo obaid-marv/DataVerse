@@ -43,8 +43,7 @@ const Dashboard = ()=>{
         };
 
         if (user) {
-            fetchData(); // Call the async function inside useEffect
-        }
+            fetchData();        }
     }, [user, dispatch]);
 
 

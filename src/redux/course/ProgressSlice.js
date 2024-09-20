@@ -14,7 +14,7 @@ export const fetchUserProgress = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get('/auth/progress');
-      console.log(response)
+  
       return response.data
     } catch (err) {
       return rejectWithValue(err.response.data);

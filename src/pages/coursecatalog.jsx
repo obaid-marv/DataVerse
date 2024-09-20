@@ -1,14 +1,41 @@
-import Navbar from "../components/navbar";
+
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Coursetile from "../components/coursetile";
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import coursecover from "../assets/coursecover.png";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCourses } from "../redux/course/CoursesSlice"
 
 const Catalog = ()=> {
     
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const user = useSelector((state)=> state.auth.user);
+    const courses = useSelector((state)=> state.courses.courses);
+    console.log(courses);
+
+    useEffect(()=>{ 
+        if(courses==null)
+        {        
+            const fetchData = async ()=>{
+                try{
+                    await dispatch(fetchCourses())
+                }catch(err){
+                    console.log("error fetching courses for catalog: ",err)
+                }
+            }
+            if(user)
+                fetchData()
+        }
+
+
+    }
+    ,[user,dispatch])
+
+    
     return (
         <div>
             {/* <Navbar/> */}
@@ -46,6 +73,10 @@ const Catalog = ()=> {
 
             </div>
             <div className="max-w-6xl flex mx-auto h-max flex-wrap items-center justify-around py-2">
+                    
+                    {courses?.map((course)=>
+                        <Coursetile cover={coursecover} key={course._id} title={course.title} tutor="Zaki" lessons={course.totalLectures} quiz={course.totalLectures}/>
+                    )}
                     <Coursetile cover={coursecover} title="Machine Learning and Data Analysis" tutor="obaid ur rehman" lessons="7" quiz="7"/>
                     <Coursetile cover={coursecover} title="Machine Learning and Data Analysis" tutor="obaid ur rehman" lessons="7" quiz="7"/>
                     <Coursetile cover={coursecover} title="Machine Learning and Data Analysis" tutor="obaid ur rehman" lessons="7" quiz="7"/>
