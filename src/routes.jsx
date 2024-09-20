@@ -168,7 +168,7 @@ export const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/app/edit-profile",
+        path: "/app/settings/edit-profile",
         element: (
           <ProtectedRoute>
             <EditProfile />
