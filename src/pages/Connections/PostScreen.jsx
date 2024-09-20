@@ -1,122 +1,98 @@
 import React, { useState } from "react";
+import EditProfileModal from "../../components/Profile/EditProfileModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faUserFriends,
-  faEnvelope,
-  faBell,
-  faThumbsUp,
-  faComment,
-  faShare,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faUserFriends, faEnvelope, faBell, faThumbsUp, faComment, faShare } from "@fortawesome/free-solid-svg-icons";
 import { IMAGES } from "../../assets";
+import { MdGroups } from "react-icons/md";
+import { postsContent } from "../../constants/postsContent";
 
 const PostScreen = () => {
   const [activeTab, setActiveTab] = useState("Home");
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      author: "Zaki Mazhar",
-      profileImg: IMAGES.avatar,
-      content: "Excited to share that I’ve completed my latest project on AI!",
-      timestamp: "2h ago",
-      likes: 12,
-      comments: 4,
-      shares: 2,
-    },
-    {
-      id: 2,
-      author: "Sara Ali",
-      profileImg: IMAGES.avatar4,
-      content: "Check out this amazing opportunity at XYZ Inc. #JobOpportunity",
-      timestamp: "5h ago",
-      likes: 34,
-      comments: 10,
-      shares: 5,
-    },
-    {
-      id: 3,
-      author: "Sara Ali",
-      profileImg: IMAGES.avatar4,
-      content: "Check out this amazing opportunity at XYZ Inc. #JobOpportunity",
-      timestamp: "5h ago",
-      likes: 34,
-      comments: 10,
-      shares: 5,
-    },
-    {
-      id: 4,
-      author: "Sara Ali",
-      profileImg: IMAGES.avatar4,
-      content: "Check out this amazing opportunity at XYZ Inc. #JobOpportunity",
-      timestamp: "5h ago",
-      likes: 34,
-      comments: 10,
-      shares: 5,
-    },
-  ]);
+  const [posts, setPosts] = useState(postsContent);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const handlePostSubmit = (e) => {
-    e.preventDefault();
-    const postContent = e.target.elements.postContent.value;
-    const newPost = {
-      id: posts.length + 1,
-      author: "You", // Example user
-      profileImg: IMAGES.your_avatar,
-      content: postContent,
-      timestamp: "Just now",
-      likes: 0,
-      comments: 0,
-      shares: 0,
-    };
-    setPosts([newPost, ...posts]);
-    e.target.reset();
-  };
+  const [profileDetails, setProfileDetails] = useState({
+    name: "Zaki Mazhar",
+    summary: "Passionate student with a keen interest in AI, Machine Learning, and Data Science.",
+    skills: "Python Programming, Machine Learning, Data Visualization, AI Model Development",
+  });
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
   };
 
+  const handleEditClick = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveProfile = (updatedProfile) => {
+    setProfileDetails(updatedProfile);
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-100">
-      {/* custom nav  */}
-      {/* <div className="bg-customBlue rounded-2xl flex text-white mb-4 px-2 py-3">
-        {[
-          { name: "Home", icon: faHome },
-          { name: "Network", icon: faUserFriends },
-          { name: "Messaging", icon: faEnvelope },
-          { name: "Notifications", icon: faBell },
-        ].map((tab) => (
-          <div
-            key={tab.name}
-            onClick={() => handleTabClick(tab.name)}
-            className={`flex-1 flex justify-center items-center py-2 cursor-pointer ${
-              activeTab === tab.name ? "bg-white text-customBlue rounded-full" : ""
-            }`}
-          >
-            <FontAwesomeIcon icon={tab.icon} className="mr-2" />
-            <p>{tab.name}</p>
-          </div>
-        ))}
-      </div> */}
       <div className="flex">
-        {/* Sidebar */}
-        <div className="w-1/4 bg-white p-4 shadow-md rounded-md mr-6">
-          {/* Popular Topics, etc. */}
-          <h2 className="text-lg font-bold mb-4">Popular Topics</h2>
-          <ul>
-            <li>#AI</li>
-            <li>#JobOpportunities</li>
-            <li>#MachineLearning</li>
-          </ul>
+        {/* Left Sidebar */}
+        <div className="bg-gray-200 p-6 shadow-lg rounded-md mx-10 flex-[2]">
+          <div className="flex flex-col items-center mb-6">
+            <img
+              src={IMAGES.avatar}
+              alt="avatar"
+              className="w-20 h-20 rounded-full mb-3 shadow-md"
+            />
+            <h3 className="font-semibold text-lg">{profileDetails.name}</h3>
+            <p className="text-sm text-gray-500 mb-4">Student at XYZ</p>
+            <button
+              onClick={handleEditClick}
+              className="px-3 py-1 bg-blue-500 text-white rounded-full text-sm hover:bg-blue-600 transition"
+            >
+              Edit Profile
+            </button>
+          </div>
+
+          {/* Profile Summary */}
+          <div className="mb-6">
+            <h2 className="text-lg font-bold mb-2">Profile Summary</h2>
+            <p className="text-sm text-gray-600">{profileDetails.summary}</p>
+          </div>
+
+          {/* Skills Section */}
+          <div className="mb-6">
+            <h2 className="text-lg font-bold mb-2">Skills</h2>
+            <ul className="text-sm text-gray-600 space-y-1">
+              {profileDetails.skills.split(",").map((skill, index) => (
+                <li key={index}>- {skill.trim()}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Connections Section */}
+          <div className="font-semibold flex justify-between text-sm mb-5">
+            <p>Connections</p>
+            <p>100</p>
+          </div>
+
+          {/* Groups Section */}
+          <h2 className="text-lg font-bold mb-4">Groups</h2>
+          <div className="space-y-2">
+            <div className="flex items-center gap-4 text-sm cursor-pointer hover:bg-gray-100 p-2 rounded-md">
+              <MdGroups className="text-blue-500" /> <p>Artificial Intelligence</p>
+            </div>
+            <div className="flex items-center gap-4 text-sm cursor-pointer hover:bg-gray-100 p-2 rounded-md">
+              <MdGroups className="text-blue-500" /> <p>Machine Learning</p>
+            </div>
+            <div className="flex items-center gap-4 text-sm cursor-pointer hover:bg-gray-100 p-2 rounded-md">
+              <MdGroups className="text-blue-500" /> <p>Data Science</p>
+            </div>
+          </div>
         </div>
 
         {/* Main Content */}
-        <div className="flex-1">
+        <div className="flex-[4]">
           {/* Post Input Section */}
           <div className="bg-white p-4 shadow-md rounded-md mb-6">
             <h2 className="text-lg font-bold mb-2">Start a Post</h2>
-            <form onSubmit={handlePostSubmit}>
+            <form>
               <textarea
                 name="postContent"
                 className="w-full p-2 border rounded-md"
@@ -134,10 +110,7 @@ const PostScreen = () => {
 
           {/* Post Feed */}
           {posts.map((post) => (
-            <div
-              key={post.id}
-              className="bg-white p-4 shadow-md rounded-md mb-6"
-            >
+            <div key={post.id} className="bg-white p-4 shadow-md rounded-md mb-6">
               <div className="flex items-center mb-4">
                 <img
                   src={post.profileImg}
@@ -150,6 +123,15 @@ const PostScreen = () => {
                 </div>
               </div>
               <p className="mb-4">{post.content}</p>
+
+              {/* Conditional Rendering of Post Image */}
+              {post.imageUrl && (
+                <img
+                  src={post.imageUrl}
+                  alt="Post content"
+                  className="w-full h-auto rounded-md mb-4"
+                />
+              )}
 
               {/* Engagement Icons */}
               <div className="flex items-center space-x-4 text-gray-500">
@@ -169,7 +151,69 @@ const PostScreen = () => {
             </div>
           ))}
         </div>
+
+        {/* Right Sidebar */}
+    <div className="bg-gray-200 p-4 shadow-md rounded-md mx-10 flex-[2]">
+      {/* Popular Topics */}
+      <h2 className="text-lg font-bold mb-4">Popular Topics</h2>
+      <ul className="mb-6">
+        <li>#AI</li>
+        <li>#JobOpportunities</li>
+        <li>#MachineLearning</li>
+      </ul>
+
+      {/* Trending Articles */}
+      <h2 className="text-lg font-bold mb-4">Trending Articles</h2>
+      <ul className="mb-6">
+        <li className="text-blue-600 cursor-pointer hover:underline">
+          The Future of AI in Healthcare
+        </li>
+        <li className="text-blue-600 cursor-pointer hover:underline">
+          5 Must-Have Skills for Data Scientists
+        </li>
+        <li className="text-blue-600 cursor-pointer hover:underline">
+          Exploring Machine Learning Algorithms
+        </li>
+      </ul>
+
+      {/* Recommended Connections */}
+      <h2 className="text-lg font-bold mb-4">Recommended Connections</h2>
+      <div className="space-y-4">
+        <div className="flex items-center">
+          <img
+            src={IMAGES.avatar4}
+            alt="Connection 1"
+            className="w-8 h-8 rounded-full mr-3"
+          />
+          <p className="text-sm font-semibold">Jane Smith</p>
+        </div>
+        <div className="flex items-center">
+          <img
+            src={IMAGES.avatar5}
+            alt="Connection 2"
+            className="w-8 h-8 rounded-full mr-3"
+          />
+          <p className="text-sm font-semibold">John Doe</p>
+        </div>
+        <div className="flex items-center">
+          <img
+            src={IMAGES.avatar6}
+            alt="Connection 3"
+            className="w-8 h-8 rounded-full mr-3"
+          />
+          <p className="text-sm font-semibold">Alex Johnson</p>
+        </div>
       </div>
+      </div>
+      </div>
+
+      {/* Edit Profile Modal */}
+      <EditProfileModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        profileDetails={profileDetails}
+        onSave={handleSaveProfile}
+      />
     </div>
   );
 };

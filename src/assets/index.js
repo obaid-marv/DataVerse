@@ -18,5 +18,8 @@ export const IMAGES = {
   avatar11: new URL("./avatar11.png", import.meta.url).href,
   avatar12: new URL("./avatar12.png", import.meta.url).href,
   cartoon_avatar: new URL("./cartoon_avatar.png", import.meta.url).href,
+  course_cover: new URL("./coursecover.png", import.meta.url).href,
+  image1: new URL("./imagesec.png", import.meta.url).href,
+  solar: new URL("./solar-penal.png", import.meta.url).href,
 
 };
