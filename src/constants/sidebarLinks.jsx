@@ -15,7 +15,7 @@ export const sidebar_links = [
     label: "Dashboard",
     // icon: <img src={IMAGES.dashboard_icon} alt="dashboard_icon" className="" />,
     icon:<BiSolidDashboard size={20}/>,
-    path: "/admin/dashboard",
+    path: "/app/dashboard",
   },
   {
     key: "connections",
