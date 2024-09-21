@@ -89,6 +89,7 @@ import ConnectionLayout from "./layout/ConnectionLayout";
 import NetworkScreen from "./pages/Connections/NetworkScreen";
 import MessagingScreen from "./pages/Connections/MessagingScreen";
 import NotificationScreen from "./pages/Connections/NotificationScreen";
+import ViewAllConnections from "./pages/Connections/ViewAllConnections";
 
 export const routes = createBrowserRouter([
   {
@@ -240,6 +241,14 @@ export const routes = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <NotificationScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/connection/view-all-connections",
+        element: (
+          <ProtectedRoute>
+            <ViewAllConnections />
           </ProtectedRoute>
         ),
       },

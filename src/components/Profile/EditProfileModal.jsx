@@ -63,13 +63,13 @@ const EditProfileModal = ({ isOpen, onClose, profileDetails, onSave }) => {
         <div className="flex justify-end space-x-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+            className="px-4 py-2 bg-white text-customBlue font-medium rounded-md border border-customBlue hover:bg-gray-200 transition-colors duration-200"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className="px-4 py-2 bg-customBlue text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
           >
             Save
           </button>
