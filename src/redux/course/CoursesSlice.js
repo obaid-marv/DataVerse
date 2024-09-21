@@ -4,7 +4,7 @@ import axiosInstance from '../../config/api';
 
 
 const initialState = {
-  courses:null,
+  courses:[],
   status: 'idle',
   error: null
 };

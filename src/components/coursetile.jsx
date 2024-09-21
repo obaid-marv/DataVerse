@@ -1,11 +1,11 @@
 import tutot from "../assets/tutoricon.svg"
 import { useNavigate } from "react-router-dom";
 
-const Coursetile = ({cover,title , tutor, lessons, quiz})=>{
+const Coursetile = ({cover, title , tutor, lessons, quiz, courseId})=>{
     const navigate = useNavigate();
 
     const handleStartCourse = () => {
-        navigate("/app/courses/course-screen");
+        navigate(`/app/courses/course-screen/${courseId}`);
       };
     return(
         <div className="container w-60 h-72 font-poppins mt-4 shadow-md cursor-pointer rounded-xl">

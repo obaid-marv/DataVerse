@@ -1,5 +1,5 @@
 import React, { useState } from "react"; // Combined import for React and useState
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
@@ -16,23 +16,27 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
+import { useSelector } from "react-redux";
 
 const CourseNavbar = () => {
   const navigate = useNavigate();
   const [showOverview, setShowOverview] = useState(false);
-  const [open, setOpen] = useState(false); // Remove React.useState for consistency
+  const [open, setOpen] = useState(false);
+  const { courseId } = useParams();
 
   const handleOpen = () => setOpen(!open);
+  
   const handleToggleOverview = () => {
     setShowOverview(!showOverview);
   };
+  
 
   return (
-    <div className="bg-white shadow-md p-4 flex items-center justify-between w-full">
+    <div className="bg-gray-100 shadow-md p-2 flex items-center justify-between w-full">
       <FontAwesomeIcon
         icon={faArrowLeft}
         className="w-6 h-6 text-gray-700 cursor-pointer"
-        onClick={() => navigate("/app/courses/course-screen")}
+        onClick={() => navigate(`/app/courses/course-screen/${courseId}`)}
       />
       <div className="flex items-center ml-44">
         <button className="mr-2 border-2 border-gray-500 hover:bg-gray-300 px-2 py-1">

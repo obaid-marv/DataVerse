@@ -1,8 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import introVideo from "../assets/introVideo.mp4"; // Sample video import
 import coursecover from "../assets/coursecover.png"; // Example cover image
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import Loader from "../components/Loader/Loader";
+import { useEffect, useState } from "react";
 import {
     faArrowLeft,
     faVideo,
@@ -13,23 +14,110 @@ import {
     faChevronDown,
     faChevronUp,
   } from "@fortawesome/free-solid-svg-icons";
-  import { modules } from "../constants/modules";
+import { useDispatch, useSelector } from "react-redux";
+import { enrollCourse, fetchSingleCourse, setCurrentLecture } from "../redux/course/CourseSlice";
+import { fetchUserProgress } from "../redux/course/ProgressSlice";
+
+import { motion } from 'framer-motion';
+
+const EnrollmentPopup = ({ onClose }) => {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center font-poppins bg-black bg-opacity-50">
+      <motion.div
+        className="bg-white p-4 rounded-lg flex flex-col items-center shadow-lg"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        transition={{ duration: 0.3 }}
+      >
+        <h2 className="text-xl font-semibold ">Successfully Enrolled!</h2>
+        <p className="mt-2 ">You have successfully enrolled in the course.</p>
+        <button
+          className="mt-4 px-4 py-2 text-white hover:scale-110 transform-all duration-200 bg-customDarkBlue rounded"
+          onClick={onClose}
+        >
+          Close
+        </button>
+      </motion.div>
+    </div>
+  );
+};
+
+
+
 
 const CourseScreen = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("lessons");
-  const [expandedModules, setExpandedModules] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
 
-  const toggleModule = (id) => {
-    setExpandedModules((prev) =>
-      prev.includes(id) ? prev.filter((moduleId) => moduleId !== id) : [...prev, id]
-    );
+  const { courseId } = useParams();
+
+  const course = useSelector((state)=> state.course.course);
+  const enrolledCourses = useSelector((state) => state.progress.enrolledCourses);
+  const currentLecture = useSelector((state) => state.course.currentLecture);
+
+  const dispatch = useDispatch();
+  
+  const fetchCourse = async (courseId) =>{
+    try{
+      await dispatch(fetchSingleCourse(courseId))
+    }
+    catch(err){
+      console.log("Error fetching single course")
+    }
+  } 
+
+  const fetchEnrolledCourses = async () =>{
+    try{
+      await dispatch(fetchUserProgress());
+    }
+    catch(err){
+      console.log("Error fetching User Progress")
+    }
+  } 
+
+  const handleContinue = async () => {
+    if (enrolledCourses?.some(course => course.courseId._id === courseId)) {
+
+      const filteredCourse = enrolledCourses.find(course => courseId === course.courseId._id);
+      let max = 0
+      if(filteredCourse.lectureCompleted.length!=0)
+        max = Math.max(...filteredCourse.lectureCompleted);
+      dispatch(setCurrentLecture(max + 1));
+      navigate(`/course-started/video-screen/${courseId}/${max + 1}`); 
+    } else {
+      try {
+        await dispatch(enrollCourse(courseId)).unwrap();
+        setShowPopup(true);
+        await dispatch(fetchUserProgress()) 
+      } catch (error) {
+        console.error("Enrollment failed", error);
+
+      }
+    }
   };
+  
+
+  useEffect(()=>{
+    if(courseId&& ((!course)|| course._id!==courseId))
+      fetchCourse(courseId)
+
+    if(!enrolledCourses)
+      fetchEnrolledCourses()
+  },[dispatch])
+
+
+  
+
+  
+
+
 
   const getContentTypeIcon = (type) => {
     switch (type) {
       case "video":
-        return <FontAwesomeIcon icon={faVideo} className="text-blue-500 mr-2" />;
+        return <FontAwesomeIcon icon={faVideo} className="text-theme mr-2" />;
       case "code":
         return <FontAwesomeIcon icon={faCode} className="text-green-500 mr-2" />;
       case "quiz":
@@ -48,7 +136,7 @@ const CourseScreen = () => {
       <div className="flex items-center mb-8">
         <FontAwesomeIcon
           icon={faArrowLeft}
-          className="w-6 h-6 text-gray-500 hover:text-blue-500 transition duration-200 cursor-pointer"
+          className="w-6 h-6 text-gray-500 hover:text-theme transition duration-200 cursor-pointer"
           onClick={() => navigate("/app/courses/catalog")}
         />
         <p
@@ -67,29 +155,37 @@ const CourseScreen = () => {
           className="w-80 h-48 rounded-lg object-cover shadow-lg transform hover:scale-105 transition-transform duration-300"
         />
         <div className="flex flex-col">
-          <h1 className="text-4xl font-bold">Machine Learning and Data Analysis</h1>
+
+          {course?<h1 className="text-4xl font-bold">{course.title}</h1>:<Loader/>}
           <p className="text-md mt-4">
             This course provides an in-depth introduction to machine learning techniques
             and data analysis, focusing on real-world applications and projects.
           </p>
           <div className="mt-6">
+            {enrolledCourses?.some(course=> course.courseId._id==courseId)?
             <button
-              onClick={() => navigate("/course-started/video-screen")}
+              onClick={()=> handleContinue()}
               className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 transform hover:scale-105"
             >
-              Start First Lesson
+              Continue!
+            </button>:
+            <button
+                onClick={()=> handleContinue()}
+                className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 transform hover:scale-105"
+            >
+            Start Now!
             </button>
+            }
           </div>
         </div>
       </div>
 
-      {/* Toggle Section for Lessons and Discussions */}
       <div className="mt-10">
         <div className="flex justify-center">
           <button
             className={`px-6 py-2 font-semibold text-lg ${
               activeTab === "lessons"
-                ? "bg-blue-600 text-white"
+                ? "bg-customDarkBlue text-white"
                 : "bg-gray-200 text-gray-600"
             } rounded-l-lg focus:outline-none`}
             onClick={() => setActiveTab("lessons")}
@@ -114,36 +210,21 @@ const CourseScreen = () => {
         <div className="mt-10 p-6 bg-white rounded-lg shadow-lg">
           <h2 className="text-3xl font-semibold text-gray-800 mb-4">Course Modules</h2>
           <div className="space-y-4">
-            {modules.map((module) => (
-              <div key={module.id} className="border rounded-lg">
-                <div
-                  className="flex items-center justify-between p-4 cursor-pointer"
-                  onClick={() => toggleModule(module.id)}
-                >
+          {course && course.lectures ? (
+            course.lectures.map((lecture) => (
+              <div key={lecture._id} className="border rounded-lg">
+                <div className="flex items-center justify-between p-4 cursor-pointer">
                   <div className="flex items-center">
-                    {getContentTypeIcon(module.contentType)}
-                    <p className="text-lg font-medium text-gray-700">{module.title}</p>
+                    {getContentTypeIcon("video")}
+                    <p className="text-lg font-medium text-gray-700">{lecture.title}</p>
                   </div>
-                  <FontAwesomeIcon
-                    icon={expandedModules.includes(module.id) ? faChevronUp : faChevronDown}
-                    className="text-gray-500"
-                  />
                 </div>
-                {expandedModules.includes(module.id) && (
-                  <div className="p-4 bg-gray-50 text-gray-600">
-                    {module.description}
-                    <div className="mt-4">
-                      {/* <button
-                        onClick={() => navigate(`/courses/lesson/${module.id}`)}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
-                      >
-                        Start Lesson
-                      </button> */}
-                    </div>
-                  </div>
-                )}
               </div>
-            ))}
+            ))
+          ) : (
+            <p>No lectures available</p>
+          )}
+
           </div>
         </div>
       ) : (
@@ -232,6 +313,11 @@ const CourseScreen = () => {
           worked on several industry-leading projects in the field of AI.
         </p>
       </div>
+      {showPopup && <EnrollmentPopup onClose={() => {
+        setShowPopup(false)
+        navigate(`/course-started/video-screen/${courseId}/${currentLecture}`)
+      }
+      } />}
     </div>
   );
 };

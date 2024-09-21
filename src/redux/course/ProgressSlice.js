@@ -34,7 +34,6 @@ const progressSlice = createSlice({
       })
       .addCase(fetchUserProgress.fulfilled, (state, action) => {
         state.status = 'idle';
-        console.log(action);
         state.enrolledCourses = action.payload.enrolledCourses;
         state.error = null;
       })
