@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/all", verifyUser, getAllCourses);
 router.get("/:courseId", verifyUser, getCourse);
 router.post("/create", verifyUser, addCourse);
-router.post("/enroll/:courseId", verifyUser, enrollCourse);
+router.get("/enroll/:courseId", verifyUser, enrollCourse);
 router.get("/enrolled-courses", verifyUser, getEnrolledCourses);
 router.delete("/delete/:courseId", verifyUser, deleteCourse);
 

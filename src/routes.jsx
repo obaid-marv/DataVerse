@@ -120,7 +120,7 @@ export const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/app/courses/course-screen",
+        path: "/app/courses/course-screen/:courseId",
         element: (
           <ProtectedRoute>
             <CourseScreen />
@@ -178,8 +178,13 @@ export const routes = createBrowserRouter([
     ],
   },
   {
-    path: "/courses/lesson-screen",
-    element: <LessonScreen />,
+    path: "app/courses/lesson-screen/",
+    element: 
+    (
+    <ProtectedRoute>
+      <LessonScreen />
+    </ProtectedRoute>
+    )
   },
   {
     path: "/",
@@ -194,7 +199,7 @@ export const routes = createBrowserRouter([
     element: <CourseLayout />,
     children: [
       {
-        path: "/course-started/video-screen",
+        path: "/course-started/video-screen/:courseId/:index",
         element: <VideoScreen />,
       },
       {

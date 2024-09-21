@@ -31,7 +31,6 @@ const Dashboard = ()=>{
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
     const progress = useSelector((state) => state.progress.enrolledCourses)
-    progress?console.log(progress):console.log("Not recieved courses");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,7 +42,8 @@ const Dashboard = ()=>{
         };
 
         if (user) {
-            fetchData();        }
+            fetchData();        
+        }
     }, [user, dispatch]);
 
 

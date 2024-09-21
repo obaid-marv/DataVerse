@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 export default function CourseLayout() {
     return (
-        <div className="h-screen w-screen flex flex-row bg-white overflow-hidden">    
+        <div className="h-screen w-screen flex flex-row bg-gray-100 overflow-hidden">    
           {/* Main Content Section */}
           <div className={`flex flex-col flex-grow transition-all`}>
             {/* Navbar */}
