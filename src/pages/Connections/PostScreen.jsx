@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditProfileModal from "../../components/Profile/EditProfileModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faUserFriends, faEnvelope, faBell, faThumbsUp, faComment, faShare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faUserFriends,
+  faEnvelope,
+  faBell,
+  faThumbsUp,
+  faComment,
+  faShare,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { IMAGES } from "../../assets";
 import { MdGroups } from "react-icons/md";
@@ -14,9 +22,15 @@ const PostScreen = () => {
 
   const [profileDetails, setProfileDetails] = useState({
     name: "Zaki Mazhar",
-    summary: "Passionate student with a keen interest in AI, Machine Learning, and Data Science.",
-    skills: "Python Programming, Machine Learning, Data Visualization, AI Model Development",
+    summary:
+      "Passionate student with a keen interest in AI, Machine Learning, and Data Science.",
+    skills:
+      "Python Programming, Machine Learning, Data Visualization, AI Model Development",
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -74,10 +88,11 @@ const PostScreen = () => {
           </div>
 
           {/* Groups Section */}
-          <h2 className="text-lg font-bold mb-4">Groups</h2>
-          <div className="space-y-2">
+          {/* <h2 className="text-lg font-bold mb-4">Groups</h2> */}
+          {/* <div className="space-y-2">
             <div className="flex items-center gap-4 text-sm cursor-pointer hover:bg-gray-100 p-2 rounded-md">
-              <MdGroups className="text-blue-500" /> <p>Artificial Intelligence</p>
+              <MdGroups className="text-blue-500" />{" "}
+              <p>Artificial Intelligence</p>
             </div>
             <div className="flex items-center gap-4 text-sm cursor-pointer hover:bg-gray-100 p-2 rounded-md">
               <MdGroups className="text-blue-500" /> <p>Machine Learning</p>
@@ -85,7 +100,7 @@ const PostScreen = () => {
             <div className="flex items-center gap-4 text-sm cursor-pointer hover:bg-gray-100 p-2 rounded-md">
               <MdGroups className="text-blue-500" /> <p>Data Science</p>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Main Content */}
@@ -111,7 +126,10 @@ const PostScreen = () => {
 
           {/* Post Feed */}
           {posts.map((post) => (
-            <div key={post.id} className="bg-white p-4 shadow-md rounded-md mb-6">
+            <div
+              key={post.id}
+              className="bg-white p-4 shadow-md rounded-md mb-6"
+            >
               <div className="flex items-center mb-4">
                 <img
                   src={post.profileImg}
@@ -154,58 +172,76 @@ const PostScreen = () => {
         </div>
 
         {/* Right Sidebar */}
-    <div className="bg-gray-200 p-4 shadow-md rounded-md mx-10 flex-[2]">
-      {/* Popular Topics */}
-      <h2 className="text-lg font-bold mb-4">Popular Topics</h2>
-      <ul className="mb-6">
-        <li>#AI</li>
-        <li>#JobOpportunities</li>
-        <li>#MachineLearning</li>
-      </ul>
+        <div className="bg-gray-200 p-4 shadow-md rounded-md mx-10 flex-[2]">
+          {/* Popular Topics */}
+          <h2 className="text-lg font-bold mb-4">Popular Topics</h2>
+          <ul className="mb-6">
+            <li>#AI</li>
+            <li>#JobOpportunities</li>
+            <li>#MachineLearning</li>
+          </ul>
 
-      {/* Trending Articles */}
-      <h2 className="text-lg font-bold mb-4">Trending Articles</h2>
-      <ul className="mb-6">
-        <li className="text-blue-600 cursor-pointer hover:underline">
-          The Future of AI in Healthcare
-        </li>
-        <li className="text-blue-600 cursor-pointer hover:underline">
-          5 Must-Have Skills for Data Scientists
-        </li>
-        <li className="text-blue-600 cursor-pointer hover:underline">
-          Exploring Machine Learning Algorithms
-        </li>
-      </ul>
+          {/* Trending Articles */}
+          <h2 className="text-lg font-bold mb-4">Trending Articles</h2>
+          <ul className="mb-6">
+            <li className="text-blue-600 cursor-pointer hover:underline">
+              <a
+                href="https://www.iqvia.com/blogs/2024/02/the-future-of-ai-in-healthcare"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                The Future of AI in Healthcare
+              </a>
+            </li>
+            <li className="text-blue-600 cursor-pointer hover:underline">
+              <a
+                href="https://www.kdnuggets.com/5-essential-skills-every-data-scientist-needs-in-2024"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                5 Must-Have Skills for Data Scientists
+              </a>
+            </li>
+            <li className="text-blue-600 cursor-pointer hover:underline">
+              <a
+                href="https://www.elastic.co/blog/popular-ml-algorithms"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Exploring Popular Machine Learning Algorithms
+              </a>
+            </li>
+          </ul>
 
-      {/* Recommended Connections */}
-      <h2 className="text-lg font-bold mb-4">Recommended Connections</h2>
-      <div className="space-y-4">
-        <div className="flex items-center">
-          <img
-            src={IMAGES.avatar4}
-            alt="Connection 1"
-            className="w-8 h-8 rounded-full mr-3"
-          />
-          <p className="text-sm font-semibold">Jane Smith</p>
+          {/* Recommended Connections */}
+          <h2 className="text-lg font-bold mb-4">Recommended Connections</h2>
+          <div className="space-y-4">
+            <div className="flex items-center">
+              <img
+                src={IMAGES.avatar4}
+                alt="Connection 1"
+                className="w-8 h-8 rounded-full mr-3"
+              />
+              <p className="text-sm font-semibold">Jane Smith</p>
+            </div>
+            <div className="flex items-center">
+              <img
+                src={IMAGES.avatar5}
+                alt="Connection 2"
+                className="w-8 h-8 rounded-full mr-3"
+              />
+              <p className="text-sm font-semibold">John Doe</p>
+            </div>
+            <div className="flex items-center">
+              <img
+                src={IMAGES.avatar6}
+                alt="Connection 3"
+                className="w-8 h-8 rounded-full mr-3"
+              />
+              <p className="text-sm font-semibold">Alex Johnson</p>
+            </div>
+          </div>
         </div>
-        <div className="flex items-center">
-          <img
-            src={IMAGES.avatar5}
-            alt="Connection 2"
-            className="w-8 h-8 rounded-full mr-3"
-          />
-          <p className="text-sm font-semibold">John Doe</p>
-        </div>
-        <div className="flex items-center">
-          <img
-            src={IMAGES.avatar6}
-            alt="Connection 3"
-            className="w-8 h-8 rounded-full mr-3"
-          />
-          <p className="text-sm font-semibold">Alex Johnson</p>
-        </div>
-      </div>
-      </div>
       </div>
 
       {/* Edit Profile Modal */}

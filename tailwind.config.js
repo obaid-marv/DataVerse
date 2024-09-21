@@ -9,6 +9,9 @@ export default {
         scp: ["Source Code Pro", "monospace"],
         poppins: ["Poppins", "sans-serif"],
       },
+      fontSize: {
+        xxs: "0.625rem", // 10px
+      },
       backgroundColor: {
         themeblack: "#001C27",
         theme: "#2D9CDB",
@@ -32,6 +35,16 @@ export default {
         customLightYellowShade: "#FFCC471A",
         customLightRedShade: "#F445451A",
         customPurpleShade: "#D9D9D9",
+        customGray: "#414652",
+        customOtherBlue: "#344054",
+        customLightBlue: "#7D8DA6",
+        customLightGray: "#959595",
+        customPurple: "#21005D",
+        customLightGrayShade: "#7F7F7F",
+        customBlackGreyish: "#282828E5",
+        customOnlineColor: "#4BCD58",
+        customMsgIconsColor: "#B6B6C2",
+
       },
       transitionProperty: {
         height: "height",

@@ -18,3 +18,21 @@
     @apply inline-block w-5 h-5 border-2 border-t-2 border-t-blue-500 border-gray-300 rounded-full;
     animation: spin 1s linear infinite;
   }
+
+  .register-scrollbar2 {
+    /* width: 100%; */
+    padding-right: 15px;
+  }
+  
+  .register-scrollbar2::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .register-scrollbar2::-webkit-scrollbar-track {
+    background: #eeeeee;
+  }
+  
+  .register-scrollbar2::-webkit-scrollbar-thumb {
+    background: #2D9CDB;
+    border-radius: 5px;
+  }
