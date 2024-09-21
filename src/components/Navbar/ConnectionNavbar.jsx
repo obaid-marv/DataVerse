@@ -24,7 +24,7 @@ const ConnectionNavbar = () => {
   ];
 
   return (
-    <div className="bg-customBlue text-white shadow-md px-4 py-2 flex items-center justify-between w-full">
+    <div className="bg-customDarkBlue text-white shadow-md px-4 py-2 flex items-center justify-between w-full">
       <FontAwesomeIcon
         icon={faArrowLeft}
         className="w-6 h-6 text-white cursor-pointer"

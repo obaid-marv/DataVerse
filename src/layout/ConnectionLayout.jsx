@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import ConnectionNavbar from '../components/Navbar/ConnectionNavbar';
 
 export default function ConnectionLayout() {
+  
     return (
         <div className="h-screen w-screen flex flex-row bg-white overflow-hidden">    
           {/* Main Content Section */}
