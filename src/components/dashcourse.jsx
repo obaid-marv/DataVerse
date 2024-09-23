@@ -15,7 +15,9 @@ const Dashcourse = ({tutor,title,percentage}) => {
                         <FontAwesomeIcon icon={faEllipsisV} size="lg" className="cursor-pointer hover:scale-125" />
                     </div>
                     <div className="flex flex-col justify-around pt-8">
-                        <p className="text-sm font-medium">{title}</p>
+                        <div className="h-12">
+                            <p className="text-sm font-medium">{title}</p>
+                        </div>
                         <div className="flex">
                             <img src={tutot} alt="icon here" className="w-4 h-4"/>
                             <p className="text-xs font-medium ml-2">{tutor}</p>
