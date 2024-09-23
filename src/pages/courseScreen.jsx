@@ -1,8 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import introVideo from "../assets/introVideo.mp4"; // Sample video import
-import coursecover from "../assets/coursecover.png"; // Example cover image
+import introVideo from "../assets/introVideo.mp4";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loader from "../components/Loader/Loader";
+import courseIll from "../assets/course-ills.svg"
+import { FaRegClock } from "react-icons/fa6";
+import { IoPlayOutline } from "react-icons/io5";
+import { IoCode } from "react-icons/io5";
+import { GoPeople } from "react-icons/go";
 import { useEffect, useState } from "react";
 import {
     faArrowLeft,
@@ -11,8 +15,6 @@ import {
     faQuestionCircle,
     faFlask,
     faProjectDiagram,
-    faChevronDown,
-    faChevronUp,
   } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { enrollCourse, fetchSingleCourse, setCurrentLecture } from "../redux/course/CourseSlice";
@@ -146,40 +148,68 @@ const CourseScreen = () => {
           Go Back
         </p>
       </div>
+      {course?
+      <div className="flex flex-col items-start bg-white md:items-center gap-8 p-6  text-customDarkBlue rounded-lg shadow-md">
+      
+        <div className="flex flex-row">
 
-      {/* Course Overview Section */}
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-8 p-6 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg shadow-md">
-        <img
-          src={coursecover}
-          alt="Course Cover"
-          className="w-80 h-48 rounded-lg object-cover shadow-lg transform hover:scale-105 transition-transform duration-300"
-        />
-        <div className="flex flex-col">
 
-          {course?<h1 className="text-4xl font-bold">{course.title}</h1>:<Loader/>}
-          <p className="text-md mt-4">
-            This course provides an in-depth introduction to machine learning techniques
-            and data analysis, focusing on real-world applications and projects.
-          </p>
-          <div className="mt-6">
+          
+          <div className="flex flex-col">
+            <h1 className="text-4xl font-bold">{course.title}</h1>
+            <p className="text-md mt-4">
+              This course provides an in-depth introduction to machine learning techniques
+              and data analysis, focusing on real-world applications and projects.
+            </p>
+            <div className="mt-6">
             {enrolledCourses?.some(course=> course.courseId._id==courseId)?
             <button
               onClick={()=> handleContinue()}
-              className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 transform hover:scale-105"
+              className="px-6 py-3 bg-customDarkBlue text-white rounded-lg font-semibold transition-all duration-200 transform-all hover:scale-105"
             >
               Continue!
             </button>:
             <button
                 onClick={()=> handleContinue()}
-                className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 transform hover:scale-105"
+                className="px-6 py-3 bg-customDarkBlue text-white rounded-lg font-semibold transition-all duration-200 transform-all hover:scale-105"
             >
             Start Now!
             </button>
             }
           </div>
+          </div>
+          
+          
+          <img src={courseIll} alt="Start Learning" className="w-48 h-48"/>
+          
         </div>
+        <div className="flex space-x-2 w-full">
+            <div className="flex items-center h-5 px-2 py-3 space-x-1 bg-customDarkBlue text-white rounded-md shadow-md">
+              <FaRegClock />
+              <p className="text-sm text-white">4 hours</p>
+            </div>
+            <div className="flex items-center h-5 px-2 py-3 space-x-1 bg-customDarkBlue text-white rounded-md shadow-md">
+              <IoPlayOutline/>
+              <p className="text-sm text-white">10 videos</p>
+            </div>
+            <div className="flex items-center h-5 px-2 py-3 space-x-1 bg-customDarkBlue text-white rounded-md shadow-md">
+              <IoCode />
+              <p className="text-sm text-white">10 excercises</p>
+            </div>
+            <div className="flex items-center h-5 px-2 py-3 space-x-1 bg-customDarkBlue text-white rounded-md shadow-md">
+              <GoPeople />
+              <p className="text-sm text-white">1,364 enrollments</p>
+            </div>
+            <div className="flex items-center h-5 px-2 py-3 space-x-1 bg-theme text-white rounded-md shadow-md">
+      
+              <p className="text-sm text-white">2550 XP</p>
+            </div>
+        </div>
+        
       </div>
-
+      :
+      <Loader/>
+      }
       <div className="mt-10">
         <div className="flex justify-center">
           <button
