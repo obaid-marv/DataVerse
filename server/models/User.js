@@ -52,12 +52,17 @@ const UserSchema = new mongoose.Schema({
       }
     }
   ],
+  imgUrl:{
+    type: String,
+    default: null
+  },
   
   isAdmin:{
     type: Boolean,
     required: true,
     default: false
-  } 
+  },
+
 }, { timestamps: true });
 
 export default mongoose.model("User", UserSchema);

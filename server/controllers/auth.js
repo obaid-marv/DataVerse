@@ -5,6 +5,8 @@ import nodemailer from 'nodemailer';
 import { createError } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
+import cloudinary from "../utils/cloudinary.js";
+
 export const register = async(req,res,next)=>{
     try{
         const salt = bcrypt.genSaltSync(10);
@@ -94,7 +96,7 @@ export const forgotPassword = async(req,res,next)=>{
 export const fetchUserByToken = async (req, res, next)=>{
 
     try{
-        const user = await User.findById(req.user.id).populate('enrolledCourses');
+        const user = await User.findById(req.user.id).select("-password");;
 
         if(!user)
             return res.status(404).json({ message: "User not found!"})
@@ -111,7 +113,7 @@ export const fetchUserByToken = async (req, res, next)=>{
 export const fetchUserProgress = async (req, res, next)=>{
 
     try{
-        const user = await User.findById(req.user.id).populate('enrolledCourses.courseId');
+        const user = await User.findById(req.user.id).populate('enrolledCourses.courseId')
 
         if(!user)
             return res.status(404).json({ message: "User not found!"})
@@ -125,3 +127,48 @@ export const fetchUserProgress = async (req, res, next)=>{
     }
 
 }
+ // Cloudinary setup
+
+export const updateProfile = async (req, res, next) => {
+  try {
+    const userId = req.user.id; // Ensure token-based authentication
+    
+    const { name, password } = req.body;
+    const profilePicture = req.file; // Assuming profile picture is coming as a file upload
+
+    // Find the user by their ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return next(createError(404, "User not found!"));
+    }
+
+    // Update only the changed fields
+    if (name && name !== user.username) {
+      user.username = name;
+    }
+
+    if (password && password !== "********") {
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(password, salt);
+      user.password = hashedPassword;
+    }
+
+    // If a new profile picture is uploaded, update it
+    if (profilePicture) {
+      const result = await cloudinary.uploader.upload(profilePicture.path, {
+        folder: "user_profiles",
+        public_id: `${user._id}_profile`,
+      });
+
+      user.imgUrl = result.secure_url; // Save Cloudinary URL to user's profile
+    }
+
+    // Save the updated user information
+    await user.save();
+
+    res.status(200).json({ message: "Profile updated successfully!", user });
+  } catch (err) {
+    next(err);
+  }
+};
+

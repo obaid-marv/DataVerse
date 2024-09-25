@@ -1,6 +1,7 @@
 import React, { useState } from "react"; // Combined import for React and useState
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import logo from "../assets/vite.svg"
 import {
   faArrowLeft,
   faChevronLeft,
@@ -24,6 +25,9 @@ const CourseNavbar = () => {
   const [open, setOpen] = useState(false);
   const { courseId } = useParams();
 
+  const courses = useSelector((state) => state.courses.courses );
+  console.log(courses)
+
   const handleOpen = () => setOpen(!open);
   
   const handleToggleOverview = () => {
@@ -33,11 +37,17 @@ const CourseNavbar = () => {
 
   return (
     <div className="bg-gray-100 shadow-md p-2 flex items-center justify-between w-full">
-      <FontAwesomeIcon
-        icon={faArrowLeft}
-        className="w-6 h-6 text-gray-700 cursor-pointer"
-        onClick={() => navigate(`/app/courses/course-screen/${courseId}`)}
-      />
+      <div className="flex space-x-1 items-center font-poppins">
+        <div className="flex items-center h-6 px-1 rounded-md hover:bg-gray-200 cursor-pointer">
+            <img src={logo} alt="" className="w-6 h-6"/>
+            <p className="text-sm font-medium">DataVerse</p>
+        </div>
+        <p className="text-xs font-semibold cursor-default">/</p>
+        <div className="flex items-center h-6 px-1 rounded-md hover:bg-gray-200 cursor-pointer">
+            <p className="text-sm font-medium">course</p>
+        </div>
+        <p className="text-xs font-semibold cursor-default">/</p>
+      </div>
       <div className="flex items-center ml-44">
         <button className="mr-2 border-2 border-gray-500 hover:bg-gray-300 px-2 py-1">
           <FontAwesomeIcon icon={faChevronLeft} className="text-gray-700" />

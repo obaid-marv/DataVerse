@@ -37,19 +37,19 @@ const SettingsScreen = () => {
   return (
     <>
       <div
-        className={`flex items-center justify-center p-2 rounded-tl-3xl bg-white rounded-bl-3xl h-full w-full space-y-4`}
+        className={`flex items-center justify-center p-4 rounded-tl-3xl bg-white rounded-bl-3xl h-full w-full `}
       >
-        <div className="flex flex-col w-[360px] py-6 px-3 rounded-3xl bg-gray-100 font-sans font-semibold text-customDarkBlue">
+        <div className="flex flex-col w-full py-6 px-3 rounded-3xl font-semibold text-customDarkBlue font-poppins">
           {/* Heading  */}
-          <div className="flex justify-center text-xl mb-10">My Profile</div>
+          <div className="flex text-4xl">My Profile</div>
 
           {/* Pic and Details */}
-          <div className="flex flex-col items-center space-y-4 mb-12 ">
-            <div className="flex-1 flex justify-center">
+          <div className="flex flex-row justify-start space-x-8 p-8">
+            <div className="flex">
               <img
                 src= {IMAGES.student_avatar}
                 alt="Avatar"
-                className={`w-20 h-20 rounded-full cursor-pointer block`}
+                className={`w-32 h-32 rounded-full cursor-pointer block`}
               />
 {/* 
               <img
@@ -59,8 +59,8 @@ const SettingsScreen = () => {
                 className="w-5 h-5 absolute mt-16 ml-14 cursor-pointer "
               ></img> */}
             </div>
-            <div className="flex flex-col items-center">
-              <p className="text-lg">Zaki Mazhar</p>
+            <div className="flex flex-col">
+              <p className="text-3xl">Zaki Mazhar</p>
               <p className="font-normal text-sm">zakimazharsultan@gmail.com</p>
             </div>
           </div>
