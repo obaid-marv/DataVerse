@@ -53,7 +53,7 @@ const Dashboard = ()=>{
             <div className="max-w-screen-lg mt-4 h-max mx-auto p-4 font-poppins">
                 <p className="text-2xl font-medium font-poppins">Dashboard</p>
                 {user?
-                <p className="text-xl font-base font-poppins">{`HEY ${user} !`}</p>:
+                <p className="text-xl font-base font-poppins">{`HEY ${user.username} !`}</p>:
                 <></>
                 }
                 <div className="flex items-center p-4 space-x-12">

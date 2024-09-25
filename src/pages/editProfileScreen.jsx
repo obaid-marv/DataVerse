@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axiosInstance from "../config/api";
 
 const EditProfile = () => {
+  const user = useSelector((state) => state.auth.user);
+  
   const [profileData, setProfileData] = useState({
     name: "",
     email: "",
-    password: "",
+    password: "********",
     profilePicture: null,
   });
+
+  // Use useEffect to update state once user data is available
+  useEffect(() => {
+    if (user) {
+      setProfileData({
+        name: user?.username || "",
+        email: user?.email || "",
+        password: "********",
+        profilePicture: null,
+      });
+    }
+  }, [user]); // This will trigger every time user changes
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,30 +36,65 @@ const EditProfile = () => {
     setProfileData({ ...profileData, profilePicture: file });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Add form submission logic here (API request, etc.)
-    toast.success("Profile updated successfully!");
+  
+    // Check if name or password has changed or if a new file is uploaded
+    if (
+      profileData.name !== user?.username ||
+      profileData.password !== "********" ||
+      profileData.profilePicture
+    ) {
+      // Prepare form data if profile picture exists
+      const formData = new FormData();
+      formData.append("name", profileData.name);
+      
+      if (profileData.password !== "********") {
+        formData.append("password", profileData.password);
+      }
+  
+      // Check if a new profile picture has been uploaded
+      if (profileData.profilePicture) {
+        formData.append("profilePicture", profileData.profilePicture);
+      }
+  
+      try {
+        // Make API request to update the profile
+        const response = await axiosInstance.put("/auth/update-profile", formData);
+  
+        if (response.status === 200) {
+          toast.success("Profile updated successfully!");
+        } else {
+          toast.error("Failed to update profile.");
+        }
+      } catch (error) {
+        console.error("Error updating profile:", error);
+        toast.error("An error occurred while updating the profile.");
+      }
+    } else {
+      toast.error("No changes found!");
+    }
   };
 
   return (
-    <div className="h-screen bg-gray-100 flex flex-col items-center justify-center ">
-      <div className="w-full max-w-md bg-white shadow-md rounded-md p-6">
-        <h1 className="text-2xl font-bold mb-6 text-center">Edit Profile</h1>
+    <div className="h-max flex flex-col items-center justify-center ">
+      <div className="w-full bg-gray-100 shadow-md rounded-md p-6">
+        <h1 className="text-4xl font-bold mb-6 text-center">Edit Profile</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Profile Picture Upload */}
           <div className="flex flex-col items-center space-y-2">
-            {profileData.profilePicture ? (
+            {user?.imgUrl ? (
               <img
-                src={URL.createObjectURL(profileData.profilePicture)}
+                src={user?.imgUrl}
                 alt="Profile"
                 className="w-24 h-24 rounded-full object-cover"
               />
             ) : (
               <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
-                <span className="text-gray-500">No Image</span>
+                <span className="text-customBlue font-bold text-6xl">
+                  {user?.username?.at(0).toUpperCase()}
+                </span>
               </div>
             )}
             <input
@@ -71,7 +122,7 @@ const EditProfile = () => {
             />
           </div>
 
-          {/* Email */}
+          {/* Email (disabled) */}
           <div>
             <label htmlFor="email" className="block font-medium mb-1">
               Email
@@ -84,7 +135,7 @@ const EditProfile = () => {
               onChange={handleChange}
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your email"
-              required
+              disabled
             />
           </div>
 

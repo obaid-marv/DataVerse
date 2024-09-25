@@ -48,7 +48,7 @@ export const fetchUserDetails = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get('/auth/me');
-      return response.data.username;
+      return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
     }

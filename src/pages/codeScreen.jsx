@@ -19,7 +19,6 @@ const CodeExerciseScreen = () => {
     "Write clean and readable code.",
     "Submit the code for review.",
     "Test your code with different inputs."
-    // This array will come from your backend in the real implementation.
   ];
 
   const handleRunCode = async () => {
@@ -38,7 +37,7 @@ const CodeExerciseScreen = () => {
       base: "vs-dark",
       inherit: true,
       rules: [
-        { token: "comment", foreground: "ffa500", fontStyle: "italic" },
+        { token: "comment", foreground: "ffa500" },
         { token: "keyword", foreground: "ff0000" },
         { token: "identifier", foreground: "00ff00" },
       ],
