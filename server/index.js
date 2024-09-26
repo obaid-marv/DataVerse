@@ -14,6 +14,8 @@ import cors from 'cors';
 const app = express();
 dotenv.config();
 
+
+
 const connectdb = async () => {
     try {
       await mongoose.connect(process.env.MONGO);
@@ -54,3 +56,4 @@ app.listen(PORT, ()=>{
     connectdb();  
     console.log(`server running on ${PORT}`);  
   });
+
