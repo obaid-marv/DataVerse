@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../config/api";
+import Loader from "../components/Loader";
 
 const EditProfile = () => {
   const user = useSelector((state) => state.auth.user);
@@ -78,6 +79,7 @@ const EditProfile = () => {
 
   return (
     <div className="h-max flex flex-col items-center justify-center ">
+      {user?
       <div className="w-full bg-gray-100 shadow-md rounded-md p-6">
         <h1 className="text-4xl font-bold mb-6 text-center">Edit Profile</h1>
 
@@ -164,7 +166,10 @@ const EditProfile = () => {
             Save Changes
           </button>
         </form>
-      </div>
+      </div>:
+      <Loader/>
+      }
+
 
       {/* Toast Notification */}
       <ToastContainer />

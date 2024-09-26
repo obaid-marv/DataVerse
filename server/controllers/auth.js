@@ -153,16 +153,21 @@ export const updateProfile = async (req, res, next) => {
       user.password = hashedPassword;
     }
 
-    // If a new profile picture is uploaded, update it
+    try{
     if (profilePicture) {
-      const result = await cloudinary.uploader.upload(profilePicture.path, {
+        
+            const result = await cloudinary.uploader.upload(profilePicture.path, {
         folder: "user_profiles",
         public_id: `${user._id}_profile`,
       });
+     
 
       user.imgUrl = result.secure_url; // Save Cloudinary URL to user's profile
     }
-
+    }
+    catch(err){
+        console.log("clpudinary error:", err)
+    }
     // Save the updated user information
     await user.save();
 
