@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const EditProfileModal = ({ isOpen, onClose, profileDetails, onSave }) => {
+const EditProfileModal = ({ isOpen, onClose, profileDetails, onSave, name }) => {
   const [formData, setFormData] = useState(profileDetails);
 
   const handleChange = (e) => {
@@ -9,6 +9,10 @@ const EditProfileModal = ({ isOpen, onClose, profileDetails, onSave }) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    console.log("modal : ", profileDetails)
+  }, [])
 
   const handleSave = () => {
     onSave(formData);
@@ -27,8 +31,8 @@ const EditProfileModal = ({ isOpen, onClose, profileDetails, onSave }) => {
           <label className="block text-sm font-medium mb-2">Name</label>
           <input
             type="text"
-            name="name"
-            value={formData.name}
+            name="username"
+            value={formData?.username}
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
           />

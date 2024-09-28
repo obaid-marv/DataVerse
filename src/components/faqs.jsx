@@ -7,8 +7,8 @@ const FAQItem = ({ question, answer, isOpen, onClick }) => {
     <div className="faq-item py-4 px-12 border-b-2">
       <div className="faq-question flex justify-between items-center cursor-pointer" onClick={onClick}>
         <h3 className="text-2xl font-medium font-poppins">{question}</h3>
-        <div className={`h-10 w-10 border flex justify-center rounded-full ${isOpen ? 'bg-theme border-none' : 'bg-white'} hover:bg-themeblack border-black`}>
-          <button className={`text-2xl text-center font-bold ${isOpen ? 'text-white' : 'text-theme'}`}>{isOpen ? '-' : '+'}</button>
+        <div className={`h-10 w-10 border text-2xl flex justify-center rounded-full ${isOpen ? 'bg-theme border-none' : 'bg-white'} hover:bg-themeblack border-black`}>
+          <button className={`text-center font-bold h-5 ${isOpen ? 'text-white' : 'text-theme'}`}>{isOpen ? '-' : '+'}</button>
         </div>
       </div>
       <div

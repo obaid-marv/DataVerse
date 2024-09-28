@@ -1,9 +1,9 @@
 import React from 'react'
 
-const CustomButton = ({ label, icon, clickaction }) => {
+const CustomButton = ({ label, icon, bgcolor ,clickaction }) => {
     return (
         <div className='flex'>
-            <div className='flex gap-2 items-center bg-black rounded-3xl text-white py-2 px-4 hover:scale-95 cursor-pointer'>
+            <div className={`flex gap-2 items-center ${bgcolor} rounded-3xl text-white py-2 px-4 hover:scale-95 cursor-pointer`}>
                 <p>{icon}</p>
                 <p>{label} </p>
             </div>
