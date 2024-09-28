@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MonacoEditor from "@monaco-editor/react";
 import { FaRegSun } from "react-icons/fa";
 import { TbReload } from "react-icons/tb";
@@ -6,13 +6,39 @@ import { GoNote } from "react-icons/go";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import axiosInstance from "../config/api";
+import { toast, ToastContainer } from "react-toastify";
 
 const CodeExerciseScreen = () => {
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
+  const [quiz, setQuiz] = useState();
   const [dark, setDark] = useState(true);
-  const [hints, setHints] = useState([]); // State to store hints
-  const [hintCount, setHintCount] = useState(0); // Counter for hint tracking
+  const [hints, setHints] = useState([]);
+  const [hintCount, setHintCount] = useState(0);
+  const { courseId, index } = useParams();
+  const course = useSelector((state) => state.course.course);
+
+  const fetchQuiz = async () =>{
+    const lecture = course?.lectures[index-1];
+    try{
+      const response = await axiosInstance.get(`/learning/quiz/${lecture.quiz}`)
+      console.log(response.data.quiz)
+      setQuiz(response.data.quiz);
+      setCode(response.data.quiz.codeTemplate);
+    }
+    catch(err){
+      toast.error(err);
+    }
+  }
+
+  useEffect(()=>{
+    if(!quiz)
+      fetchQuiz();
+
+  },[course])
 
   const instructions = [
     "Follow the coding standards.",
@@ -143,19 +169,20 @@ const CodeExerciseScreen = () => {
 
       {/* Monaco Editor */}
       <div className="h-80 overflow-y-auto relative rounded-md">
-        <MonacoEditor
-          height="100%"
-          language="python"
-          theme={dark ? "vs-dark" : "vs"}
-          value={code}
-          options={{
-            automaticLayout: true,
-            scrollBeyondLastLine: false,
-            minimap: { enabled: false },
-          }}
-          onChange={(value) => setCode(value)}
-          onMount={handleEditorMount}
-        />
+      <MonacoEditor
+        height="100%"
+        language="python"
+        theme={dark ? "vs-dark" : "vs-light"} 
+        value={code} 
+        options={{
+          automaticLayout: true,
+          scrollBeyondLastLine: false,
+          minimap: { enabled: false },
+        }}
+        onChange={(value) => setCode(value)}
+        onMount={handleEditorMount}
+      />
+
       </div>
 
       {/* Buttons at bottom */}

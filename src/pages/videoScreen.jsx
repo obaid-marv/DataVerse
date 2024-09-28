@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import your custom video player
+import { useNavigate, useParams } from 'react-router-dom'; // Import your custom video player
 import CustomVideoPlayer from '../components/CustomVideoPlayer';
 import introVideo from "../assets/introVideo.mp4";
+import { useSelector } from 'react-redux';
 
 const VideoScreen = () => {
   const [showTranscript, setShowTranscript] = useState(false);
   const navigate = useNavigate();
+  const { courseId, index } = useParams();
+  const course = useSelector((state) => state.course.course);
+
 
   // Sample Transcript
   const transcript = `
@@ -19,7 +23,7 @@ const VideoScreen = () => {
   };
 
   const handleGotIt = () => {
-    navigate('/course-started/code-screen');
+    navigate(`/course-started/code-screen/${courseId}/${index}`);
   };
 
   return (
@@ -33,7 +37,7 @@ const VideoScreen = () => {
 
       <div className={`flex-1 ${showTranscript ? 'w-3/4' : 'w-full'} flex items-center flex-col justify-center p-4`}>
         {/* Replace default video tag with Custom Video Player */}
-        <CustomVideoPlayer videoSrc={introVideo} />
+        <CustomVideoPlayer videoSrc={course?.lectures[index-1].videoUrl} />
 
         {/* Buttons */}
         <div className="mt-4 w-3/4 flex items-center justify-between">
