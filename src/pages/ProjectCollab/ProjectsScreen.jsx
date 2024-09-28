@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import { BsSortDown } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const ProjectsScreen = () => {
+  const navigate = useNavigate();
+
+  const handleProjectClick = (project) => {
+    navigate("/app/project-board");
+  }
   // Sample data for the projects
   const projects = [
     { name: "Savebox - Mobile App", tasksRemaining: 12, completion: 72, status: "In Progress" },
@@ -23,12 +29,7 @@ const ProjectsScreen = () => {
           <h1 className="text-3xl font-semibold text-gray-800">Projects</h1>
         </div>
         <div className="flex items-center space-x-4">
-          <button className="bg-white border border-gray-300 px-4 py-2 rounded-lg flex items-center">
-            <BsSortDown className="mr-2" /> Sort by
-          </button>
-          <button className="bg-white border border-gray-300 px-4 py-2 rounded-lg flex items-center">
-            <FiFilter className="mr-2" /> Filter
-          </button>
+          
           <input
             type="text"
             placeholder="Search Project"
@@ -40,7 +41,7 @@ const ProjectsScreen = () => {
       {/* Project Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project, index) => (
-          <ProjectCard key={index} project={project} />
+          <ProjectCard key={index} project={project} onClick={()=> handleProjectClick(project)} />
         ))}
       </div>
     </div>
@@ -48,11 +49,11 @@ const ProjectsScreen = () => {
 };
 
 // ProjectCard Component
-const ProjectCard = ({ project }) => {
-  const { name, tasksRemaining, completion, status } = project;
+const ProjectCard = ({ project, onClick }) => {
+  const { name, tasksRemaining, completion, status} = project;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div onClick={onClick} className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:scale-105">
       <h3 className="text-lg font-semibold text-gray-800 mb-2">{name}</h3>
       <p className="text-sm text-gray-600">{tasksRemaining} Tasks Remaining</p>
       <div className="flex items-center mt-4">
