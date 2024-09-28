@@ -5,9 +5,18 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { IMAGES } from "../../../../constants/images"
 import { PiDotLight } from "react-icons/pi"
 import { LuDownload } from "react-icons/lu";
+import { useNavigate } from 'react-router-dom';
 
 
 const DatasetCard = ({ item }) => {
+    const navigate = useNavigate();
+    const handleProfileClick = () => {
+        navigate('/connection/post-screen/user');
+    }
+
+    const handleDataSetClick = (item) => {
+        navigate('/app/dataset-details' , { state: { item } });
+    }
 
     return (
         <div className='flex flex-col gap-0 rounded-xl bg-white border w-72 h-96'>
@@ -15,7 +24,7 @@ const DatasetCard = ({ item }) => {
                 <div className='flex flex-[2]'>
                     <img src={item?.imgurl} alt="" className=' rounded-t-xl h-32 w-full object-cover' />
                 </div>
-                <div className='flex flex-col flex-[4] px-4 pt-10  gap-2'>
+                <div className='flex flex-col flex-[4] px-4 pt-10  gap-2 cursor-pointer' onClick={()=> handleDataSetClick(item)}>
                     <div className='flex justify-between items-center '>
                         <p className='font-semibold '> {item?.title}</p>
                         {/* <p className='cursor-pointer hover:bg-black/10 hover:rounded-full p-1'><BsThreeDotsVertical /></p> */}
@@ -60,7 +69,7 @@ const DatasetCard = ({ item }) => {
                             //     transformOrigin: 'center center',
                             // },
                         }} className='w-8' >
-                            <img src={IMAGES.person} alt="person" className='w-7 h-7 rounded-full cursor-pointer' />
+                            <img src={IMAGES.person} onClick={handleProfileClick} alt="person" className='w-7 h-7 rounded-full cursor-pointer' />
                         </CircularProgressbarWithChildren>
                     </div>
                 </div>

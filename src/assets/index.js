@@ -21,5 +21,5 @@ export const IMAGES = {
   course_cover: new URL("./coursecover.png", import.meta.url).href,
   image1: new URL("./imagesec.png", import.meta.url).href,
   solar: new URL("./solar-penal.png", import.meta.url).href,
-
+  search_icon: new URL("./search_icon.png", import.meta.url).href,
 };

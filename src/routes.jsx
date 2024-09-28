@@ -100,6 +100,9 @@ import NewsAndUpdates from "./pages/News&Updates/NewsAndUpdates";
 import ProjectCollabDashboard from "./pages/ProjectCollab/ProjectCollabDashboard";
 import DetailedNewsPage from "./pages/News&Updates/DetailedNewsPage";
 import ProjectsScreen from "./pages/ProjectCollab/ProjectsScreen";
+import NewDatasetScreen from "./pages/Datasets/NewDatasetScreen";
+import DatasetDetails from "./pages/Datasets/DatasetDetails";
+import ProjectBoard from "./pages/ProjectCollab/ProjectBoard";
 
 export const routes = createBrowserRouter([
   {
@@ -219,6 +222,22 @@ export const routes = createBrowserRouter([
         ),
       },
       {
+        path: "/app/dataset-details",
+        element: (
+          <ProtectedRoute>
+            <DatasetDetails />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/datasets/new-dataset",
+        element: (
+          <ProtectedRoute>
+            <NewDatasetScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "/app/news-updates",
         element: (
           <ProtectedRoute>
@@ -255,6 +274,14 @@ export const routes = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ProjectsScreen/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/project-board",
+        element: (
+          <ProtectedRoute>
+            <ProjectBoard/>
           </ProtectedRoute>
         ),
       },

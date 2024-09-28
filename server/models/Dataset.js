@@ -4,16 +4,23 @@ const DatasetSchema = new mongoose.Schema({
 
     url:{
         type: String,
-        required:true,
     },
     imgurl:{
         type: String,
-        required:true,
     },
     title:{
         type: String,
         required:true  
     },
+    description:{
+        type: String,
+        required:true  
+    },
+    tags: [
+        {
+            type: String
+        }
+    ],
     
 },{ timestamps:true}
 );

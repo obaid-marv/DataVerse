@@ -9,6 +9,8 @@ export const uploadDataset = async(req,res,next)=>{
             url:req.body.url,
             imgurl:req.body.imgurl,
             title:req.body.title,
+            description:req.body.description,
+            tags:req.body.tags,
         });
         await newDataset.save();
         res.status(200).json("Dataset record has been saved");

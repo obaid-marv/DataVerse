@@ -55,10 +55,10 @@ const ProjectCollabDashboard = () => {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <StatCard label="Work Items" count="245" compare="+4.04%" />
-          <StatCard label="Developers" count="50" compare="+2.5%" />
-          <StatCard label="Projects" count="12" compare="+1.2%" onClick={() => navigate('/app/projects')} />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 ">
+          {/* <StatCard label="Work Items" count="245" compare="+4.04%" /> */}
+          <StatCard label="Developers" count="50"  />
+          <StatCard label="Projects" count="12"  onClick={() => navigate('/app/projects')} />
           <StatCard label="Completed Tasks" count="300" compare="+3.2%" />
         </div>
 

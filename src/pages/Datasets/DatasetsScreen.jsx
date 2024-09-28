@@ -25,17 +25,17 @@ const DatasetsScreen = () => {
 
     const [fetcheddatasetsarr, setFetcheddatasetarr] = useState([]);
     const [filter, setFilter] = useState(false);
-    const [filterarr, setFiltersArr] = useState([]);
+    const [filterarr, setFiltersArr] = useState(TAGS);
 
     const getSelectedTag = (tagdata) => {
         const arr = filterarr;
 
         if (arr?.includes(tagdata?.title)) {
-            if (tagdata.activestatus === false) {
+            if (tagdata.active === false) {
                 arr.splice(arr.indexOf(tagdata?.title), 1);
             }
         } else {
-            if (tagdata?.activestatus) {
+            if (tagdata?.active) {
                 arr.push(tagdata?.title);
             }
         }
@@ -50,6 +50,17 @@ const DatasetsScreen = () => {
 
         console.log("filter array is : ", arr);
     };
+
+    const handleResetFilters = () => {
+        let arr = TAGS;
+        let myarr = arr.map((item) => {
+            let myitem = item;
+            myitem.active = false;
+            return myitem;
+        });
+        setFiltersArr(myarr);
+        setFilter(false);
+    }
 
     const handleGetAllDatasets = async () => {
         const resp = await getAlldatasets();
@@ -72,13 +83,13 @@ const DatasetsScreen = () => {
                     <CustomButton 
                         label={"New Dataset"} 
                         icon={<FaPlus />} 
-                        onClick={() => navigate('/new-dataset')} 
+                        onClick={() => navigate('/app/datasets/new-dataset')} 
                         bgcolor={"bg-customBlue"}
                         className="bg-customBlue text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition"
                     />
                     <CustomButton 
                         label={"Reset Filters"} 
-                        onClick={() => { setFiltersArr([]); setFilter(false); }} 
+                        onClick={handleResetFilters} 
                         bgcolor={"bg-customBlue"}
                         className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md shadow hover:bg-gray-400 transition"
                     />
@@ -86,7 +97,7 @@ const DatasetsScreen = () => {
                 <div className="flex flex-col gap-4 mb-6">
                     <CustomInput onchangetext={(val) => handleSearchClick(val)} />
                     <div className="flex gap-2 items-center flex-wrap">
-                        {TAGS?.map((item) => (
+                        {filterarr?.map((item) => (
                             <Tag key={item.title} title={item.title} active={item.active} onclick={getSelectedTag} />
                         ))}
                     </div>
@@ -96,7 +107,7 @@ const DatasetsScreen = () => {
                         <DataSetcategorySection data={fetcheddatasetsarr} />
                     )}
                 </div>
-                <div className="pb-20 mt-16">
+                {/* <div className="pb-20 mt-16">
                     <div className="flex flex-col gap-4 items-center justify-center text-center">
                         <p className="font-semibold text-5xl">Didn't Find What You are Looking for?</p>
                         <div className="flex">
@@ -108,7 +119,7 @@ const DatasetsScreen = () => {
                             </p>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
