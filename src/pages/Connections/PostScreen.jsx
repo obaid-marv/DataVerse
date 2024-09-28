@@ -9,8 +9,9 @@ import {
   faThumbsUp,
   faComment,
   faShare,
+  faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import { FaImage, FaVideo, FaTimes } from "react-icons/fa";
+import { FaImage, FaVideo, FaTimes, FaLinkedin, FaTwitter, FaGithub } from "react-icons/fa";
 
 import { IMAGES } from "../../assets";
 import { MdGroups } from "react-icons/md";
@@ -31,10 +32,14 @@ const PostScreen = () => {
 
   const [profileDetails, setProfileDetails] = useState({
     ...user,
+    location: "San Francisco, CA",
     summary:
       "Passionate student with a keen interest in AI, Machine Learning, and Data Science.",
     skills:
       "Python Programming, Machine Learning, Data Visualization, AI Model Development",
+    linkedIn_Acc: "https://linkedin.com",
+    twitter_Acc: "https://twitter.com",
+    github_Acc: "https://github.com"
   });
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -112,6 +117,7 @@ const PostScreen = () => {
         console.log("user is : ", user);
         setProfileDetails({
           ...user,
+          location: "San Francisco, CA",
           summary:
             "Passionate student with a keen interest in AI, Machine Learning, and Data Science.",
           skills:
@@ -139,7 +145,11 @@ const PostScreen = () => {
               className="w-20 h-20 rounded-full mb-3 shadow-md"
             />
             <h3 className="font-semibold text-lg">{user?.username}</h3>
-            <p className="text-sm text-gray-500 mb-4">Student at XYZ</p>
+            <p className="text-sm text-gray-500 ">Student at XYZ</p>
+            <div className="flex items-center text-sm text-gray-500 mb-4">
+                <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" />
+                <span>{profileDetails.location}</span>
+              </div>
             <button
               onClick={handleEditClick}
               className="px-3 py-1 bg-customBlue text-white rounded-full text-sm hover:bg-blue-600 transition"
@@ -169,6 +179,22 @@ const PostScreen = () => {
             <p>Connections</p>
             <p>100</p>
           </div>
+
+          <div className="flex flex-col gap-4 text-sm">
+                <p className="font-bold text-customBlue text-base">Socials</p>
+                <a href={profileDetails.linkedIn_Acc} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-theme hover:underline">
+                  <FaLinkedin className="text-blue-700 text-xl hover:text-blue-800 transition" />
+                  <p>{profileDetails.linkedIn_Acc}</p>
+                </a>
+                <a href={profileDetails.twitter_Acc} target="_blank" rel="noopener noreferrer"  className="flex items-center gap-2 text-theme hover:underline">
+                  <FaTwitter className="text-blue-400 text-xl hover:text-blue-500 transition" />
+                  <p>{profileDetails.twitter_Acc}</p>
+                </a>
+                <a href={profileDetails.github_Acc} target="_blank" rel="noopener noreferrer"  className="flex items-center gap-2 text-theme hover:underline">
+                  <FaGithub className="text-gray-800 text-xl hover:text-gray-900 transition" />
+                  <p>{profileDetails.github_Acc}</p>
+                </a>
+              </div>
         </div>
 
         {/* Main Content */}
