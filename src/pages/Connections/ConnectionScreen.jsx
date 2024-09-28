@@ -30,9 +30,9 @@ const ConnectionScreen = () => {
         {/* Next Page Button */}
         <button
           onClick={handleNextPage}
-          className="bg-theme hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transform transition-transform hover:scale-105"
+          className="bg-theme hover:bg-blue-600 text-xl text-white font-semibold py-3 px-6 rounded-lg shadow-md transform transition-transform hover:scale-105"
         >
-          Explore Connections
+          Explore 
         </button>
       </div>
     </div>

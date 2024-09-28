@@ -90,6 +90,16 @@ import NetworkScreen from "./pages/Connections/NetworkScreen";
 import MessagingScreen from "./pages/Connections/MessagingScreen";
 import NotificationScreen from "./pages/Connections/NotificationScreen";
 import ViewAllConnections from "./pages/Connections/ViewAllConnections";
+import DiscussionScreen from "./pages/Discussions/DiscussionScreen";
+import MainDiscussionPage from "./pages/Discussions/DiscussionScreen";
+import DiscussionDetail from "./pages/Discussions/DiscussionDetail";
+import YourDiscussions from "./pages/Discussions/YourDiscussions";
+import StartNewDiscussion from "./pages/Discussions/NewDiscussion";
+import UserPostScreen from "./pages/Connections/UserPostScreen";
+import NewsAndUpdates from "./pages/News&Updates/NewsAndUpdates";
+import ProjectCollabDashboard from "./pages/ProjectCollab/ProjectCollabDashboard";
+import DetailedNewsPage from "./pages/News&Updates/DetailedNewsPage";
+import ProjectsScreen from "./pages/ProjectCollab/ProjectsScreen";
 
 export const routes = createBrowserRouter([
   {
@@ -145,6 +155,62 @@ export const routes = createBrowserRouter([
         ),
       },
       {
+        path: "/app/userprofile",
+        element: (
+          <ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/discussions",
+        element: (
+          <ProtectedRoute>
+            <MainDiscussionPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/discussion",
+        element: (
+          <ProtectedRoute>
+            <DiscussionDetail />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/your-discussions",
+        element: (
+          <ProtectedRoute>
+            <YourDiscussions />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/your-discussions",
+        element: (
+          <ProtectedRoute>
+            <YourDiscussions />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/new-discussion",
+        element: (
+          <ProtectedRoute>
+            <StartNewDiscussion />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/your-discussions",
+        element: (
+          <ProtectedRoute>
+            <YourDiscussions />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "/app/datasets",
         element: (
           <ProtectedRoute>
@@ -153,10 +219,42 @@ export const routes = createBrowserRouter([
         ),
       },
       {
+        path: "/app/news-updates",
+        element: (
+          <ProtectedRoute>
+            <NewsAndUpdates />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/news-updates/detailed-news",
+        element: (
+          <ProtectedRoute>
+            <DetailedNewsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "/app/jobs",
         element: (
           <ProtectedRoute>
             <JobBoardLanding />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/project-collaboration",
+        element: (
+          <ProtectedRoute>
+            <ProjectCollabDashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/projects",
+        element: (
+          <ProtectedRoute>
+            <ProjectsScreen/>
           </ProtectedRoute>
         ),
       },
@@ -222,6 +320,14 @@ export const routes = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <PostScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/connection/post-screen/user",
+        element: (
+          <ProtectedRoute>
+            <UserPostScreen />
           </ProtectedRoute>
         ),
       },

@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { FaPlus } from "react-icons/fa";
-import Navbar from '../../components/navbar';
+import { useNavigate } from 'react-router-dom';
 import Tag from '../../components/Datasets/Tag';
-import CustomButton from "../../components/Datasets/CustomButton"
-import CustomInput from "../../components/Datasets/CustomInput"
+import CustomButton from "../../components/Datasets/CustomButton";
+import CustomInput from "../../components/Datasets/CustomInput";
 import DataSetcategorySection from '../../components/Datasets/DataSetcategorySection/DataSetcategorySection';
-import DataSetcategorySection2 from '../../components/Datasets/DataSetcategorySection2/DataSetcategorySection2';
-import { DATASETSDATA, TAGS } from '../../constants/datasets';
+import { TAGS } from '../../constants/datasets';
 import { getAlldatasets } from '../../api/dataset';
-import DatasetCard from '../../components/Datasets/DataSetcategorySection/components/DatasetCard';
 
 const DatasetsScreen = () => {
-
+    const navigate = useNavigate();
     const [searchText, setSearchText] = useState('');
     const [tileView, setTileView] = useState(false);
 
@@ -19,15 +17,13 @@ const DatasetsScreen = () => {
         console.log('searchText', searchText);
         setSearchText(val);
         if (val) {
-            <Navbar/>
             setTileView(true);
-        } else if (val?.length == 0) {
+        } else if (val?.length === 0) {
             setTileView(false);
         }
-    }
+    };
 
     const [fetcheddatasetsarr, setFetcheddatasetarr] = useState([]);
-
     const [filter, setFilter] = useState(false);
     const [filterarr, setFiltersArr] = useState([]);
 
@@ -35,7 +31,7 @@ const DatasetsScreen = () => {
         const arr = filterarr;
 
         if (arr?.includes(tagdata?.title)) {
-            if (tagdata.activestatus == false) {
+            if (tagdata.activestatus === false) {
                 arr.splice(arr.indexOf(tagdata?.title), 1);
             }
         } else {
@@ -46,115 +42,76 @@ const DatasetsScreen = () => {
 
         if (arr.length > 0) {
             setFilter(true);
+        } else {
+            setFilter(false);
         }
 
-        setFilter(arr);
+        setFiltersArr(arr);
 
-
-        // setFilter(filterarr?.length > 0);
-        // if (arr.includes(tagdata?.title)) {
-        //     console.log("tag data : ", tagdata);
-        // } else {
-        //     setFiltersArr([...filterarr, tagdata?.title]);
-        // }
-
-        console.log("filter array is : ", arr)
-    }
+        console.log("filter array is : ", arr);
+    };
 
     const handleGetAllDatasets = async () => {
         const resp = await getAlldatasets();
-        console.log("resp in data is  : ", resp)
+        console.log("resp in data is  : ", resp);
         setFetcheddatasetarr(resp);
-    }
+    };
 
     useEffect(() => {
         handleGetAllDatasets();
-    }, [])
-
+    }, []);
 
     return (
-        <div className={""}>
-            {/* <Navbar /> */}
-            <div className={`  font-poppins p-8  `}>
-                <div className='flex flex-col gap-4'>
-                    <div className={""}>
-                        <p className="text-3xl" >Datasets</p>
-                        <p>Explore, analyze, and share quality data. Learn more about data types, creating, and collaborating.</p>
+        <div className="min-h-screen bg-gray-100 p-8">
+            <div className="bg-customBlue text-white p-6 rounded-lg shadow-lg mb-8">
+                <h1 className="text-3xl font-bold">Datasets</h1>
+                <p className="text-lg mt-2">Explore, analyze, and share quality data. Learn more about data types, creating, and collaborating.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+                <div className="flex justify-between items-center mb-6">
+                    <CustomButton 
+                        label={"New Dataset"} 
+                        icon={<FaPlus />} 
+                        onClick={() => navigate('/new-dataset')} 
+                        bgcolor={"bg-customBlue"}
+                        className="bg-customBlue text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition"
+                    />
+                    <CustomButton 
+                        label={"Reset Filters"} 
+                        onClick={() => { setFiltersArr([]); setFilter(false); }} 
+                        bgcolor={"bg-customBlue"}
+                        className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md shadow hover:bg-gray-400 transition"
+                    />
+                </div>
+                <div className="flex flex-col gap-4 mb-6">
+                    <CustomInput onchangetext={(val) => handleSearchClick(val)} />
+                    <div className="flex gap-2 items-center flex-wrap">
+                        {TAGS?.map((item) => (
+                            <Tag key={item.title} title={item.title} active={item.active} onclick={getSelectedTag} />
+                        ))}
                     </div>
-                    <div className='flex flex-col gap-4'>
-                        <div>
-                            <CustomButton label={"New Dataset"} icon={<FaPlus />} />
-                        </div>
-                        <div className='flex flex-col gap-2'>
-                            <CustomInput onchangetext={(val) => handleSearchClick(val)} />
-                            <div className='flex gap-2 items-center flex-wrap'>
-                                {TAGS?.map((item) => {
-                                    return (
-                                        <Tag title={item.title} active={item.active} onclick={getSelectedTag} />
-                                    )
-                                })}
-                            </div>
-                        </div>
-                        <div>
-                            <CustomButton label={"Reset Filters"} clickaction={() => { setFiltersArr([]) }} />
-                        </div>
-                    </div>
-
-                    <div className="flex py-10 flex-col">
-                        {/*                         
-                        {filter ? filterarr?.map((filterval) => {
-                            return DATASETSDATA?.map((item, index) => {
-                                if (item.heading == filterval) {
-                                    return (
-                                        <>
-                                            <DataSetcategorySection2 key={item.heading} data={item} />
-                                            <div className='w-full h-[0.1px] bg-black/20 my-14 rounded-l'></div>
-                                        </>
-                                    )
-                                }
-                            })
-                        }) : 
-                        !tileView ?
-                            DATASETSDATA?.map((item, index) => {
-                                return (
-                                    <>
-                                        <DataSetcategorySection key={item.heading} data={item} />
-                                        <div className='w-full h-[0.1px] bg-black/20 my-14 rounded-l'></div>
-                                    </>
-                                )
-                            })
-                            :
-                            DATASETSDATA?.map((item, index) => {
-                                return (
-                                    <>
-                                        <DataSetcategorySection2 key={index} data={item} />
-                                        <div className='w-full h-[0.1px] bg-black/20 my-14 rounded-l'></div>
-                                    </>
-                                )
-                            })
-                        
-                        } */}
-
-                        {/* {fetcheddatasetsarr.map((item, index) =>{ */}
-                        {/* return( <DataSetcategorySection data={item} key={index} /> ) */}
-                        {fetcheddatasetsarr?.length > 0 &&
-                            <DataSetcategorySection data={fetcheddatasetsarr} />
-                        }
-
-
-                    </div>
-                    <div className='pb-20'>
-                        <div className='flex flex-col gap-4 items-center justify-center text-center'>
-                            <p className='font-semibold text-5xl'>Didn't Find What You are Looking for?</p>
-                            <div className='flex'>
-                                <p className='text-white bg-black px-8 py-2 cursor-pointer hover:scale-95 rounded-3xl'>Explore all public datasets</p>
-                            </div>
+                </div>
+                <div className="flex flex-col gap-6">
+                    {fetcheddatasetsarr.length > 0 && (
+                        <DataSetcategorySection data={fetcheddatasetsarr} />
+                    )}
+                </div>
+                <div className="pb-20 mt-16">
+                    <div className="flex flex-col gap-4 items-center justify-center text-center">
+                        <p className="font-semibold text-5xl">Didn't Find What You are Looking for?</p>
+                        <div className="flex">
+                            <p 
+                                className="text-white text-xl bg-customBlue px-10 py-3 mt-6 cursor-pointer hover:scale-95 rounded-3xl transition" 
+                                onClick={() => navigate('/public-datasets')}
+                            >
+                                Explore all public datasets
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 };
 
-export default DatasetsScreen
+export default DatasetsScreen;

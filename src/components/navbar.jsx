@@ -31,9 +31,9 @@ const Navbar = () => {
           className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
             isActive('/app/courses') ? 'bg-customDarkBlue text-white font-semibold' : 'bg-transparent text-customDarkBlue'
           }`}
-          onClick={() => navigate('/app/courses')}
+          onClick={() => navigate('/app/courses/catalog')}
         >
-          Learning
+          Courses
         </button>
         <button
           className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${

@@ -1,0 +1,105 @@
+import React from 'react';
+import { FaComments, FaFire, FaUserCircle } from 'react-icons/fa'; // Icons for discussions
+import { useNavigate } from 'react-router-dom';
+
+const discussionsData = [
+  {
+    id: 1,
+    title: 'How to improve model accuracy for classification tasks?',
+    author: 'John Doe',
+    replies: 12,
+    tags: ['Machine Learning', 'Classification', 'Model Tuning'],
+    lastReply: '2 hours ago',
+  },
+  {
+    id: 2,
+    title: 'Best practices for handling large datasets in Python',
+    author: 'Alice Williams',
+    replies: 8,
+    tags: ['Data Processing', 'Python', 'Pandas'],
+    lastReply: '1 day ago',
+  },
+  // Add more discussions
+];
+
+const DiscussionMainPage = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      {/* Header */}
+      <div className="flex justify-between items-center bg-customBlue text-white p-6 rounded-md shadow-lg mb-8">
+        <h1 className="text-3xl font-bold">Discussions</h1>
+        <div className="flex items-center space-x-4">
+          <input
+            type="text"
+            className="p-2 rounded-md text-black"
+            placeholder="Search discussions..."
+          />
+          <button
+            onClick={() => navigate('/app/your-discussions')}
+            className="bg-white text-customBlue px-4 py-2 rounded-md hover:bg-blue-100 transition"
+          >
+            Your Discussions
+          </button>
+        </div>
+      </div>
+
+      {/* Trending Section */}
+      <div className="bg-white p-6 rounded-md shadow-md mb-8">
+        <h2 className="text-2xl font-semibold text-customBlue mb-4 flex items-center">
+          <FaFire className="mr-2" /> Trending Discussions
+        </h2>
+        <div className="flex space-x-6 overflow-x-auto">
+          {discussionsData.map((discussion) => (
+            <div key={discussion.id} className="bg-gray-50 p-4 rounded-md shadow-md w-72 flex-shrink-0">
+              <h3 className="text-lg font-bold mb-2 text-customDarkBlue">{discussion.title}</h3>
+              <p className="text-gray-600">by {discussion.author}</p>
+              <div className="flex space-x-2 mt-2">
+                {discussion.tags.map((tag, idx) => (
+                  <span
+                    key={idx}
+                    className="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-md"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <p className="text-sm text-gray-400 mt-4">{discussion.replies} replies • Last reply {discussion.lastReply}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Discussion List */}
+      <div className="bg-white p-6 rounded-md shadow-md">
+        <h2 className="text-2xl font-semibold text-customBlue mb-4">All Discussions</h2>
+        {discussionsData.map((discussion) => (
+          <div
+            key={discussion.id}
+            className="border-b last:border-b-0 py-4 flex items-center justify-between"
+          >
+            <div className="flex items-center">
+              <FaUserCircle className="text-gray-500 w-8 h-8 mr-4" />
+              <div>
+                <h3 className="text-lg font-bold text-customBlack">{discussion.title}</h3>
+                <p className="text-gray-600">Started by {discussion.author}</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <p className="text-gray-500">{discussion.replies} replies</p>
+              <button
+                onClick={() => navigate(`/app/discussion`)}
+                className="text-customBlue underline"
+              >
+                View Discussion
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default DiscussionMainPage;

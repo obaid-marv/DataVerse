@@ -4,8 +4,10 @@ import { MdGroupAdd, MdPersonAdd, MdGroups } from "react-icons/md";
 import { FaUserPlus } from "react-icons/fa";
 import { pendingInvitations } from "../../constants/pendingInvitations";
 import { suggestedConnections } from "../../constants/suggestedConnections";
+import { useNavigate } from "react-router-dom";
 
 const NetworkScreen = () => {
+  const navigate = useNavigate();
   const [pendingInvites, setPendingInvites] = useState(pendingInvitations);
   const [connectionSuggestions, setConnectionSuggestions] =
     useState(suggestedConnections);
@@ -52,7 +54,8 @@ const NetworkScreen = () => {
               ? pendingInvites.map((invite) => (
                   <div
                     key={invite.id}
-                    className="flex items-center justify-between w-full p-4 border-b border-gray-300"
+                    className="flex items-center justify-between w-full p-4 border-b border-gray-300 cursor-pointer"
+                    onClick={() => navigate("/connection/post-screen/user")}
                   >
                     <div className="flex items-center">
                       <img
@@ -79,7 +82,8 @@ const NetworkScreen = () => {
               : pendingInvites.slice(0, 2).map((invite) => (
                   <div
                     key={invite.id}
-                    className="flex items-center justify-between w-full p-4 border-b border-gray-300"
+                    className="flex items-center justify-between w-full p-4 border-b border-gray-300 cursor-pointer"
+                    onClick={() => navigate("/connection/post-screen/user")}
                   >
                     <div className="flex items-center">
                       <img
@@ -113,7 +117,8 @@ const NetworkScreen = () => {
             {connectionSuggestions.map((suggestion) => (
               <div
                 key={suggestion.id}
-                className="bg-white p-4 rounded-md shadow-md flex items-center justify-between"
+                onClick={() => navigate("/connection/post-screen/user")}
+                className="bg-white p-4 rounded-md shadow-md flex items-center justify-between cursor-pointer"
               >
                 <div className="flex items-center">
                   <img

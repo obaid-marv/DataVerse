@@ -11,6 +11,21 @@ export const postsContent = [
       comments: 4,
       shares: 2,
       imageUrl: IMAGES.image1, // Image URL for the post
+      comments: [
+        {
+          profileImg: IMAGES.avatar3,
+          author: 'Jane Smith',
+          timestamp: '1 hour ago',
+          content: 'This is a sample comment',
+        },
+        {
+          profileImg:  IMAGES.avatar8,
+          author: 'Jane Smith',
+          timestamp: '1 hour ago',
+          content: 'This is a sample comment',
+        },
+    ],
+    showComments: true,
     },
     {
       id: 2,
@@ -23,6 +38,15 @@ export const postsContent = [
       comments: 10,
       shares: 5,
       imageUrl: null, // Image URL for the post
+      comments: [
+        {
+          profileImg: IMAGES.avatar4,
+          author: 'Jane Smith',
+          timestamp: '1 hour ago',
+          content: 'This is a sample comment',
+        },
+      ],
+    showComments: true,
     },
     {
       id: 3,
@@ -35,6 +59,8 @@ export const postsContent = [
       comments: 10,
       shares: 5,
       imageUrl: IMAGES.course_cover, // Image URL for the post
+      comments: [],
+    showComments: false,
     },
     {
       id: 4,
@@ -47,5 +73,7 @@ export const postsContent = [
       comments: 10,
       shares: 5,
       imageUrl: "https://via.placeholder.com/400x300", // Image URL for the post
+      comments: [],
+    showComments: false,
     },
   ]
