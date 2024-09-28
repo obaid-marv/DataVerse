@@ -177,3 +177,19 @@ export const updateProfile = async (req, res, next) => {
   }
 };
 
+export const getAllUsers = async (req, res, next) => {
+    try{
+
+        const users = await User.find({});
+
+        if(users.length==0)
+            return res.status(404).json({ message: "Users not found!"})
+
+        res.status(200).json({ message: "Users fetched successfully!", users})
+
+    }
+    catch(err){
+        next(err)
+    }
+}
+

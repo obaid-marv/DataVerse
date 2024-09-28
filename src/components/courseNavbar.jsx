@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // Combined import for React and useState
+import React, { useEffect, useState } from "react"; // Combined import for React and useState
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/vite.svg"
@@ -17,27 +17,39 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "./Loader/Loader";
+import { fetchSingleCourse } from "../redux/course/CourseSlice";
 
 const CourseNavbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showOverview, setShowOverview] = useState(false);
   const [open, setOpen] = useState(false);
   const { courseId } = useParams();
+  const course = useSelector((state) => state.course.course);
 
-  const courses = useSelector((state) => state.courses.courses );
-  console.log(courses)
 
   const handleOpen = () => setOpen(!open);
   
   const handleToggleOverview = () => {
     setShowOverview(!showOverview);
   };
+
+  useEffect(()=>{
+
+    const fetchCourse = async ()=>{     
+      await dispatch(fetchSingleCourse(courseId))
+    }
+    if(!course)
+      fetchCourse();
+    
+  },[dispatch])
   
 
   return (
-    <div className="bg-gray-100 shadow-md p-2 flex items-center justify-between w-full">
-      <div className="flex space-x-1 items-center font-poppins">
+    <div className="bg-gray-100 shadow-md p-2 flex items-center w-full">
+      <div className="flex flex-1 space-x-1 items-center font-poppins">
         <div className="flex items-center h-6 px-1 rounded-md hover:bg-gray-200 cursor-pointer">
             <img src={logo} alt="" className="w-6 h-6"/>
             <p className="text-sm font-medium">DataVerse</p>
@@ -47,8 +59,14 @@ const CourseNavbar = () => {
             <p className="text-sm font-medium">course</p>
         </div>
         <p className="text-xs font-semibold cursor-default">/</p>
+        <div className="flex items-center h-6 px-1 rounded-md hover:bg-gray-200 cursor-pointer">
+            {course?
+              <p className="text-sm font-medium">{course.title}</p>:
+              <Loader/>
+            }
+        </div>
       </div>
-      <div className="flex items-center ml-44">
+      <div className="flex flex-1 items-center">
         <button className="mr-2 border-2 border-gray-500 hover:bg-gray-300 px-2 py-1">
           <FontAwesomeIcon icon={faChevronLeft} className="text-gray-700" />
         </button>

@@ -204,7 +204,7 @@ export const routes = createBrowserRouter([
         element: <VideoScreen />,
       },
       {
-        path: "/course-started/code-screen",
+        path: "/course-started/code-screen/:courseId/:index",
         element: <CodeScreen />,
       },
     ],

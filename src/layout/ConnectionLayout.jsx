@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CourseNavbar from '../components/courseNavbar';
 import { Outlet } from 'react-router-dom';
 import ConnectionNavbar from '../components/Navbar/ConnectionNavbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserDetails } from '../redux/auth/AuthSlice';
 
 export default function ConnectionLayout() {
   
+
+  const { token, status, user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (token && status === 'idle' && !user ) {
+      dispatch(fetchUserDetails());
+    }
+  }, [dispatch]);
+
     return (
         <div className="h-screen w-screen flex flex-row bg-white overflow-hidden">    
           {/* Main Content Section */}

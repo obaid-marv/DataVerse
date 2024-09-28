@@ -1,42 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { GoDotFill } from "react-icons/go";
+// src/components/Profile/ChatCard.js
+import React from "react";
 
-export default function ChatCard({ img, name, lastSeen, msgShown, status }) {
-  const [msgReceived, setMsgReceived] = useState(false);
-
-  useEffect(() => {
-    if (msgShown.includes("You:")) {
-      setMsgReceived(true);
-    } else {
-      setMsgReceived(false);
-    }
-  }, [msgShown]);
-
+const ChatCard = ({ img, name, lastSeen, msgShown, status, onClick, isSelected }) => {
   return (
-    <div className="flex p-2 items-center relative">
-      {status === "online" && (
-        <GoDotFill
-          className="absolute bottom-1 left-1 text-customOnlineColor"
-          size={20}
-        />
-      )}
-      <img src={img} alt="Avatar" className="w-[38px] h-[38px]" />
-
-      <div className="flex w-full flex-col ml-2">
-        <div className="flex justify-between text-customBlackGreyish font-medium ">
-          <p className="text-sm">{name}</p>
-          <p className="text-xxs text-customLightGrayShade hidden lg:flex">
-            {lastSeen}
-          </p>
+    <div
+      onClick={onClick}
+      className={`flex items-center p-3 cursor-pointer rounded-lg ${
+        isSelected ? "bg-blue-100" : "hover:scale-105 transition-all duration-200"
+      }`}
+    >
+      {img==null?
+      <div className="w-[38px] h-[38px] rounded-full flex items-center justify-center bg-white">
+        <p className="font-bold text-2xl">{name.at(0).toUpperCase()}</p>
+      </div>
+      :
+        <img src={img} alt="Avatar" className="w-[38px] h-[38px] rounded-full" />
+    
+      
+      }
+      <div className="ml-3 flex-1">
+        <div className="flex justify-between">
+          <h5 className="text-sm font-semibold">{name}</h5>
+          <span className="text-xs text-gray-500">{lastSeen}</span>
         </div>
-        <p
-          className={`${
-            msgReceived ? "text-customLightGray" : "text-yellow-600"
-          } text-xs font-medium hidden smMd:flex md:hidden lg:flex`}
-        >
-          {msgShown}
-        </p>
+        <div className="flex justify-between">
+          <p className="text-xs text-gray-600 truncate">{msgShown}</p>
+          <span className={`text-xs ${status === "online" ? "text-green-500" : "text-red-500"}`}>
+            {status}
+          </span>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default ChatCard;

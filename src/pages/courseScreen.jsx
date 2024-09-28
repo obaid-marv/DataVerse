@@ -6,6 +6,7 @@ import courseIll from "../assets/course-ills.svg"
 import { FaRegClock } from "react-icons/fa6";
 import { IoPlayOutline } from "react-icons/io5";
 import { IoCode } from "react-icons/io5";
+import { ToastContainer } from 'react-toastify';
 import { GoPeople } from "react-icons/go";
 import { useEffect, useState } from "react";
 import {
@@ -21,6 +22,7 @@ import { enrollCourse, fetchSingleCourse, setCurrentLecture } from "../redux/cou
 import { fetchUserProgress } from "../redux/course/ProgressSlice";
 
 import { motion } from 'framer-motion';
+import { toast } from "react-toastify";
 
 const EnrollmentPopup = ({ onClose }) => {
   return (
@@ -91,11 +93,10 @@ const CourseScreen = () => {
     } else {
       try {
         await dispatch(enrollCourse(courseId)).unwrap();
-        setShowPopup(true);
+          toast.success("Enrolled Successfully!")
         await dispatch(fetchUserProgress()) 
       } catch (error) {
-        console.error("Enrollment failed", error);
-
+        toast.error("Unable to enroll in course");
       }
     }
   };
@@ -348,6 +349,7 @@ const CourseScreen = () => {
         navigate(`/course-started/video-screen/${courseId}/${currentLecture}`)
       }
       } />}
+      <ToastContainer/>
     </div>
   );
 };
