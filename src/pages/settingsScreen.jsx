@@ -41,7 +41,7 @@ const SettingsScreen = () => {
       >
         <div className="flex flex-col w-full py-6 px-3 rounded-3xl font-semibold text-customDarkBlue font-poppins">
           {/* Heading  */}
-          <div className="flex text-4xl">My Profile</div>
+          <div className="flex text-4xl ml-2 mb-4 bg-customBlue2 text-white rounded-xl p-4 px-6 mt-6">My Profile</div>
 
           {/* Pic and Details */}
           <div className="flex flex-row justify-start space-x-8 p-8">
@@ -66,12 +66,12 @@ const SettingsScreen = () => {
           </div>
 
           {/* Buttons  */}
-          <div className="px-5">
+          <div className="px-5 bg-gray-200 py-4">
             <p className="mb-3 ml-2">Account</p>
             <div>
                 <div
                   onClick={handleEditProfile}
-                  className="flex items-center space-x-3 rounded-lg hover:bg-slate-200 p-2 cursor-pointer"
+                  className="flex items-center space-x-3 rounded-lg hover:bg-blue-200 p-2 cursor-pointer"
                 >
                   <div className={`bg-customPurpleShade p-3 rounded-lg`}>
                     <MdEditDocument color="purple"/>
@@ -82,7 +82,7 @@ const SettingsScreen = () => {
                 </div>
                 <div
                   onClick={handlePrivacyPolicy}
-                  className="flex items-center space-x-3 rounded-lg hover:bg-slate-200 p-2 cursor-pointer"
+                  className="flex items-center space-x-3 rounded-lg hover:bg-blue-200 p-2 cursor-pointer"
                 >
                   <div className={`bg-customLightBlueShade p-3 rounded-lg`}>
                     <img
@@ -97,7 +97,7 @@ const SettingsScreen = () => {
                 </div>
                 <div
                   onClick={handleTermsConditions}
-                  className="flex items-center space-x-3 rounded-lg hover:bg-slate-200 p-2 cursor-pointer"
+                  className="flex items-center space-x-3 rounded-lg hover:bg-blue-200 p-2 cursor-pointer"
                 >
                   <div className={`bg-customLightYellowShade p-3 rounded-lg`}>
                     <img
@@ -112,7 +112,7 @@ const SettingsScreen = () => {
                 </div>
                 <div
                   onClick={handleLogout}
-                  className="flex items-center space-x-3 rounded-lg hover:bg-slate-200 p-2 cursor-pointer"
+                  className="flex items-center space-x-3 rounded-lg hover:bg-blue-200 p-2 cursor-pointer"
                 >
                   <div className={`bg-customLightRedShade p-3 rounded-lg`}>
                     <img

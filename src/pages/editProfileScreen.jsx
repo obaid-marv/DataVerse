@@ -161,7 +161,7 @@ const EditProfile = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"
+            className="w-full bg-customBlue text-white p-2 rounded-md hover:bg-blue-600 transition"
           >
             Save Changes
           </button>

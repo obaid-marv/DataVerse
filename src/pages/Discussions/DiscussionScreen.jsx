@@ -28,7 +28,7 @@ const DiscussionMainPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       {/* Header */}
-      <div className="flex justify-between items-center bg-customBlue text-white p-6 rounded-md shadow-lg mb-8">
+      <div className="flex justify-between items-center bg-customBlue2 text-white p-6 rounded-md shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Discussions</h1>
         <div className="flex items-center space-x-4">
           <input
@@ -38,7 +38,7 @@ const DiscussionMainPage = () => {
           />
           <button
             onClick={() => navigate('/app/your-discussions')}
-            className="bg-white text-customBlue px-4 py-2 rounded-md hover:bg-blue-100 transition"
+            className="bg-white text-customBlue font-semibold border-2 border-theme px-4 py-2 rounded-md hover:bg-blue-100 transition"
           >
             Your Discussions
           </button>

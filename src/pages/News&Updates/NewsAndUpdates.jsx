@@ -61,7 +61,7 @@ const NewsAndUpdates = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Header */}
-      <header className="bg-customBlue text-white py-4 rounded-2xl">
+      <header className="bg-customBlue2 text-white py-4 rounded-2xl">
         <div className="container mx-auto flex justify-between items-center px-3">
           <h1 className="text-xl font-bold ml-2">News & Updates</h1>
           <nav>
@@ -144,7 +144,7 @@ const NewsAndUpdates = () => {
         </section>
 
         {/* Upcoming Events Section */}
-        <section className="bg-customBlue text-white p-6 rounded-md">
+        <section className="bg-customBlue2 text-white p-6 rounded-md">
           <h3 className="text-2xl font-bold mb-4">Upcoming Events</h3>
           <ul>
             <li className="mb-2">
