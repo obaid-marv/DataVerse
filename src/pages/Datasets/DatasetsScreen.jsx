@@ -74,7 +74,7 @@ const DatasetsScreen = () => {
 
     return (
         <div className="min-h-screen bg-gray-100 p-8">
-            <div className="bg-customBlue text-white p-6 rounded-lg shadow-lg mb-8">
+            <div className="bg-customBlue2 text-white p-6 rounded-lg shadow-lg mb-8">
                 <h1 className="text-3xl font-bold">Datasets</h1>
                 <p className="text-lg mt-2">Explore, analyze, and share quality data. Learn more about data types, creating, and collaborating.</p>
             </div>
@@ -84,13 +84,13 @@ const DatasetsScreen = () => {
                         label={"New Dataset"} 
                         icon={<FaPlus />} 
                         onClick={() => navigate('/app/datasets/new-dataset')} 
-                        bgcolor={"bg-customBlue"}
+                        bgcolor={"bg-customBlue2"}
                         className="bg-customBlue text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition"
                     />
                     <CustomButton 
                         label={"Reset Filters"} 
                         onClick={handleResetFilters} 
-                        bgcolor={"bg-customBlue"}
+                        bgcolor={"bg-customBlue2"}
                         className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md shadow hover:bg-gray-400 transition"
                     />
                 </div>

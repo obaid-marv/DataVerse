@@ -26,7 +26,7 @@ const FollowedDiscussions = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <div className="bg-customBlue text-white p-6 rounded-md shadow-lg mb-8">
+      <div className="bg-customBlue2 text-white p-6 rounded-md shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Followed Discussions</h1>
         <p className="text-lg mt-2">Manage the discussions you are following.</p>
       </div>

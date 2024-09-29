@@ -52,7 +52,7 @@ const Dashboard = () => {
   return (
     <div className="bg-white min-h-screen">
       <div className="max-w-screen-lg mt-4 mx-auto p-6 font-poppins">
-        <p className="text-3xl font-semibold text-customBlue">Dashboard</p>
+        <p className="text-3xl font-semibold text-customBlue2">Dashboard</p>
         {user ? (
           <p className="text-xl font-medium text-customDarkBlue mt-2">
             {`Hey, ${user.username}!`}

@@ -28,6 +28,7 @@ export default {
       colors: {
         theme: "#2D9CDB",
         customBlue: "#065a8a",
+        customBlue2: "#344054",
         customDarkBlue: "#001C27",
         textgrey: "#4F4F4F",
         trackgrey: "#F2F2F2",
