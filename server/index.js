@@ -10,6 +10,7 @@ import lectureRoute from "./routes/learning/lecture.js";
 import quizRoute from "./routes/learning/quiz.js";
 import datasetRoute from "./routes/dataset.js";
 import messageRoutes from "./routes/message.js"; 
+import newsRoutes from "./routes/news.js"
 import cors from "cors";
 import http from "http";
 import initSocket from "./config/socket.js";
@@ -58,6 +59,7 @@ app.use("/api/learning/course", courseRoute);
 app.use("/api/learning/lecture", lectureRoute);
 app.use("/api/learning/quiz", quizRoute);
 app.use("/api/messages", messageRoutes); 
+app.use("/api/news", newsRoutes); 
 
 // Health Check Route
 app.get("/", (req, res) => {
