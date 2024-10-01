@@ -1,4 +1,4 @@
-// server.js
+
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -10,7 +10,8 @@ import lectureRoute from "./routes/learning/lecture.js";
 import quizRoute from "./routes/learning/quiz.js";
 import datasetRoute from "./routes/dataset.js";
 import messageRoutes from "./routes/message.js"; 
-import newsRoutes from "./routes/news.js"
+import newsRoutes from "./routes/news.js";
+import companyRoutes from "./routes/company.js";
 import cors from "cors";
 import http from "http";
 import initSocket from "./config/socket.js";
@@ -19,10 +20,8 @@ dotenv.config();
 
 const app = express();
 
-// Create the HTTP server
 const server = http.createServer(app);
 
-// Initialize Socket.IO with the server
 initSocket(server);
 
 // MongoDB Connection
@@ -40,7 +39,6 @@ mongoose.connection.on("disconnected", () => {
   console.log("MongoDB Disconnected");
 });
 
-// Middleware
 app.use(
   cors({
     origin: ["http://localhost:5173", "http://localhost:5174"], 
@@ -52,7 +50,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// Routes
 app.use("/api/auth", authRoute);
 app.use("/api/dataset", datasetRoute);
 app.use("/api/learning/course", courseRoute);
@@ -60,13 +57,12 @@ app.use("/api/learning/lecture", lectureRoute);
 app.use("/api/learning/quiz", quizRoute);
 app.use("/api/messages", messageRoutes); 
 app.use("/api/news", newsRoutes); 
+app.use("/api/company", companyRoutes); 
 
-// Health Check Route
 app.get("/", (req, res) => {
   res.send("Hello API");
 });
 
-// Start the server
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   connectdb();
