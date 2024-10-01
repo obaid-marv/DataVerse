@@ -22,6 +22,17 @@ export const fetchSingleCourse = createAsyncThunk(
   }
 );
 
+export const completeLecture = createAsyncThunk(
+'courses/completeLecture',
+  async ({lectureId, courseId}, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(`/learning/lecture/completed/${courseId}/${lectureId}`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 
 export const enrollCourse = createAsyncThunk(
@@ -45,6 +56,9 @@ const courseSlice = createSlice({
         state.currentLecture = action.payload;
 
       },
+      goToNextLecture: (state, action) => {
+        state.currentLecture = state.currentLecture+1;
+      }
 
   },
   extraReducers: (builder) => {
@@ -69,7 +83,6 @@ const courseSlice = createSlice({
       .addCase(enrollCourse.fulfilled, (state) => {
         state.status = 'idle';
         state.currentLecture = 1;
-        console.log("currentlecture in slice :", state.currentLecture)
         state.error = null;
       })
       .addCase(enrollCourse.rejected, (state, action) => {
@@ -80,5 +93,5 @@ const courseSlice = createSlice({
 });
 
 
-export const { setCurrentLecture } = courseSlice.actions;
+export const { setCurrentLecture, goToNextLecture } = courseSlice.actions;
 export default courseSlice.reducer;

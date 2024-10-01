@@ -36,3 +36,10 @@
     background: #2D9CDB;
     border-radius: 5px;
   }
+  strong{
+    background-color: antiquewhite;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    border-radius: 5px;
+    font-weight: 600;
+  }

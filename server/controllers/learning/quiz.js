@@ -17,7 +17,7 @@ export const createQuiz = async (req, res) => {
     } = req.body;
 
     if (!excercise || !type || !title || !instructions) {
-      return res.status(400).json({ message: 'Question and type, title, instructions are required' });
+      return res.status(400).json({ message: 'Question, type, title, and instructions are required' });
     }
 
     if (type === 'multiple-choice') {
@@ -58,9 +58,7 @@ export const createQuiz = async (req, res) => {
       hints,
     });
 
-
     const savedQuestion = await newQuestion.save();
-
     return res.status(201).json(savedQuestion);
   } catch (error) {
     console.error('Error creating quiz question:', error);
@@ -68,34 +66,52 @@ export const createQuiz = async (req, res) => {
   }
 };
 
-
-export const getAllQuiz = async (req,res,next) => {
-  try{
+export const getAllQuiz = async (req, res, next) => {
+  try {
     const allQuiz = await Quiz.find({}).select('_id title');
 
-    if(allQuiz.length==0)
-      return res.status(404).json({ message: "No quiz currently!"});
+    if (allQuiz.length == 0)
+      return res.status(404).json({ message: "No quiz currently!" });
 
-    return res.status(200).json({ message: "Quiz found!", allQuiz});
+    return res.status(200).json({ message: "Quiz found!", allQuiz });
+  } catch (err) {
+    next(err);
   }
-  catch(err){
-    next(err)
-  }
-}
+};
 
-
-export const getQuiz = async (req,res,next) => {
-  
-  const quizId = req.params.quizId
-  try{
+export const getQuiz = async (req, res, next) => {
+  const quizId = req.params.quizId;
+  try {
     const quiz = await Quiz.findById(quizId);
-    
-    if(!quiz)
-      return res.status(404).json({ message: "Quiz not found!"})
 
-    return res.status(200).json({ message: "Quiz fetched Successfully", quiz});
+    if (!quiz)
+      return res.status(404).json({ message: "Quiz not found!" });
+
+    return res.status(200).json({ message: "Quiz fetched successfully", quiz });
+  } catch (err) {
+    next(err);
   }
-  catch(err){
-    next(err)
+};
+
+export const updateQuiz = async (req, res, next) => {
+  const quizId = req.params.quizId;
+  const updates = req.body;
+
+  try {
+
+    const updatedQuiz = await Quiz.findByIdAndUpdate(
+      quizId,
+      { $set: updates },
+      { new: true, runValidators: true } 
+    );
+
+    if (!updatedQuiz) {
+      return res.status(404).json({ message: "Quiz not found!" });
+    }
+
+    return res.status(200).json({ message: "Quiz updated successfully", updatedQuiz });
+  } catch (err) {
+    console.error('Error updating quiz:', err);
+    return res.status(500).json({ message: "Internal server error" });
   }
-}
+};

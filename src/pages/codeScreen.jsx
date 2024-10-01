@@ -6,20 +6,29 @@ import { GoNote } from "react-icons/go";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../config/api";
 import { toast, ToastContainer } from "react-toastify";
+import Loader from "../components/Loader";
+import { completeLecture, goToNextLecture, setCurrentLecture } from "../redux/course/CourseSlice";
+import { current } from "@reduxjs/toolkit";
 
 const CodeExerciseScreen = () => {
+  const [isCorrect, setIsCorrect] = useState(null);
+  const [submissionFeedback, setSubmissionFeedback] = useState('');
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [quiz, setQuiz] = useState();
   const [dark, setDark] = useState(true);
   const [hints, setHints] = useState([]);
   const [hintCount, setHintCount] = useState(0);
+  const dispatch = useDispatch();
   const { courseId, index } = useParams();
+  const navigate = useNavigate();
   const course = useSelector((state) => state.course.course);
+  const currentLecture = useSelector((state)=>state.course.currentLecture);
+  console.log("current lec: ", currentLecture);
 
   const fetchQuiz = async () =>{
     const lecture = course?.lectures[index-1];
@@ -40,18 +49,82 @@ const CodeExerciseScreen = () => {
 
   },[course])
 
-  const instructions = [
-    "Follow the coding standards.",
-    "Write clean and readable code.",
-    "Submit the code for review.",
-    "Test your code with different inputs."
-  ];
+  const normalizeCode = (code) => {
+    // Remove comments (single-line and multi-line)
+    const codeWithoutComments = code
+      .replace(/#.*$/gm, '') // Remove single-line comments
+      .replace(/""".*?"""/gs, '') // Remove multi-line comments (triple quotes)
+      .replace(/'''.*?'''/gs, ''); // Remove multi-line comments (single quotes)
+  
+    // Remove extra whitespace and newline characters
+    const normalized = codeWithoutComments
+      .split('\n')
+      .map(line => line.trim()) // Trim each line
+      .filter(line => line) // Remove empty lines
+      .join('\n'); // Join back into a single string
+  
+    return normalized;
+  };
+  
+
+  const handleSubmitAnswer = async () => {
+    
+    const userOutput = await handleExecuteCode(code);
+    
+    const correctOutput = await handleExecuteCode(quiz.correctCode);
+  
+    if (userOutput.trim() === correctOutput.trim()) {
+      toast.success("Correct Answer!")
+      const lecture = course.lectures.find(lecture=> lecture.index==index);
+      const lectureId = lecture._id;
+      console.log("lectureid:", lectureId)
+      console.log("courseID:", courseId)
+      await dispatch(completeLecture({lectureId, courseId}))
+      
+      if(course.lectures.length==index){
+        toast.success("Course Completed Successfully")
+        navigate("/app/dashboard");
+      }
+      else{
+        const num = parseInt(index, 10);;
+        dispatch(setCurrentLecture(num+1));
+      }
+        
+
+    } else {
+      setSubmissionFeedback('Incorrect. Please try again.');
+    }
+  };
+  
+  const handleExecuteCode = async (codeToExecute) => {
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/execute", {
+        code: codeToExecute,
+      });
+      return response.data.output; 
+    } catch (err) {
+      return `Error: ${err.message}`; 
+    }
+  };
+  
+
+  useEffect(()=>{
+
+    if(!currentLecture)
+      dispatch(setCurrentLecture(index));
+
+    if(currentLecture>index)
+      navigate(`/course-started/video-screen/${courseId}/${currentLecture}`);
+
+   } ,[dispatch, currentLecture]);
 
   const handleRunCode = async () => {
+    console.log("running code")
     try {
       const response = await axios.post("http://127.0.0.1:5000/execute", {
         code: code,
       });
+      console.log("response: ", response)
       setOutput(response.data.output);
     } catch (err) {
       setOutput(`Error: ${err.message}`);
@@ -87,21 +160,19 @@ const CodeExerciseScreen = () => {
   {/* Sidebar */}
   <div className="w-1/3 bg-white shadow-sm rounded-md overflow-auto">
     
-    {/* Exercise Section */}
     <div className="w-full h-64 flex flex-col">
-      {/* Exercise Heading */}
+
       <div className="sticky top-0 z-10 w-full h-7 py-1 px-4 bg-slate-200 flex-none">
         <p className="text-customDarkBlue font-semibold text-sm flex items-center">
           <span className="mr-2"><GoNote size={15} /></span>Exercise
         </p>
       </div>
-      {/* Exercise Instructions */}
       <div className="flex-1 p-2 overflow-y-auto">
-        <p className="text-sm">
-          Add detailed instructions here...
-          Add detailed instructions here...
-          {/* Add more instructions as needed */}
-        </p>
+        {quiz?
+          <p className="text-xs leading-tight" dangerouslySetInnerHTML={{ __html: quiz.excercise }} />
+        :
+        <Loader/>  
+      }
       </div>
     </div>
 
@@ -113,17 +184,18 @@ const CodeExerciseScreen = () => {
           <span className="mr-2"><FaRegCheckCircle size={12} /></span>Instructions
         </p>
       </div>
-      {/* Instruction Content */}
       <div className="flex-1 p-4 overflow-y-auto">
+       {quiz?        
         <ul className="list-disc pl-6 text-sm">
-          {instructions.map((point, index) => (
-            <li key={index} className="mb-1">
-              {point}
-            </li>
-          ))}
-        </ul>
-
-        {/* Hint Button */}
+        {quiz.instructions.map((point, index) => (
+          <li key={index} className="mb-1 text-sm leading-tight" dangerouslySetInnerHTML={{ __html: point }}>
+          </li>
+        ))}
+      </ul>
+      
+        :
+        <Loader/>
+        }
         <button
           onClick={addHint}
           className="w-36 hover:scale-110 transform-all duration-200 h-10 p-2 flex items-center text-sm font-semibold justify-center rounded-md border-2 border-customDarkBlue"
@@ -200,11 +272,12 @@ const CodeExerciseScreen = () => {
           <p>Run Code</p>
         </button>
         <button
-          onClick={handleRunCode}
+          onClick={handleSubmitAnswer} // Change here to call the new submission logic
           className="px-4 h-full py-1 bg-theme text-sm text-white rounded-sm"
         >
           Submit Answer!
         </button>
+
       </div>
     </div>
 
@@ -219,7 +292,15 @@ const CodeExerciseScreen = () => {
         <pre>{output}</pre>
       </div>
     </div>
+    <div className="mt-2">
+      {submissionFeedback && (
+        <p className={`text-sm ${isCorrect ? 'text-green-500' : 'text-red-500'}`}>
+          {submissionFeedback}
+        </p>
+      )}
+    </div>
   </div>
+  <ToastContainer/>
 </div>
 
   );
