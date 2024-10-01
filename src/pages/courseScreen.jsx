@@ -54,7 +54,7 @@ const CourseScreen = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("lessons");
   const [showPopup, setShowPopup] = useState(false);
-
+  const [completed, setCompleted] = useState(false);
   const { courseId } = useParams();
 
   const course = useSelector((state)=> state.course.course);
@@ -84,7 +84,12 @@ const CourseScreen = () => {
   const handleContinue = async () => {
     if (enrolledCourses?.some(course => course.courseId._id === courseId)) {
 
+
       const filteredCourse = enrolledCourses.find(course => courseId === course.courseId._id);
+      if(filteredCourse.lectureCompleted){
+        setCompleted(true);
+        return
+      }
       let max = 0
       if(filteredCourse.lectureCompleted.length!=0)
         max = Math.max(...filteredCourse.lectureCompleted);
@@ -108,6 +113,7 @@ const CourseScreen = () => {
 
     if(!enrolledCourses)
       fetchEnrolledCourses()
+
   },[dispatch])
 
 
@@ -162,7 +168,13 @@ const CourseScreen = () => {
               This course provides an in-depth introduction to machine learning techniques
               and data analysis, focusing on real-world applications and projects.
             </p>
+            {completed?
+            <div className="px-6 py-3 w-36 bg-customDarkBlue text-white rounded-lg font-semibold transition-all duration-200 transform-all hover:scale-105">
+              Completed!
+            </div>
+            :
             <div className="mt-6">
+            
             {enrolledCourses?.some(course=> course.courseId._id==courseId)?
             <button
               onClick={()=> handleContinue()}
@@ -177,7 +189,7 @@ const CourseScreen = () => {
             Start Now!
             </button>
             }
-          </div>
+          </div>}
           </div>
           
           

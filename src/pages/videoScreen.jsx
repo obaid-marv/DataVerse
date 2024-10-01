@@ -9,8 +9,6 @@ const VideoScreen = () => {
   const navigate = useNavigate();
   const { courseId, index } = useParams();
   const course = useSelector((state) => state.course.course);
-
-
   // Sample Transcript
   const transcript = `
     Welcome to this lesson. In this video, we will cover the basics of data science.
