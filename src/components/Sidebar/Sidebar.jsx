@@ -4,6 +4,7 @@ import { sidebar_links } from "../../constants/sidebarLinks";
 import { IoMenu } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/auth/AuthSlice";
+import { RiLogoutBoxLine } from "react-icons/ri";
 
 export default function Sidebar({ collapsed, toggleSidebar }) {
   const dispatch = useDispatch();
@@ -13,7 +14,6 @@ export default function Sidebar({ collapsed, toggleSidebar }) {
       className={`text-lightGrey1 min-h-screen bg-customDarkBlue mt-16 border-gray-200 transition-all ${
         collapsed ? "w-16" : "w-52"
       }`}
-  
     >
       {/* Logo Div */}
       <div
@@ -21,21 +21,48 @@ export default function Sidebar({ collapsed, toggleSidebar }) {
           !collapsed ? "px-4" : "px-2"
         } py-4 items-center`}
       >
-        <div className={`cursor-pointer rounded-lg ${!collapsed ? "" : "ml-2"}`} onClick={toggleSidebar}>
+        <div
+          className={`cursor-pointer rounded-lg ${!collapsed ? "" : "ml-2"}`}
+          onClick={toggleSidebar}
+        >
           <IoMenu size={28} color="white" />
         </div>
       </div>
-      
+
       {/* Sidebar Links Div */}
       <div className="flex-[4] w-full mt-4 border-t border-blue-950 text-white">
         {sidebar_links.map((item) => (
           <SidebarLink key={item.key} item={item} collapsed={collapsed} />
         ))}
       </div>
-      {isAuthenticated?<div>
-        <button onClick={()=> dispatch(logout())} className="px-3 py-1 ml-4 bg-theme transform-all duration-200 text-white rounded-md text-sm hover:scale-110">Logout</button>
-      </div>:<></>}
-
+      {collapsed ? (
+        isAuthenticated ? (
+          <div>
+            <button
+              onClick={() => dispatch(logout())}
+              className="px-2 py-2 ml-4 flex bg-customBlue2 transform-all duration-200 text-white font-semibold rounded-md text-sm hover:scale-110"
+            >
+              {" "}
+              <RiLogoutBoxLine color="white" size={20}  />{" "}
+              
+            </button>
+          </div>
+        ) : (
+          <></>
+        )
+      ) : isAuthenticated ? (
+        <div>
+          <button
+            onClick={() => dispatch(logout())}
+            className="px-3 py-2 ml-4 flex bg-customBlue2 transform-all duration-200 text-white font-semibold rounded-md text-sm hover:scale-110"
+          >
+            {" "}
+            <RiLogoutBoxLine color="white" size={20} className="mr-2" /> Logout
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
