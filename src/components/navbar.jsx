@@ -45,11 +45,11 @@ const Navbar = () => {
         </button>
         <button
           className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
-            isActive('/app/datasets') ? 'bg-customDarkBlue text-white font-semibold' : 'bg-transparent text-customDarkBlue'
+            isActive('/app/rankings') ? 'bg-customDarkBlue text-white font-semibold' : 'bg-transparent text-customDarkBlue'
           }`}
-          onClick={() => navigate('/app/datasets')}
+          onClick={() => navigate('/app/rankings')}
         >
-          Datasets
+          Leaderboard
         </button>
       </div>
 

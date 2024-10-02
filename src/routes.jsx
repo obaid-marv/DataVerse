@@ -103,6 +103,9 @@ import ProjectsScreen from "./pages/ProjectCollab/ProjectsScreen";
 import NewDatasetScreen from "./pages/Datasets/NewDatasetScreen";
 import DatasetDetails from "./pages/Datasets/DatasetDetails";
 import ProjectBoard from "./pages/ProjectCollab/ProjectBoard";
+import DataverRankings from "./pages/Progression/DataverseRankings";
+
+
 
 export const routes = createBrowserRouter([
   {
@@ -178,6 +181,14 @@ export const routes = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <DiscussionDetail />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/app/rankings",
+        element: (
+          <ProtectedRoute>
+            <DataverRankings/>
           </ProtectedRoute>
         ),
       },
