@@ -6,9 +6,13 @@ import { faUserEdit, faLock, faFileAlt, faSignOutAlt } from "@fortawesome/free-s
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MdEditDocument } from "react-icons/md";
+import { useSelector } from "react-redux";
+import Loader from "../components/Loader/Loader";
+
 
 const SettingsScreen = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
   const handleEditProfile = () => {
     navigate("/app/settings/edit-profile"); // Route to Edit Profile screen
@@ -28,11 +32,7 @@ const SettingsScreen = () => {
     navigate("/login");
   };
 
-  const user = {
-    name: "Zaki",
-    email: "zaki@gmail.com",
-    photo: IMAGES.student_avatar,
-  }
+  
 
   return (
     <>
@@ -46,11 +46,20 @@ const SettingsScreen = () => {
           {/* Pic and Details */}
           <div className="flex flex-row justify-start space-x-8 p-8">
             <div className="flex">
+            {user?.imgUrl?
               <img
-                src= {IMAGES.student_avatar}
+                src= {user.imgUrl}
                 alt="Avatar"
                 className={`w-32 h-32 rounded-full cursor-pointer block`}
               />
+            :
+            <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
+                <span className="text-customBlue font-bold text-6xl">
+                  {user?.username?.at(0).toUpperCase()}
+                </span>
+              </div>
+            }
+
 {/* 
               <img
                 src={IMAGES.edit_icon}
@@ -59,10 +68,14 @@ const SettingsScreen = () => {
                 className="w-5 h-5 absolute mt-16 ml-14 cursor-pointer "
               ></img> */}
             </div>
+            {user?
             <div className="flex flex-col">
-              <p className="text-3xl">Zaki Mazhar</p>
-              <p className="font-normal text-sm">zakimazharsultan@gmail.com</p>
+              <p className="text-3xl">{user.username}</p>
+              <p className="font-normal text-sm">{user.email}</p>
             </div>
+            :
+            <Loader/>
+            }
           </div>
 
           {/* Buttons  */}

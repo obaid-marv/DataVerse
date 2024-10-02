@@ -1,14 +1,15 @@
-import React, { useState } from "react"; // Combined import for React and useState
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import logo from "../../assets/vite.svg"
+import { HiOutlineGlobeAlt } from "react-icons/hi";
 import {
   faArrowLeft,
-  faChevronLeft,
-  faChevronRight,
-  faHome, faUsers, faCommentDots, faBell,
+  faHome,
+  faUsers,
+  faCommentDots,
+  faBell,
 } from "@fortawesome/free-solid-svg-icons";
-import { FaPen, FaTrophy, FaVideo } from "react-icons/fa";
-import { RiFeedbackFill } from "react-icons/ri";
 
 const ConnectionNavbar = () => {
   const navigate = useNavigate();
@@ -24,27 +25,33 @@ const ConnectionNavbar = () => {
   ];
 
   return (
-    <div className="bg-customDarkBlue text-white shadow-md px-4 py-2 flex items-center justify-between w-full">
-      <FontAwesomeIcon
-        icon={faArrowLeft}
-        className="w-6 h-6 text-white cursor-pointer"
-        onClick={() => navigate("/app/connection-screen")}
-      />
-       <ul className="flex items-center justify-center space-x-20 flex-1">
-        {navItems.map((item) => (
-          <li
-            key={item.name}
-            className={`cursor-pointer flex items-center space-x-2 text-lg px-2 transition-colors duration-300 hover:text-blue-300 ${
-              isActive(item.path) ? "text-blue-300 font-bold border-b border-blue-300 pb-1" : ""
-            }`}
-            onClick={() => navigate(item.path)} 
-          >
-            <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
-            <span>{item.name}</span>
-          </li>
-        ))}
-      </ul>
+    <div className="bg-white text-customDarkBlue shadow-md px-4 py-2 flex items-center space-x-20 w-full">
+      <div className="flex space-x-1 items-center font-poppins">
+        <div className="flex items-center h-6 px-1 rounded-md hover:bg-gray-200 cursor-pointer" onClick={()=> navigate("/app/dashboard")}>
+            <img src={logo} alt="" className="w-6 h-6" />
+            <p className="text-sm font-medium">DataVerse</p>
+        </div>
+        <p className="text-xs font-semibold cursor-default">/</p>
+        <div className="flex items-center space-x-2 h-6 px-1 rounded-md hover:bg-gray-200 cursor-pointer">
+            <p className="text-sm font-medium">Community</p>
+            <HiOutlineGlobeAlt/>
+        </div>
         
+      </div>
+      <div className="flex md:ml-4 items-center mr-10 space-x-4 bg-gray-100  p-2 rounded-full">
+      
+        {navItems.map((item) => (
+          <button
+            key={item.name} 
+            className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
+              isActive(item.path) ? "bg-customDarkBlue text-white font-semibold" : "bg-transparent text-customDarkBlue"
+            }`}
+            onClick={() => navigate(item.path)}
+          >
+            {item.name}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
