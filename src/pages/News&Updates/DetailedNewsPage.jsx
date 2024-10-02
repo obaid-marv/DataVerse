@@ -1,6 +1,6 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 const DetailedNewsPage = () => {
   const location = useLocation();
@@ -60,9 +60,16 @@ const DetailedNewsPage = () => {
           <p className="text-lg text-gray-700 mb-4">{news.description}</p>
           <p className="text-gray-700">{news.content}</p>
           <p className="text-customBlue mt-4">{news.category}</p>
+          <a
+            href={news.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-customBlue mt-2 block"
+          >
+            Read more...
+          </a>
         </div>
       </main>
-
     </div>
   );
 };
