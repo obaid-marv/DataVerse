@@ -134,10 +134,10 @@ const PostScreen = () => {
   }, [user]);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <div className="flex">
+    <div className="flex flex-col h-screen ">
+      <div className="flex p-2">
         {/* Left Sidebar */}
-        <div className="bg-gray-200 p-6 shadow-lg rounded-md mx-10 flex-[2]">
+        <div className="bg-gray-100 p-6 shadow-lg rounded-md mx-10 flex-[2]">
           <div className="flex flex-col items-center mb-6">
             <img
               src={IMAGES.avatar}
@@ -368,8 +368,7 @@ const PostScreen = () => {
           ))}
         </div>
 
-        {/* Right Sidebar */}
-        <div className="bg-gray-200 p-4 shadow-md rounded-md mx-10 flex-[2]">
+        <div className="bg-gray-100 p-4 shadow-md rounded-md mx-10 flex-[2]">
           {/* Popular Topics */}
           <h2 className="text-lg font-bold mb-4">Popular Topics</h2>
           <ul className="mb-6">

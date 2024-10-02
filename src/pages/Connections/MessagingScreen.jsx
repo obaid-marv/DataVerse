@@ -107,6 +107,9 @@ export default function StudentChatsPage() {
     setSelectedUser(user);
   };
 
+  const filteredUsers = messageUsers.filter(user=> user._id!==currentUser._id)
+  
+
   return (
     <div className="flex flex-col h-screen">
       <div className="flex flex-row flex-1 font-poppins">
@@ -123,7 +126,7 @@ export default function StudentChatsPage() {
             ) : messageUsers?.length === 0 ? (
               <p className="text-center text-gray-500">No conversations available.</p>
             ) : (
-              messageUsers.map((item) => (
+              filteredUsers.map((item) => (
                 <ChatCard
                   key={item._id}
                   img={item.imgUrl || IMAGES.defaultAvatar}
