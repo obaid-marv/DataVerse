@@ -1,6 +1,4 @@
-
 import { createError } from "../utils/error.js";
-
 import Dataset from "../models/Dataset.js";
 
 export const uploadDataset = async(req,res,next)=>{
@@ -25,10 +23,7 @@ export const getAllDatasets = async(req,res,next)=>{
         const Datasets = await Dataset.find();
         if(!Datasets) 
         return next(createError(404,"No Datasets found not found"));
-        
         res.status(200).json(Datasets);
-        
-        
     }
     catch(err){
         next(err);

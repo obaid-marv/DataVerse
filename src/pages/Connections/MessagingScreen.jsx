@@ -107,7 +107,7 @@ export default function StudentChatsPage() {
     setSelectedUser(user);
   };
 
-  const filteredUsers = messageUsers.filter(user=> user._id!==currentUser._id)
+  const filteredUsers = messageUsers?.filter(user=> user._id!==currentUser._id)
   
 
   return (
@@ -226,7 +226,10 @@ export default function StudentChatsPage() {
               </div>
 
               <div className="flex fixed flex-row ml-4 items-center bottom-0 w-[950px] p-2">
-                <form onSubmit={handleSubmit} className="flex flex-row w-full items-center space-x-2">
+                <form
+                  onSubmit={handleSubmit}
+                  className="flex flex-row w-full items-center space-x-2"
+                >
                   <textarea
                     rows="1"
                     placeholder="Type your message..."
@@ -236,6 +239,12 @@ export default function StudentChatsPage() {
                     onInput={(e) => {
                       e.target.style.height = "auto";
                       e.target.style.height = e.target.scrollHeight + "px";
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSubmit(e);
+                      }
                     }}
                   ></textarea>
                   <BiSolidMicrophone className="text-customMsgIconsColor w-5 h-5" />
@@ -249,6 +258,7 @@ export default function StudentChatsPage() {
                   <RiSendPlaneFill className="text-white" />
                 </div>
               </div>
+
             </div>
           )}
         </div>

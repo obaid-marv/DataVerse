@@ -50,7 +50,7 @@ const CourseNavbar = () => {
   return (
     <div className="bg-gray-100 shadow-md p-2 flex items-center w-full">
       <div className="flex flex-1 space-x-1 items-center font-poppins">
-        <div className="flex items-center h-6 px-1 rounded-md hover:bg-gray-200 cursor-pointer">
+        <div className="flex items-center h-6 px-1 rounded-md hover:bg-gray-200 cursor-pointer" onClick={()=>  navigate("/app/dashboard")}>
             <img src={logo} alt="" className="w-6 h-6"/>
             <p className="text-sm font-medium">DataVerse</p>
         </div>

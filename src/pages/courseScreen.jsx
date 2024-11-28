@@ -86,9 +86,13 @@ const CourseScreen = () => {
 
 
       const filteredCourse = enrolledCourses.find(course => courseId === course.courseId._id);
-      if(filteredCourse.lectureCompleted){
+      if(filteredCourse.completed===true){
+        console.log(filteredCourse)
         setCompleted(true);
         return
+      }
+      else{
+        setCompleted(false);
       }
       let max = 0
       if(filteredCourse.lectureCompleted.length!=0)
@@ -230,21 +234,12 @@ const CourseScreen = () => {
               activeTab === "lessons"
                 ? "bg-customDarkBlue text-white"
                 : "bg-gray-200 text-gray-600"
-            } rounded-l-lg focus:outline-none`}
+            } rounded-lg focus:outline-none`}
             onClick={() => setActiveTab("lessons")}
           >
             Lessons
           </button>
-          <button
-            className={`px-6 py-2 font-semibold text-lg ${
-              activeTab === "discussions"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-600"
-            } rounded-r-lg focus:outline-none`}
-            onClick={() => setActiveTab("discussions")}
-          >
-            Discussions
-          </button>
+          
         </div>
       </div>
 
