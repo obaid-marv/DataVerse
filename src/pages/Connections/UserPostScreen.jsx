@@ -103,7 +103,6 @@ const UserPostScreen = () => {
   };
 
   const handleProfileClick = (id) => {
-    // navigate(`/connection/post-screen/${id}`);
     navigate(`/connection/post-screen/user`);
   };
 
@@ -132,7 +131,7 @@ const UserPostScreen = () => {
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       <div className="flex flex-col">
-        {/* Div on Top of page */}
+
         <div className="bg-gray-100 p-6 shadow-lg rounded-md mx-10 flex-[2] mb-8">
           <div className="flex items-center mb-6 gap-4">
             <img
@@ -180,7 +179,6 @@ const UserPostScreen = () => {
             <p>100</p>
           </div>
 
-          {/* Profile Summary and Skills Section */}
           <div className="flex flex-wrap">
             <div className="mb-2 flex-1 min-w-[200px]">
               <h2 className="text-lg font-bold mb-2">Profile Summary</h2>

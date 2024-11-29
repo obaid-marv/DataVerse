@@ -12,6 +12,7 @@ import datasetRoute from "./routes/dataset.js";
 import messageRoutes from "./routes/message.js"; 
 import newsRoutes from "./routes/news.js";
 import companyRoutes from "./routes/company.js";
+import postRoutes from "./routes/post.js"
 import cors from "cors";
 import http from "http";
 import initSocket from "./config/socket.js";
@@ -57,7 +58,8 @@ app.use("/api/learning/lecture", lectureRoute);
 app.use("/api/learning/quiz", quizRoute);
 app.use("/api/messages", messageRoutes); 
 app.use("/api/news", newsRoutes); 
-app.use("/api/company", companyRoutes); 
+app.use("/api/company", companyRoutes);
+app.use("/api/post", postRoutes); 
 
 app.get("/", (req, res) => {
   res.send("Hello API");

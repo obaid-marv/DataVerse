@@ -20,12 +20,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserDetails } from "../../redux/auth/AuthSlice";
 import { fetchUserProgress } from "../../redux/course/ProgressSlice";
 import { useNavigate } from "react-router-dom";
+import { cloudname, preset } from "../../config/cloudinary";
+import axios from "axios";
+import { addComment, createPost, getAllPosts } from "../../api/post";
+import { toast } from "react-toastify";
+import { getPostById } from "../../../server/controllers/post";
+import Loader from "../../components/Loader";
 
 const PostScreen = () => {
   const navigate = useNavigate();
-  const [postStates, setPostStates] = useState(postsContent);
+  const [postStates, setPostStates] = useState(null);
   const [postContent, setPostContent] = useState("");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [newComment, setNewComment] = useState({
+    content: "",
+    imgUrl: "", 
+  });
+  const [commentLoading, setCommentLoading] = useState(false)
+  
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
@@ -53,15 +65,43 @@ const PostScreen = () => {
     setSelectedVideo(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle the post submission logic here
-    console.log("Post content:", postContent);
-    if (selectedImage) {
-      console.log("Image file:", selectedImage);
+
+    if (!postContent.trim()) {
+      alert("Post content cannot be empty.");
+      return;
     }
-    if (selectedVideo) {
-      console.log("Video file:", selectedVideo);
+
+    try {
+      let imageUrl = null;
+
+      if (selectedImage) {
+        const formData = new FormData();
+        formData.append("file", selectedImage);
+        formData.append("upload_preset", preset); 
+
+        const response = await axios.post(
+          `https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, 
+          formData
+        );
+
+        imageUrl = response.data.secure_url;
+      }
+
+      const postData = {
+        description: postContent,
+        imgUrl: imageUrl,
+      };
+      
+      await createPost(postData)
+
+      toast.success("Post Created Successfully!");
+      setPostContent("");
+      setSelectedImage(null);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Failed to upload image or submit post.");
     }
   };
 
@@ -76,10 +116,10 @@ const PostScreen = () => {
   const handleLikeToggle = (postId) => {
     setPostStates((prevPosts) =>
       prevPosts.map((post) =>
-        post.id === postId
+        post._id === postId
           ? {
               ...post,
-              likes: post.liked ? post.likes - 1 : post.likes + 1,
+              likes: post.upVotes ? post.upVotes - 1 : post.upVotes + 1,
               liked: !post.liked,
             }
           : post
@@ -96,6 +136,47 @@ const PostScreen = () => {
       )
     );
   };
+
+  const handleAddComment = async (e, postId) => {
+    e.preventDefault();
+    try {
+      setCommentLoading(true)
+      const data = {
+        content: newComment.content,
+        username: user.username, 
+        imgUrl: user.imgUrl,
+      }
+      
+      const response = await addComment(data,postId);
+
+      if (!response) {
+        throw new Error("Failed to add comment");
+      }
+
+      const updatedPost = response.updatedPost;
+  
+      setPostStates((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === updatedPost._id
+            ? { ...post, comments: updatedPost.comments } 
+            : post 
+        )
+      );
+      
+      setNewComment({
+        content: "", 
+        imgUrl: "",
+      });
+      setCommentLoading(false)
+      
+    } catch (error) {
+      console.error(error);
+    }
+    finally{
+      setCommentLoading(false)
+    }
+  };
+  
 
   const handleProfileClick = (id) => {
     // navigate(`/connection/post-screen/${id}`);
@@ -133,6 +214,14 @@ const PostScreen = () => {
     }
   }, [user]);
 
+
+  useEffect(()=>{
+    const fetchPosts = async () => {
+      const response = await getAllPosts();
+      setPostStates(response)
+    }
+    fetchPosts();
+  },[])
   return (
     <div className="flex flex-col h-screen ">
       <div className="flex p-2">
@@ -224,7 +313,7 @@ const PostScreen = () => {
                     onChange={handleImageUpload}
                   />
                 </label>
-                <label className="flex items-center cursor-pointer">
+                {/* <label className="flex items-center cursor-pointer">
                   <FaVideo className="text-blue-500 mr-2" />
                   <span className="text-blue-500 hover:underline">
                     Add Video
@@ -235,7 +324,7 @@ const PostScreen = () => {
                     className="hidden"
                     onChange={handleVideoUpload}
                   />
-                </label>
+                </label> */}
               </div>
 
               {selectedImage && (
@@ -282,30 +371,38 @@ const PostScreen = () => {
           </div>
 
           {/* Post Feed */}
-          {postStates.map((post) => (
+          {postStates?.map((post) => (
             <div
-              key={post.id}
+              key={post._id}
               className="bg-white p-6 shadow-lg rounded-md mb-6"
             >
               <div
                 onClick={handleProfileClick}
                 className="flex items-center mb-4 cursor-pointer"
               >
+                {post.userId.imgUrl?
                 <img
-                  src={post.profileImg}
+                  src={post.userId.imgUrl}
                   alt={`${post.author} avatar`}
                   className="w-10 h-10 rounded-full mr-4"
                 />
-                <div>
-                  <p className="font-bold">{post.author}</p>
-                  <p className="text-sm text-gray-500">{post.timestamp}</p>
+                :
+                <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                  <span className="text-customBlue font-bold text-2xl">
+                    {post.userId.username.at(0).toUpperCase()}
+                  </span>
+                </div>
+                }
+                <div className="ml-4">
+                  <p className="font-bold">{post.userId.username}</p>
+                  {/* <p className="text-sm text-gray-500">{post.timestamp}</p> */}
                 </div>
               </div>
-              <p className="mb-4">{post.content}</p>
+              <p className="mb-4">{post.description}</p>
 
-              {post.imageUrl && (
+              {post.imgUrl && (
                 <img
-                  src={post.imageUrl}
+                  src={post.imgUrl}
                   alt="Post content"
                   className="w-full h-auto rounded-md mb-4"
                 />
@@ -316,10 +413,10 @@ const PostScreen = () => {
                   className={`flex items-center space-x-1 cursor-pointer ${
                     post.liked ? "text-blue-500" : ""
                   }`}
-                  onClick={() => handleLikeToggle(post.id)}
+                  onClick={() => handleLikeToggle(post._id)}
                 >
                   <FontAwesomeIcon icon={faThumbsUp} />
-                  <span>{post.likes}</span>
+                  <span>{post.upVotes}</span>
                 </div>
                 <div
                   className="flex items-center space-x-1 cursor-pointer"
@@ -335,35 +432,42 @@ const PostScreen = () => {
                   {post.comments.map((comment, index) => (
                     <div key={index} className="flex items-start mb-4">
                       <img
-                        src={comment.profileImg}
-                        alt={`${comment.author} avatar`}
+                        src={comment.imgUrl || "https://robohash.org/placeholder-avatar"} // Fallback for missing avatar
+                        alt={`${comment.username} avatar`}
                         className="w-8 h-8 rounded-full mr-4"
                       />
                       <div>
-                        <p className="font-bold">{comment.author}</p>
+                        <p className="font-bold">{comment.username}</p>
                         <p className="text-sm text-gray-500">
-                          {comment.timestamp}
+                          {new Date(comment.createdAt).toLocaleString()} {/* Display comment timestamp */}
                         </p>
                         <p className="mt-1">{comment.content}</p>
                       </div>
                     </div>
                   ))}
-                  <form className="mt-4">
+                  <form onSubmit={(e) => handleAddComment(e, post._id)} className="mt-4">
                     <textarea
                       name="commentContent"
-                      className="w-full p-2 border rounded-md"
+                      value={newComment.content}
+                      onChange={(e) =>
+                        setNewComment({ ...newComment, content: e.target.value })
+                      }
+                      className="w-full p-2 border rounded-md resize-none"
                       placeholder="Add a comment..."
                       rows="2"
+                      required
+                      
                     />
                     <button
                       type="submit"
                       className="mt-2 px-4 py-2 bg-customBlue text-white rounded-md hover:bg-blue-600 transition"
                     >
-                      Comment
+                      {commentLoading?<span><Loader/></span>:"Comment"}
                     </button>
                   </form>
                 </div>
               )}
+
             </div>
           ))}
         </div>
@@ -449,7 +553,6 @@ const PostScreen = () => {
         </div>
       </div>
 
-      {/* Edit Profile Modal */}
       {user && (
         <EditProfileModal
           isOpen={isEditModalOpen}

@@ -11,7 +11,6 @@ const EditProfileModal = ({ isOpen, onClose, profileDetails, onSave }) => {
   };
 
   useEffect(() => {
-    console.log("modal : ", profileDetails);
   }, [profileDetails]);
 
   const handleSave = () => {

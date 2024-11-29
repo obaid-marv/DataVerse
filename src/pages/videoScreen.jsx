@@ -23,7 +23,7 @@ const VideoScreen = () => {
   const handleGotIt = () => {
     navigate(`/course-started/code-screen/${courseId}/${index}`);
   };
-
+  
   return (
     <div className="flex flex-row h-screen bg-gray-200">
       {showTranscript && (
