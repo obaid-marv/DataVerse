@@ -9,10 +9,11 @@ import courseRoute from "./routes/learning/course.js";
 import lectureRoute from "./routes/learning/lecture.js";
 import quizRoute from "./routes/learning/quiz.js";
 import datasetRoute from "./routes/dataset.js";
-import messageRoutes from "./routes/message.js"; 
+import messageRoutes from "./routes/community/message.js"; 
 import newsRoutes from "./routes/news.js";
 import companyRoutes from "./routes/company.js";
-import postRoutes from "./routes/post.js"
+import postRoutes from "./routes/community/post.js"
+import connectionRoutes from "./routes/community/connection.js"
 import cors from "cors";
 import http from "http";
 import initSocket from "./config/socket.js";

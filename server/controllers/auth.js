@@ -179,13 +179,28 @@ export const updateProfile = async (req, res, next) => {
 
 export const getAllUsers = async (req, res, next) => {
     try{
-
+        console.log("182 HERE")
         const users = await User.find({});
-
+        console.log("184 HERE")
         if(users.length==0)
             return res.status(404).json({ message: "Users not found!"})
 
         res.status(200).json({ message: "Users fetched successfully!", users})
+
+    }
+    catch(err){
+        next(err)
+    }
+}
+
+
+export const deleteUserById = async (req, res, next) => {
+    try{
+        const {id} = req.params;
+        const deletedUser = await User.findByIdAndDelete(id);
+        if(!deletedUser)
+            return createError(404, "User not found")
+        res.status(200).json({ message: "Users deleted successfully!", deletedUser})
 
     }
     catch(err){

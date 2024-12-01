@@ -1,5 +1,5 @@
-import Post from "../models/Post.js";
-import { createError } from "../utils/error.js";
+import Post from "../../models/community/Post.js";
+import { createError } from "../../utils/error.js";
 
 export const createPost = async (req, res, next) => {
     try {
