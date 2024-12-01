@@ -54,7 +54,7 @@ export default function Sidebar({ collapsed, toggleSidebar }) {
         <div>
           <button
             onClick={() => dispatch(logout())}
-            className="px-3 py-2 ml-4 flex bg-customBlue2 transform-all duration-200 text-white font-semibold rounded-md text-sm hover:scale-110"
+            className="px-3 py-2 ml-4 mt-5 flex bg-customBlue2 transform-all duration-200 text-white font-semibold rounded-md text-sm hover:scale-110"
           >
             {" "}
             <RiLogoutBoxLine color="white" size={20} className="mr-2" /> Logout

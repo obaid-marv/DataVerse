@@ -11,7 +11,8 @@ import {
 const router = express.Router();
 
 router.post("/create", verifyToken, createCompany);
-router.get("/all", verifyToken, getAllCompanies);
+// router.get("/all", verifyToken, getAllCompanies);
+router.get("/allCompanies", getAllCompanies);
 router.get("/:id",  verifyToken, getCompanyById);
 router.put("/:id", verifyToken, updateCompany);
 router.delete("/:id", verifyToken, deleteCompany);
