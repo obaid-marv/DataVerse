@@ -24,7 +24,7 @@ import { cloudname, preset } from "../../config/cloudinary";
 import axios from "axios";
 import { addComment, createPost, getAllPosts } from "../../api/post";
 import { toast } from "react-toastify";
-import { getPostById } from "../../../server/controllers/post";
+import { getPostById } from "../../../server/controllers/community/post";
 import Loader from "../../components/Loader";
 
 const PostScreen = () => {

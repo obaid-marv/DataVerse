@@ -1,6 +1,6 @@
 import express from "express";
-import { fetchUserByToken, fetchUserProgress, forgotPassword, getAllUsers, login, register, updateProfile } from "../controllers/auth.js";
-import { verifyToken } from "../utils/verifyToken.js";
+import { deleteUserById, fetchUserByToken, fetchUserProgress, forgotPassword, getAllUsers, login, register, updateProfile } from "../controllers/auth.js";
+import { verifyAdmin, verifyToken } from "../utils/verifyToken.js";
 import upload from "../middlewares/multer.js";
 
 const router = express.Router();
@@ -13,5 +13,5 @@ router.get("/progress",verifyToken, fetchUserProgress)
 router.get("/get-all-users", getAllUsers)
 router.post("/forgot-password", forgotPassword)
 router.put("/update-profile", upload.single("profilePicture"),verifyToken , updateProfile)
-
+router.delete("/:id", verifyAdmin, deleteUserById);
 export default router;

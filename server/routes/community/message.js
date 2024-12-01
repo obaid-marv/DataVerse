@@ -1,6 +1,6 @@
 import express from "express";
-import { verifyToken } from "../utils/verifyToken.js";
-import { getPreviousMessages } from "../controllers/message.js";
+import { getPreviousMessages } from "../../controllers/community/message.js";
+import { verifyToken } from "../../utils/verifyToken.js";
 
 const router = express.Router();
 

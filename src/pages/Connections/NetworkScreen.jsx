@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IMAGES } from "../../assets";
-import { MdGroupAdd, MdPersonAdd, MdGroups } from "react-icons/md";
 import { FaUserPlus } from "react-icons/fa";
 import { pendingInvitations } from "../../constants/pendingInvitations";
 import { suggestedConnections } from "../../constants/suggestedConnections";
 import { useNavigate } from "react-router-dom";
+import RequestCard from "./components/RequestCard";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMessageUsers } from "../../redux/message/messageSlice";
 
 const NetworkScreen = () => {
   const navigate = useNavigate();
   const [pendingInvites, setPendingInvites] = useState(pendingInvitations);
+  const allUsers = useSelector((state) => state.message.users);
+  const currentUser = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  console.log(allUsers)
   const [connectionSuggestions, setConnectionSuggestions] =
     useState(suggestedConnections);
 
@@ -17,6 +23,19 @@ const NetworkScreen = () => {
     setSeeAllInvitesView(!seeAllInvitesView);
   };
 
+  useEffect(() => {
+    if (!currentUser) return;
+
+    const fetchUsers = async () => {
+      try {
+        await dispatch(fetchMessageUsers());
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchUsers();
+  }, [dispatch, currentUser]);
   return (
     <div className="flex bg-gray-100 min-h-screen">
       {/* Main Content */}
@@ -51,61 +70,17 @@ const NetworkScreen = () => {
 
           <div className="grid grid-cols-2 gap-4">
             {seeAllInvitesView
-              ? pendingInvites.map((invite) => (
-                  <div
-                    key={invite.id}
-                    className="flex items-center justify-between w-full p-4 border-b border-gray-300 cursor-pointer"
-                    onClick={() => navigate("/connection/post-screen/user")}
-                  >
-                    <div className="flex items-center">
-                      <img
-                        src={invite.avatar}
-                        alt={invite.name}
-                        className="w-12 h-12 rounded-full mr-4"
-                      />
-                      <div>
-                        <p className="font-semibold">{invite.name}</p>
-                        <p className="text-sm text-gray-600">{invite.title}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex space-x-4 font-normal">
-                      <button className="px-3 py-2 bg-customBlue text-white rounded-lg shadow hover:bg-blue-600 transition-colors duration-200">
-                        Accept
-                      </button>
-                      <button className="px-3 py-2 bg-white text-customBlue font-medium border border-customBlue rounded-lg shadow hover:bg-gray-200 transition-colors duration-200">
-                        Ignore
-                      </button>
-                    </div>
-                  </div>
-                ))
-              : pendingInvites.slice(0, 2).map((invite) => (
-                  <div
-                    key={invite.id}
-                    className="flex items-center justify-between w-full p-4 border-b border-gray-300 cursor-pointer"
-                    onClick={() => navigate("/connection/post-screen/user")}
-                  >
-                    <div className="flex items-center">
-                      <img
-                        src={invite.avatar}
-                        alt={invite.name}
-                        className="w-12 h-12 rounded-full mr-4"
-                      />
-                      <div>
-                        <p className="font-semibold">{invite.name}</p>
-                        <p className="text-sm text-gray-600">{invite.title}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex space-x-4 font-normal">
-                      <button className="px-3 py-2 bg-customBlue text-white rounded-lg shadow hover:bg-blue-600 transition-colors duration-200">
-                        Accept
-                      </button>
-                      <button className="px-3 py-2 bg-white text-customBlue font-medium border border-customBlue rounded-lg shadow hover:bg-gray-200 transition-colors duration-200">
-                        Ignore
-                      </button>
-                    </div>
-                  </div>
+              ?
+              pendingInvites.map((invite, i) => (
+                
+                  <RequestCard invite={invite} key={i}/>
+                
+              ))
+              :
+              pendingInvites.slice(0, 2).map((invite, i) => (
+                <>
+                  <RequestCard invite={invite} key={i}/>
+                </>
                 ))}
           </div>
         </div>
@@ -114,21 +89,21 @@ const NetworkScreen = () => {
         <div className="mb-8">
           <h2 className="text-lg font-semibold mb-4">People You May Know</h2>
           <div className="grid grid-cols-2 gap-4">
-            {connectionSuggestions.map((suggestion) => (
+            {allUsers?.map((suggestion) => (
               <div
-                key={suggestion.id}
+                key={suggestion._id}
                 onClick={() => navigate("/connection/post-screen/user")}
                 className="bg-white p-4 rounded-md shadow-md flex items-center justify-between cursor-pointer"
               >
                 <div className="flex items-center">
                   <img
-                    src={suggestion.avatar}
-                    alt={suggestion.name}
+                    src={suggestion.imgUrl || "https://robohash.org/placeholder-avatar"}
+                    alt={suggestion.username}
                     className="w-12 h-12 rounded-full mr-4"
                   />
                   <div>
-                    <p className="font-semibold">{suggestion.name}</p>
-                    <p className="text-sm text-gray-600">{suggestion.title}</p>
+                    <p className="font-semibold">{suggestion.username}</p>
+                    <p className="text-sm text-gray-600">{"Data Scientist at Virtus Tech"}</p>
                     <p className="text-sm text-gray-400">
                       2 Mutual Connections
                     </p>

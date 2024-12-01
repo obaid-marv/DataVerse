@@ -1,7 +1,7 @@
 
 import express from "express";
-import { verifyToken } from "../utils/verifyToken.js";
-import { addComment, createPost, deletePost, getAllPosts, getPostById, incrementUpVotes, updatePost } from "../controllers/post.js";
+import { addComment, createPost, deletePost, getAllPosts, getPostById, incrementUpVotes, updatePost } from "../../controllers/community/post.js";
+import { verifyToken } from "../../utils/verifyToken.js";
 
 const router = express.Router();
 
