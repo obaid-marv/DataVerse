@@ -6,7 +6,8 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/all", verifyUser, getAllCourses);
+// router.get("/all", verifyUser, getAllCourses);
+router.get("/all",  getAllCourses);
 router.get("/:courseId", verifyUser, getCourse);
 router.post("/create", verifyUser, addCourse);
 router.get("/enroll/:courseId", verifyUser, enrollCourse);

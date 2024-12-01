@@ -30,13 +30,13 @@ export const sidebar_links = [
     icon: <BsClipboardData size={20}/>,
     path: "/app/datasets",
   },
-  {
-    key: "project",
-    label: "Collaboration",
-    // icon: <IoCodeSlash size={20}/>,
-    icon: <LuNetwork size={20} />,
-    path: "/app/project-collaboration",
-  },  
+  // {
+  //   key: "project",
+  //   label: "Collaboration",
+  //   // icon: <IoCodeSlash size={20}/>,
+  //   icon: <LuNetwork size={20} />,
+  //   path: "/app/project-collaboration",
+  // },  
   {
     key: "courses",
     label: "Learn",
