@@ -118,3 +118,30 @@ export const addComment = async (req, res, next) => {
         next(err);
     }
 };
+
+export const deleteComment = async (req, res, next) => {
+    try {
+        const { id: postId, commentId } = req.params; 
+
+        const post = await Post.findById(postId);
+        if (!post) {
+            return next(createError(404, "Post not found"));
+        }
+
+        const commentIndex = post.comments.findIndex(
+            (comment) => comment._id.toString() === commentId
+        );
+
+        if (commentIndex === -1) {
+            return next(createError(404, "Comment not found"));
+        }
+
+        post.comments.splice(commentIndex, 1);
+
+        const updatedPost = await post.save();
+
+        res.status(200).json({ message: "Comment deleted successfully", updatedPost });
+    } catch (err) {
+        next(err);
+    }
+};

@@ -29,3 +29,19 @@ export const getAllDatasets = async(req,res,next)=>{
         next(err);
     }
 }
+
+
+export const deleteDataset = async(req,res,next)=>{
+    try{
+        const { id } = req.params;
+        const oldDataset = await Dataset.findByIdAndDelete(id);
+
+        if(!oldDataset) 
+            return next(createError(404,"Dataset not found"));
+
+        res.status(200).json({ message: "Dataset Deleted Successfully", oldDataset});
+    }
+    catch(err){
+        next(err);
+    }
+}

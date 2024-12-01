@@ -115,3 +115,36 @@ export const getLecture = async (req, res, next) => {
     next(err)
   }
 }
+
+export const deleteLecture = async (req, res, next) => {
+  const { courseId, lectureId } = req.params;
+
+  try {
+
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    console.log(course)
+    const lectureIndex = course.lectures.findIndex(
+      (lecture) => lecture.toString() === lectureId
+    );
+
+    if (lectureIndex === -1) {
+      return res.status(404).json({ message: "Lecture not found in the course" });
+    }
+
+    course.lectures.splice(lectureIndex, 1);
+    course.totalLectures -= 1;
+    await course.save();
+
+    const deletedLecture = await Lecture.findByIdAndDelete(lectureId);
+    if (!deletedLecture) {
+      return res.status(404).json({ message: "Lecture not found" });
+    }
+
+    res.status(200).json({ message: "Lecture deleted successfully", deletedLecture });
+  } catch (err) {
+    next(err);
+  }
+};
