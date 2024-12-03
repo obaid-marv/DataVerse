@@ -15,6 +15,7 @@ export const fetchSingleCourse = createAsyncThunk(
   async (courseId, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/learning/course/${courseId}`);
+      console.log("Courses: ", response.data);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
