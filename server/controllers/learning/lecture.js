@@ -125,7 +125,7 @@ export const deleteLecture = async (req, res, next) => {
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
     }
-    console.log(course)
+
     const lectureIndex = course.lectures.findIndex(
       (lecture) => lecture.toString() === lectureId
     );
@@ -143,6 +143,9 @@ export const deleteLecture = async (req, res, next) => {
       return res.status(404).json({ message: "Lecture not found" });
     }
 
+    
+     
+    
     res.status(200).json({ message: "Lecture deleted successfully", deletedLecture });
   } catch (err) {
     next(err);

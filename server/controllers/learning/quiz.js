@@ -1,5 +1,6 @@
 import Quiz from "../../models/learning/Quiz.js";
 import Lecture from "../../models/learning/Lecture.js";
+import { createError } from "../../utils/error.js";
 
 export const createQuiz = async (req, res) => {
   try {
@@ -98,7 +99,6 @@ export const updateQuiz = async (req, res, next) => {
   const updates = req.body;
 
   try {
-
     const updatedQuiz = await Quiz.findByIdAndUpdate(
       quizId,
       { $set: updates },
@@ -115,3 +115,19 @@ export const updateQuiz = async (req, res, next) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const DeleteQuiz = async (req, res, next) => {
+
+  try{
+    const { id } = req.params;
+    const deletedQuiz = await Quiz.findByIdAndDelete(id);
+
+    if(!deletedQuiz)
+      return createError(404, "Quiz to be deleted not found!")
+
+    return res.status(200).json( { message: "Quiz deleted successfully!"});
+
+  }catch(err){
+    return res.status(500).json({ message: "Internal server error"})
+  }
+}

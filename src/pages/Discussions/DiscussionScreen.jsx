@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaComments, FaFire, FaUserCircle } from 'react-icons/fa'; // Icons for discussions
 import { useNavigate } from 'react-router-dom';
+import { getAllDiscussion } from '../../api/discussion';
+import { toast } from 'react-toastify';
 
 const discussionsData = [
   {
@@ -23,7 +25,35 @@ const discussionsData = [
 ];
 
 const DiscussionMainPage = () => {
+  const [discussions, setDiscussions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
   const navigate = useNavigate();
+
+  
+
+  useEffect(() => {
+    const fetchDiscussions = async () => {
+      try {
+        const response = await getAllDiscussion();
+        
+        if (response) {
+          console.log(response)
+          setDiscussions(response.discussions);
+        } else {
+          const errorData = response
+          setError(errorData.message || "Failed to fetch discussions.");
+        }
+      } catch (err) {
+        setError("An error occurred. Please try again.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDiscussions();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -74,29 +104,31 @@ const DiscussionMainPage = () => {
       {/* Discussion List */}
       <div className="bg-white p-6 rounded-md shadow-md">
         <h2 className="text-2xl font-semibold text-customBlue mb-4">All Discussions</h2>
-        {discussionsData.map((discussion) => (
-          <div
-            key={discussion.id}
-            className="border-b last:border-b-0 py-4 flex items-center justify-between"
-          >
-            <div className="flex items-center">
-              <FaUserCircle className="text-gray-500 w-8 h-8 mr-4" />
-              <div>
-                <h3 className="text-lg font-bold text-customBlack">{discussion.title}</h3>
-                <p className="text-gray-600">Started by {discussion.author}</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <p className="text-gray-500">{discussion.replies} replies</p>
-              <button
-                onClick={() => navigate(`/app/discussion`)}
-                className="text-customBlue underline"
-              >
-                View Discussion
-              </button>
+        {discussions?.map((discussion) => (
+        <div
+          key={discussion._id}
+          className="border-b last:border-b-0 py-4 flex items-center justify-between"
+        >
+          <div className="flex items-center">
+            <FaUserCircle className="text-gray-500 w-8 h-8 mr-4" />
+            <div>
+              <h3 className="text-lg font-bold text-customBlack">{discussion.title}</h3>
+              {/* Displaying author's username */}
+              <p className="text-gray-600">Started by {discussion.author?.username}</p>
             </div>
           </div>
-        ))}
+          <div className="flex items-center space-x-4">
+            <p className="text-gray-500">{discussion.replies?.length || 0} replies</p>
+            <button
+              onClick={() => navigate(`/app/discussion/${discussion._id}`)}
+              className="text-customBlue underline"
+            >
+              View Discussion
+            </button>
+          </div>
+        </div>
+      ))}
+
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaReply, FaArrowUp, FaArrowDown, FaShareAlt } from 'react-icons/fa';
 import { IMAGES } from '../../assets';
+import { useParams } from 'react-router-dom';
+import { AddReplyToDiscussion, getDiscussionById } from '../../api/discussion';
+import { toast } from 'react-toastify';
 
 const initialReplies = [
   {
@@ -29,20 +32,27 @@ const initialReplies = [
 ];
 
 const DiscussionDetail = () => {
-  const [replies, setReplies] = useState(initialReplies);
   const [replyText, setReplyText] = useState('');
   const [sortedBy, setSortedBy] = useState('upvotes');
   const [isFollowing, setIsFollowing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
+  const [discussion, setDiscussion] = useState(null);
+  const [replies, setReplies] = useState([]);
+  const { id: discussionId } = useParams();
+  console.log(replies)
+
+
+  
 
   const handleUpvote = (replyId) => {
     setReplies((prevReplies) =>
       prevReplies.map((reply) => {
         if (reply.id === replyId) {
-          // If the user has already upvoted, undo the upvote
           if (reply.hasUpvoted) {
             return { ...reply, upvotes: reply.upvotes - 1, hasUpvoted: false };
           }
-          // If the user has downvoted before, remove the downvote first
+
           if (reply.hasDownvoted) {
             return {
               ...reply,
@@ -66,7 +76,6 @@ const DiscussionDetail = () => {
           if (reply.hasDownvoted) {
             return { ...reply, upvotes: reply.upvotes + 1, hasDownvoted: false };
           }
-          // If the user has upvoted before, remove the upvote first
           if (reply.hasUpvoted) {
             return {
               ...reply,
@@ -82,27 +91,72 @@ const DiscussionDetail = () => {
     );
   };
 
-  const handleReply = () => {
-    // Logic for handling reply submission
+  const handleReply = async () => {
+    if (!replyText.trim()) {
+      toast.error('Reply cannot be empty.');
+      return;
+    }
+  
+    const replyData = {
+      content: replyText,
+    };
+  
+    try {
+      const newReply = await AddReplyToDiscussion(discussionId, replyData);
+      console.log(newReply)
+      if (newReply) {
+        setReplies((prevReplies) => [newReply, ...prevReplies]);
+        setReplyText('');
+        toast.success('Reply posted successfully!');
+      } else {
+        toast.error('Failed to post reply. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error posting reply:', error);
+      toast.error('An error occurred while posting your reply.');
+    }
   };
+  
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
-    // Logic to add/remove the discussion from the followed discussions list
   };
+
+  useEffect(() => {
+    const fetchDiscussionDetails = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await getDiscussionById(discussionId);
+        if (response) {
+          setDiscussion(response.discussion)
+          setReplies(response.discussion.replies)
+        } else {
+          setError('Failed to fetch discussion details.');
+        }
+      } catch (err) {
+        setError('An error occurred while fetching the discussion.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDiscussionDetails();
+  }, [discussionId]);
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       {/* Header Section */}
       <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
-        <h1 className="text-4xl font-bold text-customBlue">Best Practices for Data Cleaning</h1>
+        <h1 className="text-4xl font-bold text-customBlue">{discussion?.title}</h1>
         <div className="flex items-center mt-4 text-gray-500">
-          <span>Posted by <span className="font-semibold">Alice Johnson</span></span>
-          <span className="ml-4 text-sm">• 50 views • 15 replies</span>
+          <span>Posted by <span className="font-semibold">{discussion?.author.username}</span></span>
+          <span className="ml-4 text-sm">• 50 views • {discussion?.replies.length} replies</span>
           <FaShareAlt className="ml-auto text-xl cursor-pointer" />
         </div>
         <p className="mt-4 text-gray-700 text-lg">
-          What tools are best for data cleaning in Python? I’m working on cleaning a large dataset and want to know what libraries I should consider.
+          {discussion?.content}
         </p>
         <button
           onClick={handleFollow}
@@ -132,11 +186,11 @@ const DiscussionDetail = () => {
       <div className="bg-white p-6 rounded-md shadow-md">
         {replies.map((reply) => (
           <div key={reply.id} className="border-b py-4 flex items-start">
-            <img src={reply.avatar} alt={reply.user} className="w-12 h-12 rounded-full mr-4" />
+            <img src={reply.author?.imgUrl || "https://robohash.org/placeholder-avatar"} alt={reply.user} className="w-12 h-12 rounded-full mr-4" />
             <div className="flex-1">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-semibold text-lg">{reply.user}</p>
+                  <p className="font-semibold text-lg">{reply.author?.username}</p>
                   {reply.badge && (
                     <span className="bg-customBlue text-white px-2 py-1 text-xs rounded-full">
                       {reply.badge}
@@ -148,7 +202,7 @@ const DiscussionDetail = () => {
                     className={`cursor-pointer hover:text-green-600 ${reply.hasUpvoted && 'text-green-600'}`}
                     onClick={() => handleUpvote(reply.id)}
                   />
-                  <span>{reply.upvotes}</span>
+                  <span>{reply?.upvotes}</span>
                   <FaArrowDown
                     className={`cursor-pointer hover:text-red-600 ${reply.hasDownvoted && 'text-red-600'}`}
                     onClick={() => handleDownvote(reply.id)}
