@@ -4,12 +4,13 @@ import { IMAGES } from '../../assets';
 import { useParams } from 'react-router-dom';
 import { AddReplyToDiscussion, getDiscussionById } from '../../api/discussion';
 import { toast } from 'react-toastify';
+import { formatDistanceToNow } from 'date-fns';
 
 const initialReplies = [
   {
     id: 1,
     user: 'Jane Smith',
-    avatar: IMAGES.avatar4, // Use actual avatar path
+    avatar: IMAGES.avatar4, 
     content: 'I recommend using pandas for data cleaning!',
     upvotes: 10,
     timestamp: '1 hour ago',
@@ -20,7 +21,7 @@ const initialReplies = [
   {
     id: 2,
     user: 'John Doe',
-    avatar: IMAGES.avatar3, // Use actual avatar path
+    avatar: IMAGES.avatar3, 
     content: 'Numpy can be quite helpful too!',
     upvotes: 7,
     timestamp: '2 hours ago',
@@ -40,7 +41,6 @@ const DiscussionDetail = () => {
   const [discussion, setDiscussion] = useState(null);
   const [replies, setReplies] = useState([]);
   const { id: discussionId } = useParams();
-  console.log(replies)
 
 
   
@@ -102,10 +102,10 @@ const DiscussionDetail = () => {
     };
   
     try {
-      const newReply = await AddReplyToDiscussion(discussionId, replyData);
-      console.log(newReply)
-      if (newReply) {
-        setReplies((prevReplies) => [newReply, ...prevReplies]);
+      const newDiscussionData = await AddReplyToDiscussion(discussionId, replyData);
+    
+      if (newDiscussionData) {
+        setReplies(newDiscussionData.discussion.replies);
         setReplyText('');
         toast.success('Reply posted successfully!');
       } else {
@@ -122,6 +122,10 @@ const DiscussionDetail = () => {
     setIsFollowing(!isFollowing);
   };
 
+  const relativeTime = discussion?.lastReplyAt 
+  ? formatDistanceToNow(new Date(discussion.lastReplyAt), { addSuffix: true }) 
+  : 'Unknown';
+
   useEffect(() => {
     const fetchDiscussionDetails = async () => {
       setLoading(true);
@@ -129,6 +133,7 @@ const DiscussionDetail = () => {
       try {
         const response = await getDiscussionById(discussionId);
         if (response) {
+          console.log("discussion detail:", response.discussion)
           setDiscussion(response.discussion)
           setReplies(response.discussion.replies)
         } else {
@@ -146,13 +151,13 @@ const DiscussionDetail = () => {
   }, [discussionId]);
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen">
+    <div className="p-8 bg-gray-100 min-h-screen font-poppins">
       {/* Header Section */}
       <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
         <h1 className="text-4xl font-bold text-customBlue">{discussion?.title}</h1>
         <div className="flex items-center mt-4 text-gray-500">
           <span>Posted by <span className="font-semibold">{discussion?.author.username}</span></span>
-          <span className="ml-4 text-sm">• 50 views • {discussion?.replies.length} replies</span>
+          <span className="ml-4 text-sm">• Last Replied at: {relativeTime} • {discussion?.replies.length} replies</span>
           <FaShareAlt className="ml-auto text-xl cursor-pointer" />
         </div>
         <p className="mt-4 text-gray-700 text-lg">
@@ -185,7 +190,7 @@ const DiscussionDetail = () => {
       {/* Replies Section */}
       <div className="bg-white p-6 rounded-md shadow-md">
         {replies.map((reply) => (
-          <div key={reply.id} className="border-b py-4 flex items-start">
+          <div key={reply._id} className="border-b py-4 flex items-start">
             <img src={reply.author?.imgUrl || "https://robohash.org/placeholder-avatar"} alt={reply.user} className="w-12 h-12 rounded-full mr-4" />
             <div className="flex-1">
               <div className="flex items-center justify-between">

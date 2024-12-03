@@ -62,14 +62,13 @@ const StartNewDiscussion = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-100 p-8 font-poppins">
       {/* Page Header */}
       <div className="bg-customBlue text-white p-6 rounded-lg shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Start a New Discussion</h1>
         <p className="text-lg mt-2">Share your thoughts or ask questions. Your peers are here to help!</p>
       </div>
 
-      {/* Form Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Discussion Form */}
         <div className="col-span-2 bg-white p-6 rounded-lg shadow-lg">

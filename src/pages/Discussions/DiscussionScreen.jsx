@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FaComments, FaFire, FaUserCircle } from 'react-icons/fa'; // Icons for discussions
+import { FaComments, FaFire, FaUserCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { getAllDiscussion } from '../../api/discussion';
+import { formatDistanceToNow } from 'date-fns';
+import { getAllDiscussion, getTrendingDiscussions } from '../../api/discussion';
 import { toast } from 'react-toastify';
 
 const discussionsData = [
@@ -26,6 +27,7 @@ const discussionsData = [
 
 const DiscussionMainPage = () => {
   const [discussions, setDiscussions] = useState([]);
+  const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const navigate = useNavigate();
@@ -36,10 +38,10 @@ const DiscussionMainPage = () => {
     const fetchDiscussions = async () => {
       try {
         const response = await getAllDiscussion();
-        
-        if (response) {
-          console.log(response)
+        const response2 = await getTrendingDiscussions();
+        if (response&&response2) {
           setDiscussions(response.discussions);
+          setTrending(response2.trendingDiscussions);
         } else {
           const errorData = response
           setError(errorData.message || "Failed to fetch discussions.");
@@ -55,8 +57,9 @@ const DiscussionMainPage = () => {
     fetchDiscussions();
   }, []);
 
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-6 font-poppins">
       {/* Header */}
       <div className="flex justify-between items-center bg-customBlue2 text-white p-6 rounded-md shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Discussions</h1>
@@ -80,11 +83,11 @@ const DiscussionMainPage = () => {
         <h2 className="text-2xl font-semibold text-customBlue mb-4 flex items-center">
           <FaFire className="mr-2" /> Trending Discussions
         </h2>
-        <div className="flex space-x-6 overflow-x-auto">
-          {discussionsData.map((discussion) => (
-            <div key={discussion.id} className="bg-gray-50 p-4 rounded-md shadow-md w-72 flex-shrink-0">
+        <div className="flex space-x-6 overflow-x-auto p-2">
+          {trending.map((discussion) => (
+            <div key={discussion._id} className="bg-gray-50 p-4 rounded-md shadow-md w-72 flex-shrink-0">
               <h3 className="text-lg font-bold mb-2 text-customDarkBlue">{discussion.title}</h3>
-              <p className="text-gray-600">by {discussion.author}</p>
+              <p className="text-gray-600">by {discussion.author.username}</p>
               <div className="flex space-x-2 mt-2">
                 {discussion.tags.map((tag, idx) => (
                   <span
@@ -95,7 +98,15 @@ const DiscussionMainPage = () => {
                   </span>
                 ))}
               </div>
-              <p className="text-sm text-gray-400 mt-4">{discussion.replies} replies • Last reply {discussion.lastReply}</p>
+              <p className="text-sm text-gray-400">{discussion.replies.length} replies
+              </p>
+              {discussion.replies.length>0 && <p className="text-sm text-gray-400 mt-4">
+                 Last reply {discussion.lastReplyAt
+                  ? formatDistanceToNow(new Date(discussion.lastReplyAt), { addSuffix: true })
+                  : ''}
+              </p>
+              }
+              
             </div>
           ))}
         </div>

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaComments, FaSort, FaFilter, FaEye, FaThumbsUp } from 'react-icons/fa'; // Importing icons
 import { useNavigate } from 'react-router-dom';
 import FollowedDiscussions from './FollowDiscussionPage'; // Import the FollowedDiscussions component
+import { getMyDiscussions } from '../../api/discussion';
 
 const yourDiscussionsData = [
   {
@@ -22,15 +23,42 @@ const yourDiscussionsData = [
     tags: ['Machine Learning', 'Data Preprocessing'],
     lastReply: '2 days ago',
   },
-  // More discussions...
+
 ];
 
 const YourDiscussions = () => {
   const navigate = useNavigate();
-  const [view, setView] = useState('yourDiscussions'); // State to manage the current view
+  const [view, setView] = useState('yourDiscussions'); 
+  const [loading, setLoading] = useState(true);
+  const [yourDiscussions, setYourDiscussions] = useState([]);
+  const [error, setError] = useState([]);
+  
+
+  useEffect(() => {
+    const fetchMyDiscussions = async () => {
+      try {
+        const response = await getMyDiscussions();
+        
+        if (response) {
+          console.log(response)
+          setYourDiscussions(response.myDiscussions);
+        } else {
+          const errorData = response
+          setError(errorData.message || "Failed to fetch discussions.");
+        }
+      } catch (err) {
+          setError("An error occurred. Please try again.");
+          console.error(err);
+      } finally {
+          setLoading(false);
+      }
+    };
+
+    fetchMyDiscussions();
+  }, []);  
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-100 p-8 font-poppins">
       {/* Header */}
       <div className="bg-customBlue2 text-white p-6 rounded-lg shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Your Discussions</h1>
@@ -104,17 +132,16 @@ const YourDiscussions = () => {
 
           {/* Discussions List */}
           <div className="grid gap-6">
-            {yourDiscussionsData.map((discussion) => (
+            {yourDiscussions?.map((discussion) => (
               <div
-                key={discussion.id}
+                key={discussion._id}
                 className="bg-white p-6 rounded-lg shadow-md flex justify-between items-center border-l-4 border-customBlue"
               >
                 <div>
                   <h3 className="text-xl font-bold text-customDarkBlue mb-2">{discussion.title}</h3>
                   <div className="flex items-center space-x-4 text-gray-600">
-                    <p>{discussion.replies} replies</p>
-                    <p>{discussion.views} views</p>
-                    <p>{discussion.likes} likes</p>
+                    <p>{discussion.replies.length} replies</p>
+                    <p>{"50"} views</p>
                   </div>
                   <div className="flex space-x-2 mt-2">
                     {discussion.tags.map((tag, idx) => (
