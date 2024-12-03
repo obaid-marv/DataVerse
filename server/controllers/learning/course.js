@@ -52,7 +52,13 @@ export const getCourse = async (req, res, next) => {
 export const getAllCourses = async (req, res, next) => {
   
   try{
-    const courses = await Course.find({});
+    const courses = await Course.find({}).populate('lectures').populate({
+      "path": "lectures",
+      "populate": {
+        "path": "quiz",
+        "model": "Quiz"
+      }
+    });
     
     if(courses.length==0)
       return res.status(404).json({ message: "Courses not found!"})

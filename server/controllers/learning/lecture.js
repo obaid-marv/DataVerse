@@ -5,7 +5,7 @@ import User from "../../models/User.js";
 
 
 export const createLecture = async (req, res, next) => {
-  const { courseId, title, videoUrl, index, quizId } = req.body;
+  const { courseId, title, videoUrl, index, quizId , type } = req.body;
 
   try {
     
@@ -35,6 +35,7 @@ export const createLecture = async (req, res, next) => {
     const newLecture = new Lecture({
       title,
       videoUrl,
+      type,
       index,
       quiz: quiz._id
     });
