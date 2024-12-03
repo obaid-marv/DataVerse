@@ -5,21 +5,21 @@ const LectureSchema = new mongoose.Schema(
     {
       title: {
         type: String,
-        required: true,
+      },
+      type: {
+        type: String,
+        enum:["video", "text"],
       },
       videoUrl: {
         type: String,
-        required: true,
       },
       index:{
         type: Number,
-        required: true
       },
-      quiz: {
+      quiz: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Quiz",
-        required: true,
-      }, 
+      }], 
     },
     { timestamps: true }
   );
