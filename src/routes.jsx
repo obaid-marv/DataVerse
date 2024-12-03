@@ -177,7 +177,7 @@ export const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/app/discussion",
+        path: "/app/discussion/:id",
         element: (
           <ProtectedRoute>
             <DiscussionDetail />

@@ -32,7 +32,7 @@ export default function DataverseRankings() {
   const [activeCategory, setActiveCategory] = useState('Competitions')
 
   return (
-    <div className="max-w-screen-md mx-auto px-4 py-8 ">
+    <div className="w-full mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-6">Dataverse Rankings</h1>
       
       <div className="flex justify-between items-center mb-8">

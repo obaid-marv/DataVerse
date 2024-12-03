@@ -1,6 +1,6 @@
 
-import { createLecture, getLecture, lectureCompleted } from "../../controllers/learning/lecture.js";
-import { verifyUser } from "../../utils/verifyToken.js";
+import { createLecture, deleteLecture, getLecture, lectureCompleted } from "../../controllers/learning/lecture.js";
+import { verifyToken, verifyUser } from "../../utils/verifyToken.js";
 
 import express from "express";
 
@@ -10,7 +10,7 @@ router.get("/:lectureId", verifyUser, getLecture);
 // router.post("/create", verifyUser, createLecture);
 router.post("/create", createLecture);
 router.post("/completed/:courseId/:lectureId", verifyUser, lectureCompleted);
-
+router.delete("/:courseId/del/:lectureId", verifyToken, deleteLecture)
 
 
 

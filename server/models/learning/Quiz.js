@@ -45,3 +45,4 @@ const QuizQuestionSchema = new mongoose.Schema(
   );
 
   export default mongoose.model("Quiz", QuizQuestionSchema);
+  

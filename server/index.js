@@ -12,8 +12,11 @@ import datasetRoute from "./routes/dataset.js";
 import messageRoutes from "./routes/community/message.js"; 
 import newsRoutes from "./routes/news.js";
 import companyRoutes from "./routes/company.js";
-import postRoutes from "./routes/community/post.js"
-import connectionRoutes from "./routes/community/connection.js"
+import postRoutes from "./routes/community/post.js";
+import connectionRoutes from "./routes/community/connection.js";
+import discussionRoutes from "./routes/discussion/discussion.js";
+
+
 import cors from "cors";
 import http from "http";
 import initSocket from "./config/socket.js";
@@ -61,6 +64,8 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/news", newsRoutes); 
 app.use("/api/company", companyRoutes);
 app.use("/api/post", postRoutes); 
+app.use("/api/discussion", discussionRoutes); 
+
 
 app.get("/", (req, res) => {
   res.send("Hello API");

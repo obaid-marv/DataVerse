@@ -46,7 +46,6 @@ export const getCourse = async (req, res, next) => {
   catch(err){
     next(err)
   }
-  
 }
 
 export const getAllCourses = async (req, res, next) => {

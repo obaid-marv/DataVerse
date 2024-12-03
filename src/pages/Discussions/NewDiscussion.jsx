@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FaTags, FaLightbulb } from 'react-icons/fa';
-
+import { createDiscussion } from '../../api/discussion';
+import Loader from "../../components/Loader";
+import { toast } from 'react-toastify';
 const categories = ['Data Science', 'Machine Learning', 'Deep Learning', 'Natural Language Processing', 'Computer Vision'];
 const tags = ['Python', 'TensorFlow', 'Pandas', 'Scikit-Learn', 'PyTorch', 'Data Preprocessing'];
 
@@ -9,11 +11,54 @@ const StartNewDiscussion = () => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState(categories[0]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [loading, setLoading] = useState(false);
   
   const handleTagSelection = (tag) => {
     setSelectedTags((prevTags) =>
       prevTags.includes(tag) ? prevTags.filter((t) => t !== tag) : [...prevTags, tag]
     );
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!title || !description) {
+      alert("Please fill in both the title and description.");
+      return;
+    }
+  
+    if (selectedTags.length > 3) {
+      alert("You can select up to 3 tags only.");
+      return;
+    }
+  
+    const discussionData = {
+      title,
+      content: description,
+      tags: selectedTags,
+      category,
+    };
+  
+    setLoading(true);
+  
+    try {
+      const response = await createDiscussion(discussionData); 
+  
+      if (response) {
+        toast.success("Discussion Started Successfully!");
+        setTitle("");
+        setDescription("");
+        setSelectedTags([]);
+        setCategory(categories[0]);
+      } else {
+        alert(response.message || "Failed to post the discussion.");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -78,9 +123,14 @@ const StartNewDiscussion = () => {
 
           <button
             className="bg-customBlue text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition"
-            onClick={() => alert('Discussion posted!')}
+            onClick={(e) => handleSubmit(e)}
           >
-            Post Discussion
+            {loading?
+              <span><Loader/></span>
+              :
+              "Post Discussion"
+            }
+            
           </button>
         </div>
 
