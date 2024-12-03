@@ -100,11 +100,17 @@ export const getAllDiscussions = async (req, res, next) => {
       discussion.lastReplyAt = new Date();
       await discussion.save();
   
-      res.status(201).json({ message: "Reply added successfully!", discussion });
+      // Refetch the updated discussion and populate necessary fields
+      const updatedDiscussion = await Discussion.findById(id)
+        .populate("author", "username")
+        .populate("replies.author", "username imgUrl");
+  
+      res.status(201).json({ message: "Reply added successfully!", discussion: updatedDiscussion });
     } catch (err) {
       next(err);
     }
   };
+  
 
   export const getTrendingDiscussions = async (req, res, next) => {
     try {

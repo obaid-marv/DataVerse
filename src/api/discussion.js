@@ -38,3 +38,24 @@ export const AddReplyToDiscussion = async(discussionId, data) =>{
         console.log("error is : ", error )
     }
 }
+
+
+export const getMyDiscussions = async () =>{
+    try {
+        const response = await axiosInstance.get(`/discussion/me`)
+        return response.data;
+    } catch (error) {
+        console.log("error is : ", error )
+    }
+}
+
+
+
+export const getTrendingDiscussions = async () =>{
+    try {
+        const response = await axiosInstance.get(`/discussion/trending`)
+        return response.data;
+    } catch (error) {
+        console.log("error is : ", error )
+    }
+}
