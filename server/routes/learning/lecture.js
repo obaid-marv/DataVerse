@@ -9,8 +9,9 @@ const router = express.Router();
 router.get("/:lectureId", verifyUser, getLecture);
 // router.post("/create", verifyUser, createLecture);
 router.post("/create", createLecture);
+// router.delete("/:courseId/del/:lectureId", verifyToken, deleteLecture)
+router.delete("/:courseId/del/:lectureId", deleteLecture)
 router.post("/completed/:courseId/:lectureId", verifyUser, lectureCompleted);
-router.delete("/:courseId/del/:lectureId", verifyToken, deleteLecture)
 
 
 

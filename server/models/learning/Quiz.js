@@ -8,7 +8,7 @@ const QuizQuestionSchema = new mongoose.Schema(
       },
       excercise: {
         type: String,
-        required: true,
+        // required: true,
       },
       points: {
         type: Number
@@ -20,7 +20,7 @@ const QuizQuestionSchema = new mongoose.Schema(
       },
       instructions:{
         type: [String],
-        required: true,
+        // required: true,
       },
       choices: {
         type: [String],
