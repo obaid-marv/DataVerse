@@ -22,7 +22,7 @@
 
   .register-scrollbar2 {
     /* width: 100%; */
-    padding-right: 15px;
+    /* padding-right: 15px; */
   }
   
   .register-scrollbar2::-webkit-scrollbar {
@@ -36,6 +36,7 @@
   .register-scrollbar2::-webkit-scrollbar-thumb {
     background: #2D9CDB;
     border-radius: 5px;
+    width: 10px;
   }
   strong{
     background-color: antiquewhite;

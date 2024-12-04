@@ -6,8 +6,7 @@ export const createPost = async (req, res, next) => {
         const newPost = new Post({
             imgUrl: req.body.imgUrl,
             userId: req.user.id,
-            description: req.body.description,
-            upVotes: req.body.upVotes || 0, 
+            description: req.body.description
         });
 
         await newPost.save();
@@ -62,19 +61,52 @@ export const updatePost = async (req, res, next) => {
 // Increment upVotes for a Post
 export const incrementUpVotes = async (req, res, next) => {
     try {
-        const post = await Post.findByIdAndUpdate(
-            req.params.id,
-            { $inc: { upVotes: 1 } }, // Increment upVotes by 1
-            { new: true } // Return the updated document
-        );
-        if (!post) {
-            return next(createError(404, "Post not found for upvoting"));
+      const userId = req.user.id; // Assuming user ID is available in req.user
+      const post = await Post.findById(req.params.id);
+  
+      if (!post) {
+        return next(createError(404, "Post not found for upvoting"));
+      }
+      
+      if(post.upVotes){
+        if (post.upVotes.includes(userId)) {
+            return res.status(400).json({ message: "You have already upvoted this post" });
         }
-        res.status(200).json("Upvote added successfully");
+      }
+  
+      post.upVotes.push(userId);
+      await post.save();
+  
+      res.status(200).json({ message: "Upvote added successfully", upVotes: post.upVotes });
     } catch (err) {
-        next(err);
+      next(err);
     }
-};
+  };
+  
+  export const decrementUpVotes = async (req, res, next) => {
+    try {
+      const userId = req.user.id;
+      const post = await Post.findById(req.params.id);
+  
+      if (!post) {
+        return next(createError(404, "Post not found for downvoting"));
+      }
+  
+      // Check if the user has upvoted
+      if (!post.upVotes.includes(userId)) {
+        return res.status(400).json({ message: "You haven't upvoted this post yet" });
+      }
+  
+      // Remove the user ID from the upVotes array
+      post.upVotes = post.upVotes.filter((id) => id.toString() !== userId);
+      await post.save();
+  
+      res.status(200).json({ message: "Upvote removed successfully", upVotes: post.upVotes });
+    } catch (err) {
+      next(err);
+    }
+  };
+  
 
 
 export const deletePost = async (req, res, next) => {

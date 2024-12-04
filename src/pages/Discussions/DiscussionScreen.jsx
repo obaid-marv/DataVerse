@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { getAllDiscussion, getTrendingDiscussions } from '../../api/discussion';
 import { toast } from 'react-toastify';
+import Loader from '../../components/Loader';
 
 const discussionsData = [
   {
@@ -59,7 +60,7 @@ const DiscussionMainPage = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 font-poppins">
+    <div className="max-h-max max-w-screen-lg bg-gray-100 p-6 font-poppins">
       {/* Header */}
       <div className="flex justify-between items-center bg-customBlue2 text-white p-6 rounded-md shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Discussions</h1>
@@ -83,7 +84,8 @@ const DiscussionMainPage = () => {
         <h2 className="text-2xl font-semibold text-customBlue mb-4 flex items-center">
           <FaFire className="mr-2" /> Trending Discussions
         </h2>
-        <div className="flex space-x-6 overflow-x-auto p-2">
+        <div className="flex space-x-6 overflow-x-auto no-scrollbar p-2">
+          {loading && <Loader/>}
           {trending.map((discussion) => (
             <div key={discussion._id} className="bg-gray-50 p-4 rounded-md shadow-md w-72 flex-shrink-0">
               <h3 className="text-lg font-bold mb-2 text-customDarkBlue">{discussion.title}</h3>
@@ -115,6 +117,7 @@ const DiscussionMainPage = () => {
       {/* Discussion List */}
       <div className="bg-white p-6 rounded-md shadow-md">
         <h2 className="text-2xl font-semibold text-customBlue mb-4">All Discussions</h2>
+        {loading && <Loader/>}
         {discussions?.map((discussion) => (
         <div
           key={discussion._id}
