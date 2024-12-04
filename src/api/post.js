@@ -27,3 +27,21 @@ export const addComment = async(data, postId) => {
         console.log("error is : ", error )
     }   
 }
+
+export const upVotePost = async(postId) => {
+    try {
+        const response = await axiosInstance.patch(`/post/${postId}/upvote`)
+        return response.data;
+    } catch (error) {
+        console.log("error is : ", error )
+    }   
+}
+
+export const decrementUpVotePost = async(postId) => {
+    try {
+        const response = await axiosInstance.patch(`/post/${postId}/decrement-upvote`)
+        return response.data;
+    } catch (error) {
+        console.log("error is : ", error )
+    }   
+}

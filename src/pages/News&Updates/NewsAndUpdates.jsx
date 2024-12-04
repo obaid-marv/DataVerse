@@ -158,10 +158,10 @@ const NewsAndUpdates = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen max-w-screen-lg min-w-full">
       {/* Header */}
       <header className="bg-customBlue2 text-white py-4 rounded-2xl">
-        <div className="container mx-auto flex justify-between items-center px-3">
+        <div className="container mx-auto flex justify-between items-center px-3 py-2">
           <h1 className="text-xl font-bold ml-2">News & Updates</h1>
           {/* <nav>
             <a href="/" className="px-3 hover:underline">
@@ -184,14 +184,15 @@ const NewsAndUpdates = () => {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto py-10">
+      <main className="container mx-auto py-10 px-2">
         {/* News Grid Section */}
         <section className="mb-10">
           <h3 className="text-2xl font-bold text-customBlue mb-6">
             Latest Articles
           </h3>
+          {loading && <div className="text-blue-800 w-full h-full flex items-center justify-center"><Loader /> </div>}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {loading && <div className="text-blue-800"><Loader /> </div>}
+            
             {!loading &&
               newsData.map((item, index) => (
                 <div

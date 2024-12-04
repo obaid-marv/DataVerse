@@ -151,13 +151,13 @@ const DiscussionDetail = () => {
   }, [discussionId]);
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen font-poppins">
+    <div className="p-8 bg-gray-100 max-h-max font-poppins">
       {/* Header Section */}
       <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
         <h1 className="text-4xl font-bold text-customBlue">{discussion?.title}</h1>
         <div className="flex items-center mt-4 text-gray-500">
           <span>Posted by <span className="font-semibold">{discussion?.author.username}</span></span>
-          <span className="ml-4 text-sm">• Last Replied at: {relativeTime} • {discussion?.replies.length} replies</span>
+          <span className="ml-4 text-sm">{replies.length==0? "• Posted " : "• Last Replied "} {relativeTime} • {discussion?.replies.length} replies</span>
           <FaShareAlt className="ml-auto text-xl cursor-pointer" />
         </div>
         <p className="mt-4 text-gray-700 text-lg">
@@ -227,7 +227,7 @@ const DiscussionDetail = () => {
         <textarea
           value={replyText}
           onChange={(e) => setReplyText(e.target.value)}
-          className="w-full mt-4 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-customBlue"
+          className="w-full mt-4 p-3 border resize-none rounded-md focus:outline-none focus:ring-2 focus:ring-customBlue"
           placeholder="Write your reply..."
         />
         <button

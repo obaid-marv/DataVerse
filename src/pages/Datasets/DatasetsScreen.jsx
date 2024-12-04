@@ -73,7 +73,7 @@ const DatasetsScreen = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gray-100 p-8">
+        <div className="min-h-screen max-w-screen-lg bg-gray-100 p-8">
             <div className="bg-customBlue2 text-white p-6 rounded-lg shadow-lg mb-8">
                 <h1 className="text-3xl font-bold">Datasets</h1>
                 <p className="text-lg mt-2">Explore, analyze, and share quality data. Learn more about data types, creating, and collaborating.</p>

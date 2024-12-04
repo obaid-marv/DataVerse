@@ -2,10 +2,6 @@ import React, { useEffect, useState } from "react";
 import EditProfileModal from "../../components/Profile/EditProfileModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHome,
-  faUserFriends,
-  faEnvelope,
-  faBell,
   faThumbsUp,
   faComment,
   faShare,
@@ -22,7 +18,7 @@ import { fetchUserProgress } from "../../redux/course/ProgressSlice";
 import { useNavigate } from "react-router-dom";
 import { cloudname, preset } from "../../config/cloudinary";
 import axios from "axios";
-import { addComment, createPost, getAllPosts } from "../../api/post";
+import { addComment, createPost, decrementUpVotePost, getAllPosts, upVotePost } from "../../api/post";
 import { toast } from "react-toastify";
 import { getPostById } from "../../../server/controllers/community/post";
 import Loader from "../../components/Loader";
@@ -113,18 +109,34 @@ const PostScreen = () => {
     setSelectedVideo(null);
   };
 
-  const handleLikeToggle = (postId) => {
-    setPostStates((prevPosts) =>
-      prevPosts.map((post) =>
-        post._id === postId
-          ? {
-              ...post,
-              likes: post.upVotes ? post.upVotes - 1 : post.upVotes + 1,
-              liked: !post.liked,
-            }
-          : post
-      )
-    );
+  const handleLikeToggle = async (postId) => {
+    try {
+      const response = await upVotePost(postId);
+      console.log(response)
+      if(response){
+        setPostStates((prevPosts) =>
+          prevPosts.map((post) =>
+            post._id === postId
+              ? { ...post, upVotes: response.upVotes }
+              : post
+          )
+        );
+      }
+      else{
+        const response2 = await decrementUpVotePost(postId);
+        if(response2){
+          setPostStates((prevPosts) =>
+            prevPosts.map((post) =>
+              post._id === postId
+                ? { ...post, upVotes: response2.upVotes }
+                : post
+            )
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Failed to toggle like", error);
+    }
   };
 
   const handleCommentToggle = (postId) => {
@@ -195,7 +207,6 @@ const PostScreen = () => {
     const fetchData = async () => {
       try {
         await dispatch(fetchUserDetails());
-        console.log("user is : ", user);
         setProfileDetails({
           ...user,
           location: "San Francisco, CA",
@@ -411,12 +422,12 @@ const PostScreen = () => {
               <div className="flex items-center space-x-4 text-gray-500">
                 <div
                   className={`flex items-center space-x-1 cursor-pointer ${
-                    post.liked ? "text-blue-500" : ""
+                    post.upVotes.includes(user._id) ? "text-blue-500" : ""
                   }`}
-                  onClick={() => handleLikeToggle(post._id)}
+                  onClick={() => handleLikeToggle(post._id, post)}
                 >
                   <FontAwesomeIcon icon={faThumbsUp} />
-                  <span>{post.upVotes}</span>
+                  <span>{post.upVotes.length}</span>
                 </div>
                 <div
                   className="flex items-center space-x-1 cursor-pointer"

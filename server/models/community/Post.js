@@ -40,8 +40,9 @@ const PostSchema = new mongoose.Schema(
       trim: true,
     },
     upVotes: {
-        type: Number,
-        default: 0
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'User',
+      default: [],
     },
     comments: [CommentSchema]
   },
