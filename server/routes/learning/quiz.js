@@ -6,7 +6,8 @@ import express from "express";
 
 const router = express.Router(); 
 
-router.post("/create", verifyUser, createQuiz);
+// router.post("/create", verifyUser, createQuiz);
+router.post("/create", createQuiz);
 // router.get("/all", verifyUser, getAllQuiz);
 router.get("/all",  getAllQuiz);
 router.get("/:quizId", verifyUser, getQuiz);
