@@ -1,5 +1,5 @@
 
-import { createQuiz, getAllQuiz, getQuiz, updateQuiz } from "../../controllers/learning/quiz.js";
+import { createQuiz, DeleteQuiz, getAllQuiz, getQuiz, updateQuiz } from "../../controllers/learning/quiz.js";
 import { verifyUser } from "../../utils/verifyToken.js";
 
 import express from "express";
@@ -12,6 +12,7 @@ router.post("/create", createQuiz);
 router.get("/all",  getAllQuiz);
 router.get("/:quizId", verifyUser, getQuiz);
 router.put("/:quizId", verifyUser, updateQuiz);
+router.delete("/:quizId", DeleteQuiz);
 
 
 

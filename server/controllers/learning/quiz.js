@@ -119,8 +119,8 @@ export const updateQuiz = async (req, res, next) => {
 export const DeleteQuiz = async (req, res, next) => {
 
   try{
-    const { id } = req.params;
-    const deletedQuiz = await Quiz.findByIdAndDelete(id);
+    const { quizId } = req.params;
+    const deletedQuiz = await Quiz.findByIdAndDelete(quizId);
 
     if(!deletedQuiz)
       return createError(404, "Quiz to be deleted not found!")
