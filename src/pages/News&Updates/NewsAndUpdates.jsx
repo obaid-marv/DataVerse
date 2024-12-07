@@ -139,8 +139,9 @@ const NewsAndUpdates = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    fetch("http://localhost:5000/api/news")
+    fetch("http://127.0.0.1:5000/api/news")
       .then((response) => {
+        console.log(response)
         setLoading(false);
         return response.json();
       })
