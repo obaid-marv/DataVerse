@@ -212,9 +212,7 @@ const PostScreen = () => {
           location: "San Francisco, CA",
           summary:
             "Passionate student with a keen interest in AI, Machine Learning, and Data Science.",
-          skills:
-            "Python Programming, Machine Learning, Data Visualization, AI Model Development",
-        });
+          });
       } catch (error) {
         console.error("Failed to fetch progress:", error);
       }
@@ -261,14 +259,14 @@ const PostScreen = () => {
           {/* Profile Summary */}
           <div className="mb-6">
             <h2 className="text-lg font-bold mb-2">Profile Summary</h2>
-            <p className="text-sm text-gray-600">{profileDetails.summary}</p>
+            <p className="text-sm text-gray-600">{profileDetails.title}</p>
           </div>
 
           {/* Skills Section */}
           <div className="mb-6">
             <h2 className="text-lg font-bold mb-2">Skills</h2>
             <ul className="text-sm text-gray-600 space-y-1">
-              {profileDetails.skills.split(",").map((skill, index) => (
+              {user?.skills.map((skill, index) => (
                 <li key={index}>- {skill.trim()}</li>
               ))}
             </ul>
@@ -277,7 +275,7 @@ const PostScreen = () => {
           {/* Connections Section */}
           <div onClick={()=> navigate("/connection/view-all-connections")} className="font-bold flex justify-between text-sm mb-5 text-customBlue hover:underline cursor-pointer">
             <p>Connections</p>
-            <p>100</p>
+            <p>{user?.friends.length}</p>
           </div>
 
           <div className="flex flex-col gap-4 text-sm">
@@ -570,6 +568,7 @@ const PostScreen = () => {
           onClose={() => setIsEditModalOpen(false)}
           profileDetails={{ ...user, ...profileDetails }}
           onSave={handleSaveProfile}
+          skills={user?.skills}
           name={user?.username}
         />
       )}

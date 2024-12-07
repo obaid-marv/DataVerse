@@ -1,29 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IMAGES } from "../../assets";
 import { FaUserPlus, FaComment, FaThumbsUp, FaBell } from "react-icons/fa";
 import { MdCheckCircle, MdClose } from "react-icons/md";
 import { notificationContent } from "../../constants/notificationContent";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getAllFriendRequest } from "../../api/connection";
 
 const NotificationScreen = () => {
   const [notifications, setNotifications] = useState(notificationContent);
   const navigate = useNavigate();
+  const [pendingInvites, setPendingInvites] = useState([]);
+  const [requests, setRequests] = useState(0)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const markAsRead = (id) => {
-    setNotifications(
-      notifications.map((notification) =>
-        notification.id === id
-          ? { ...notification, isRead: true }
-          : notification
-      )
-    );
-  };
+  const currentUser = useSelector((state) => state.auth.user);
+  
 
-  const handleDismiss = (id) => {
-    setNotifications(
-      notifications.filter((notification) => notification.id !== id)
-    );
-  };
+  useEffect(() => {
+
+    if (!currentUser) return;
+    
+
+    const fetchAllRequests = async () => {
+      setLoading(true); 
+      setError(null); 
+      try {
+        const response = await getAllFriendRequest();
+        setPendingInvites(response)
+        setRequests(response.length)
+      } catch (err) {
+        console.error(err);
+        setError(err.message || "An error occurred while fetching users.");
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+  
+    fetchAllRequests();
+  }, [currentUser]);
+
 
   const getIcon = (type) => {
     switch (type) {
@@ -40,42 +58,32 @@ const NotificationScreen = () => {
     }
   };
 
+
+
+
   return (
-    <div className="flex flex-col bg-gray-100 min-h-screen p-8 space-y-6">
+    <div className="flex flex-col bg-gray-100 max-h-max p-8 space-y-6">
       {/* Title and Summary Section */}
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-customBlue">Notifications</h1>
         <div className="bg-white p-4 rounded-md shadow-sm flex items-center space-x-6">
           <div className="text-center">
             <p className="text-2xl font-bold text-gray-700">
-              {notifications.length}
+              {pendingInvites.length}
             </p>
             <p className="text-sm text-gray-500">Total Notifications</p>
           </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-gray-700">
-              {notifications.filter((n) => !n.isRead).length}
-            </p>
-            <p className="text-sm text-gray-500">Unread</p>
-          </div>
+
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="flex items-center mb-6">
-        <input
-          type="text"
-          placeholder="Search notifications..."
-          className="p-3 w-full border rounded-md focus:outline-none focus:ring focus:ring-customBlue"
-        />
-      </div>
 
       {/* Notification Cards */}
       <div className="bg-white p-6 rounded-md shadow-md">
-        {notifications.length === 0 ? (
+        {pendingInvites.length === 0 ? (
           <p className="text-gray-500">No notifications available.</p>
         ) : (
-          notifications.map((notification) => (
+          pendingInvites.map((notification) => (
             <div
               key={notification.id}
               className={`flex items-center justify-between p-4 mb-4 border rounded-lg shadow-sm ${
@@ -106,21 +114,6 @@ const NotificationScreen = () => {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4">
-                <div>{getIcon(notification.type)}</div>
-                {!notification.isRead && (
-                  <MdCheckCircle
-                    className="text-green-500 cursor-pointer"
-                    onClick={() => markAsRead(notification.id)}
-                    size={20}
-                  />
-                )}
-                <MdClose
-                  className="text-red-500 cursor-pointer"
-                  onClick={() => handleDismiss(notification.id)}
-                  size={20}
-                />
-              </div>
             </div>
           ))
         )}
@@ -147,7 +140,7 @@ const NotificationScreen = () => {
       </div>
 
       {/* Recent Activities */}
-      <div className="bg-white p-6 rounded-md shadow-md pb-10">
+      {/* <div className="bg-white p-6 rounded-md shadow-md pb-10">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
           Recent Activities
         </h2>
@@ -165,7 +158,7 @@ const NotificationScreen = () => {
             <span className="text-xs text-gray-400">20 minutes ago</span>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

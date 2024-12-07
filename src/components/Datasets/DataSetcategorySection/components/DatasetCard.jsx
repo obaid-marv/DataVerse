@@ -19,15 +19,15 @@ const DatasetCard = ({ item }) => {
     }
 
     return (
-        <div className='flex flex-col gap-0 rounded-xl bg-white border w-72 h-96'>
+        <div className='flex flex-col gap-0 rounded-xl bg-white border w-72 h-80'>
             <div className='flex flex-col h-full'>
                 <div className='flex flex-[2]'>
-                    <img src={item?.imgurl} alt="" className=' rounded-t-xl h-32 w-full object-cover' />
+                    <img src={item?.imgurl || IMAGES.datasetImg} alt="" className=' rounded-t-xl h-32 w-full object-cover' />
                 </div>
                 <div className='flex flex-col flex-[4] px-4 pt-10  gap-2 cursor-pointer' onClick={()=> handleDataSetClick(item)}>
-                    <div className='flex justify-between items-center '>
+                    <div className='flex justify-between flex-col'>
                         <p className='font-semibold '> {item?.title}</p>
-                        {/* <p className='cursor-pointer hover:bg-black/10 hover:rounded-full p-1'><BsThreeDotsVertical /></p> */}
+                        <p className='text-sm text-gray-500'> {item?.description}</p>
                     </div>
                     {/* <div className='flex items-center text-sm'>
                         <p className='underline cursor-pointer'>{item?.author}</p>

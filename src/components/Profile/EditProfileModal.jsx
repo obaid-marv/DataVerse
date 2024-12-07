@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-const EditProfileModal = ({ isOpen, onClose, profileDetails, onSave }) => {
-  const [formData, setFormData] = useState(profileDetails);
+const EditProfileModal = ({ isOpen, onClose, profileDetails, skills, onSave }) => {
+  const [formData, setFormData] = useState({...profileDetails, skills});
 
   const handleChange = (e) => {
     setFormData({
@@ -42,7 +42,7 @@ const EditProfileModal = ({ isOpen, onClose, profileDetails, onSave }) => {
           <label className="block text-sm font-medium mb-2">Profile Summary</label>
           <textarea
             name="summary"
-            value={formData.summary}
+            value={formData.title}
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
             rows="3"
@@ -54,7 +54,7 @@ const EditProfileModal = ({ isOpen, onClose, profileDetails, onSave }) => {
           <label className="block text-sm font-medium mb-2">Skills</label>
           <textarea
             name="skills"
-            value={formData.skills}
+            value={formData.skills.join(", ")}
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
             rows="2"

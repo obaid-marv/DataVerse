@@ -1,4 +1,5 @@
 import Connection from "../../models/community/Connection.js";
+import User from "../../models/User.js";
 
   export const sendFriendRequest = async (req, res, next) => {
     const { receiverId } = req.params;
@@ -83,6 +84,48 @@ import Connection from "../../models/community/Connection.js";
       }).populate("sender", "username imgUrl");
   
       res.status(200).json(requests);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  export const getAllCommunityUsers = async (req, res, next) => {
+    const userId = req.user.id;
+  
+    try {
+      const sentRequests = await Connection.find({ sender: userId }).distinct("receiver");
+      const receivedRequests = await Connection.find({ receiver: userId }).distinct("sender");
+  
+      const excludeIds = [
+        ...new Set([
+          ...sentRequests,
+          ...receivedRequests,
+          ...(await User.findById(userId).select("friends -_id")).friends,
+        ]),
+        userId, 
+      ];
+  
+  
+      const users = await User.find({ _id: { $nin: excludeIds } }).select("username imgUrl title");
+  
+      res.status(200).json(users);
+    } catch (err) {
+      next(err);
+    }
+  };
+  
+
+  export const getAllFriends = async (req, res, next) => {
+    const userId = req.user.id;
+  
+    try {
+      const user = await User.findById(userId).select("friends").populate("friends", "username imgUrl");
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found." });
+      }
+  
+      res.status(200).json(user.friends);
     } catch (err) {
       next(err);
     }

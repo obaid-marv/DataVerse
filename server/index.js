@@ -64,7 +64,8 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/news", newsRoutes); 
 app.use("/api/company", companyRoutes);
 app.use("/api/post", postRoutes); 
-app.use("/api/discussion", discussionRoutes); 
+app.use("/api/discussion", discussionRoutes);
+app.use("/api/connection", connectionRoutes); 
 
 
 app.get("/", (req, res) => {

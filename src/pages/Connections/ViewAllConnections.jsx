@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IMAGES } from "../../assets"; // Ensure you have proper image assets
 import { FaCheckCircle, FaUserPlus, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getAllFriends } from "../../api/connection";
 
 const connectionsData = [
   {
@@ -40,16 +42,20 @@ const suggestedConnections = [
 ];
 
 const ViewAllConnections = () => {
-  const navigate = useNavigate(); // Use navigate to redirect
+  const navigate = useNavigate(); 
   const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [friends, setFriends] = useState([]);
+  const [error, setError] = useState(null);
+  const currentUser = useSelector((state) => state.auth.user);
 
   const handleMessageClick = () => {
     navigate("/connection/messaging-screen"); // Change to your messaging screen path
   };
 
-  const handleProfileClick = (id) => {
+  const handleProfileClick = (userId) => {
     // navigate(`/connection/post-screen/${id}`);
-    navigate(`/connection/post-screen/user`);
+    navigate(`/connection/post-screen/user/${userId}`);
   };
 
   const handleSearchChange = (e) => {
@@ -59,6 +65,31 @@ const ViewAllConnections = () => {
   const filteredConnections = connectionsData.filter((connection) =>
     connection.name.toLowerCase().includes(searchText.toLowerCase())
   );
+
+
+  useEffect(() => {
+
+    if (!currentUser) return;
+
+    const fetchAllFriends = async () => {
+      setLoading(true); 
+      setError(null); 
+      try {
+        const response = await getAllFriends();
+        console.log(response);
+        setFriends(response)
+      } catch (err) {
+        console.error(err);
+        setError(err.message || "An error occurred while fetching users.");
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+  
+    fetchAllFriends();
+  }, [currentUser]);
+
 
   return (
     <div className="flex flex-col bg-gray-100 min-h-screen p-8">
@@ -76,47 +107,38 @@ const ViewAllConnections = () => {
             className="w-full p-2 border rounded-md"
           />
         </div>
-        {filteredConnections.length === 0 ? (
+        {friends.length === 0 ? (
           <p className="text-gray-500 text-lg text-center">
             No connections found.
           </p>
         ) : (
-          filteredConnections.map((connection) => (
+          friends.map((connection) => (
             <div
-              key={connection.id}
-              onClick={() => handleProfileClick(connection.id)}
-              className="flex items-center border-b last:border-b-0 py-4 hover:bg-gray-50 transition duration-200 cursor-pointer" 
+              key={connection._id}
+              
+              className="flex items-center border-b last:border-b-0 py-4 p-2 hover:bg-gray-50 transition duration-200 cursor-pointer rounded" 
             >
               <img
-                src={connection.avatar}
-                alt={connection.name}
+                src={connection.imgUrl || "https://robohash.org/placeholder-avatar"}
+                alt={connection.username}
                 className="w-14 h-14 rounded-full border-2 border-gray-200 mr-4 shadow-md"
               />
-              <div className="flex-1">
+              <div className="flex-1"
+                onClick={() => handleProfileClick(connection._id)}
+              >
                 <p className="font-semibold text-customBlack text-lg">
-                  {connection.name}
+                  {connection.username}
                 </p>
                 <p
-                  className={`text-sm ${
-                    connection.status === "Connected"
-                      ? "text-green-600"
-                      : "text-yellow-600"
-                  }`}
+                  className={`text-sm text-green-600`}
                 >
-                  {connection.status === "Connected" ? (
-                    <>
                       <FaCheckCircle className="inline mr-1" /> Connected
-                    </>
-                  ) : (
-                    <>
-                      <FaUserPlus className="inline mr-1" /> Pending
-                    </>
-                  )}
+
                 </p>
               </div>
               <button
                 className="bg-customBlue text-white py-1 px-4 rounded-md shadow hover:bg-blue-700 transition duration-200"
-                onClick={handleMessageClick} // Navigate on button click
+                onClick={handleMessageClick} 
               >
                 Message
               </button>
