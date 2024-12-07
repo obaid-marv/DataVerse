@@ -209,3 +209,56 @@ export const deleteUserById = async (req, res, next) => {
     }
 }
 
+
+export const getUserById = async (req, res, next) => {
+    const { id } = req.params;
+  
+    try {
+      const user = await User.findById(id).select("-password");
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+  
+      res.status(200).json(user);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+
+  export const addTitleAndSkills = async (req, res, next) => {
+    const { id } = req.params;
+    const { title, skills } = req.body;
+  
+    try {
+      const user = await User.findByIdAndUpdate(id, { title, skills })
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+  
+      res.status(200).json(user);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  export const addPhone = async (req, res, next) => {
+    const { id } = req.params;
+    const { phone } = req.body;
+  
+    try {
+      const user = await User.findByIdAndUpdate(id, { phone })
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+  
+      res.status(200).json(user);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  

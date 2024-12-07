@@ -29,7 +29,7 @@ export default function ConnectionLayout() {
             </div>
     
             {/* Page Content Below Navbar */}
-            <div className="flex flex-col mt-16 p-4 overflow-auto h-full no-scrollbar">
+            <div className="flex flex-col mt-16 p-4 overflow-auto h-full no-scrollbar font-poppins">
               <Outlet />
             </div>
           </div>

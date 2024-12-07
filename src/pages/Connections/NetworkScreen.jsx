@@ -5,16 +5,22 @@ import { pendingInvitations } from "../../constants/pendingInvitations";
 import { suggestedConnections } from "../../constants/suggestedConnections";
 import { useNavigate } from "react-router-dom";
 import RequestCard from "./components/RequestCard";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchMessageUsers } from "../../redux/message/messageSlice";
+import { useSelector } from "react-redux";
+import { acceptFriendRequest, getAllFriendRequest, getMayKnowUsers, rejectFriendRequest, sendFriendRequest } from "../../api/connection";
+import Loader from "../../components/Loader";
 
 const NetworkScreen = () => {
   const navigate = useNavigate();
-  const [pendingInvites, setPendingInvites] = useState(pendingInvitations);
-  const allUsers = useSelector((state) => state.message.users);
+  const [pendingInvites, setPendingInvites] = useState([]);
+  const [requests, setRequests] = useState(0)
+  const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+  const [pendingConnections, setPendingConnections] = useState([]);
+
   const currentUser = useSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
-  console.log(allUsers)
+  
+
   const [connectionSuggestions, setConnectionSuggestions] =
     useState(suggestedConnections);
 
@@ -24,21 +30,86 @@ const NetworkScreen = () => {
   };
 
   useEffect(() => {
+
     if (!currentUser) return;
-
+    
     const fetchUsers = async () => {
+      setLoading(true); 
+      setError(null); 
       try {
-        await dispatch(fetchMessageUsers());
+        const response = await getMayKnowUsers();
+        setUsers(response)
       } catch (err) {
-        console.log(err);
+        console.error(err);
+        setError(err.message || "An error occurred while fetching users.");
+      } finally {
+        setLoading(false); 
       }
-    }
+    };
 
+    const fetchAllRequests = async () => {
+      setLoading(true); 
+      setError(null); 
+      try {
+        const response = await getAllFriendRequest();
+        setPendingInvites(response)
+        setRequests(response.length)
+      } catch (err) {
+        console.error(err);
+        setError(err.message || "An error occurred while fetching users.");
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+  
     fetchUsers();
-  }, [dispatch, currentUser]);
+    fetchAllRequests();
+  }, [currentUser]);
+
+  const handleConnect = async (userId) => {
+    try {
+      const response = await sendFriendRequest(userId); 
+      if (response) {
+        setPendingConnections((prev) => [...prev, userId]); 
+      }
+    } catch (error) {
+      console.error("Failed to send connection request:", error);
+
+    }
+  };
+
+  const handleAcceptInvite = async (requestId) => {
+    console.log(`Accepted invite: ${requestId}`);
+    try {
+      const response = await acceptFriendRequest(requestId); 
+      if (response) {  
+        setPendingInvites((prev) => prev.filter((invite) => invite._id !== requestId));
+      }
+    } catch (error) {
+      console.error("Failed to send connection request:", error);
+
+    }
+  };
+  
+  const handleRejectInvite = async (requestId) => {
+    console.log(`Rejected invite: ${requestId}`);
+    try {
+      const response = await rejectFriendRequest(requestId); 
+      if (response) {  
+        setPendingInvites((prev) => prev.filter((invite) => invite._id !== requestId));
+      }
+    } catch (error) {
+      console.error("Failed to send connection request:", error);
+
+    }
+  };
+  
+  
+
+
   return (
-    <div className="flex bg-gray-100 min-h-screen">
-      {/* Main Content */}
+    <div className="flex bg-gray-100 max-h-max">
       <div className="flex-1 p-8">
         <h1 className="text-2xl font-bold text-customBlue mb-8">
           Manage Your Network
@@ -49,9 +120,7 @@ const NetworkScreen = () => {
           <h2 className="text-lg font-semibold mb-4">Recent Network Activity</h2>
           <div className="bg-white p-4 rounded-md shadow-sm">
             <ul className="space-y-3 text-gray-700">
-              <li>💼 You have 5 new connection requests this week</li>
-              <li>🎉 ABC just connected with XYZ</li>
-              <li>✨ DEF endorsed you for "Machine Learning"</li>
+              <li>💼 You have {requests} new connection requests this week</li>
             </ul>
           </div>
         </div>
@@ -60,12 +129,15 @@ const NetworkScreen = () => {
         <div className="mb-8">
           <div className="flex justify-between items-center text-sm">
             <h2 className="text-lg font-semibold mb-4">Pending Invitations</h2>
-            <p
+            {pendingInvites.length==0?
+              "No pending Invitations"
+            :<p
               onClick={toggleSeeAllInvitesView}
               className={`text-theme hover:underline cursor-pointer`}
             >
               {seeAllInvitesView ? "See Less" : "See All"}
             </p>
+            }
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -73,14 +145,20 @@ const NetworkScreen = () => {
               ?
               pendingInvites.map((invite, i) => (
                 
-                  <RequestCard invite={invite} key={i}/>
+                  <RequestCard invite={invite} key={i}
+                    onAccept={() => handleAcceptInvite(invite._id)}
+                    onIgnore={() => handleRejectInvite(invite._id)}
+                  />
                 
               ))
               :
               pendingInvites.slice(0, 2).map((invite, i) => (
-                <>
-                  <RequestCard invite={invite} key={i}/>
-                </>
+  
+                  <RequestCard invite={invite} key={i}
+                    onAccept={() => handleAcceptInvite(invite._id)}
+                    onIgnore={() => handleRejectInvite(invite._id)}
+                  />
+                
                 ))}
           </div>
         </div>
@@ -89,13 +167,17 @@ const NetworkScreen = () => {
         <div className="mb-8">
           <h2 className="text-lg font-semibold mb-4">People You May Know</h2>
           <div className="grid grid-cols-2 gap-4">
-            {allUsers?.map((suggestion) => (
+            {users.length==0
+            ?
+            <Loader/>
+            :users?.map((suggestion,i) => (
               <div
-                key={suggestion._id}
-                onClick={() => navigate("/connection/post-screen/user")}
-                className="bg-white p-4 rounded-md shadow-md flex items-center justify-between cursor-pointer"
+                key={i}
+                className="bg-white p-4 rounded-md shadow-md flex items-center justify-between"
               >
-                <div className="flex items-center">
+                <div className="flex items-center cursor-pointer"
+                  onClick={() => navigate("/connection/post-screen/user")}
+                >
                   <img
                     src={suggestion.imgUrl || "https://robohash.org/placeholder-avatar"}
                     alt={suggestion.username}
@@ -103,14 +185,23 @@ const NetworkScreen = () => {
                   />
                   <div>
                     <p className="font-semibold">{suggestion.username}</p>
-                    <p className="text-sm text-gray-600">{"Data Scientist at Virtus Tech"}</p>
-                    <p className="text-sm text-gray-400">
-                      2 Mutual Connections
-                    </p>
+                    <p className="text-sm text-gray-600">{suggestion.title}</p>
                   </div>
                 </div>
-                <button className="py-2 px-4 bg-customBlue text-white rounded-lg shadow hover:bg-blue-600 transition-colors duration-200 flex items-center">
-                  <FaUserPlus className="mr-2" /> Connect
+                <button 
+                  onClick={()=> handleConnect(suggestion._id)}
+                  className={`py-2 px-4 bg-customBlue  rounded-lg shadow hover:bg-blue-600 transition-colors duration-200 flex items-center
+                  ${pendingConnections.includes(suggestion._id)?
+                    "bg-white text-black"
+                    :
+                    "text-white"
+                  }
+                  `}>
+                    {pendingConnections.includes(suggestion._id)?
+                    "Pending.."
+                    :
+                    <><FaUserPlus className="mr-2" /> Connect</>
+                  }
                 </button>
               </div>
             ))}

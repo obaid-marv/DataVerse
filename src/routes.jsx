@@ -362,7 +362,7 @@ export const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/connection/post-screen/user",
+        path: "/connection/post-screen/user/:userId",
         element: (
           <ProtectedRoute>
             <UserPostScreen />

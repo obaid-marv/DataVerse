@@ -5,7 +5,7 @@ export const uploadDataset = async(req,res,next)=>{
     try{
         const newDataset = new Dataset({ 
             url:req.body.url,
-            imgurl:req.body.imgurl,
+            imgurl:req.body.imgurl || null,
             title:req.body.title,
             description:req.body.description,
             tags:req.body.tags,

@@ -15,6 +15,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: String,
+  },
   isAdmin: {
     type: Boolean,
     default: false,
@@ -67,7 +70,11 @@ const UserSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "User" 
     }
-  ]
+  ],
+  title:{
+    type: String,
+  },
+  skills : [String]
 
 }, { timestamps: true });
 
