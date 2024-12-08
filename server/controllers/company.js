@@ -7,6 +7,8 @@ export const createCompany = async (req, res, next) => {
         const newCompany = new Company({
             name: req.body.name,
             employees: req.body.employees,
+            email: req.body.email,
+            noOfEmployees: req.body.noOfEmployees,
             description: req.body.description,
             owner: req.body.owner,
             profileUrl: req.body.profileUrl,

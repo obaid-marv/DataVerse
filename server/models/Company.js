@@ -7,6 +7,14 @@ const CompanySchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    email: {
+      type: String,
+      trim: true,
+    },
+    noOfEmployees: {
+      type: Number,
+      default: 0,
+    },
     employees: [
       {
         type: mongoose.Schema.Types.ObjectId,
