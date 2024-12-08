@@ -12,14 +12,14 @@ const CourseProgress = ({id, progress, title, totalLectures}) =>{
     }      
     return(
         <div 
-            className="flex items-center w-full px-4 py-2 border-b cursor-pointer hover:scale-105 transition-all duration-200 border-grey-300 text-textgrey"
+            className="flex items-center w-full px-4 py-2 border-b cursor-pointer hover:bg-customDarkBlue rounded mt-2 transition-all duration-200 border-grey-300 text-textgrey"
             onClick={() => handleNavigate()}
         >
-            <div className="w-20 h-20 bg-themeblack flex items-center justify-center rounded">
+            <div className="w-32 h-20 bg-themeblack flex items-center justify-center rounded">
                 <img src={book} alt="" className=''/>
             </div>
             <div className='flex flex-col w-96 p-2 ml-4'>
-                <p className='text-md font-semibold'>{title}</p>
+                <p className='text-sm font-semibold w-max'>{title}</p>
                 {progress!==100?<>
                 <div className='flex items-center space-x-4'>
                     <p className='text-sm font-medium text-grey-500'>progress</p>

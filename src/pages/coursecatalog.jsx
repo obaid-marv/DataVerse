@@ -13,10 +13,12 @@ const Catalog = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-  const courses = useSelector((state) => state.courses.courses || []);
-  
+  const courses = useSelector((state) => state.courses.courses || []); // Ensure courses is always an array
+
+
+  console.log(courses)
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
-  const [filteredCourses, setFilteredCourses] = useState(courses); // State for filtered courses
+  const [filteredCourses, setFilteredCourses] = useState([]); // Initialize as an empty array
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,17 +33,22 @@ const Catalog = () => {
 
     fetchData();
   }, [user, location.pathname, dispatch]);
-
+  
   useEffect(() => {
-    // Filter courses based on search query
-    const lowerCaseQuery = searchQuery.toLowerCase();
-    const result = courses.filter(
-      (course) =>
-        course.title.toLowerCase().includes(lowerCaseQuery) ||
-        course.category?.toLowerCase().includes(lowerCaseQuery)
-    );
-    setFilteredCourses(result);
+    if (Array.isArray(courses)) {
+      const lowerCaseQuery = searchQuery.toLowerCase();
+      const result = courses.filter(
+        (course) =>
+          course.title?.toLowerCase().includes(lowerCaseQuery) ||
+          course.category?.toLowerCase().includes(lowerCaseQuery)
+      );
+      setFilteredCourses(result);
+    } else {
+      console.warn("Courses is not an array:", courses);
+      setFilteredCourses([]); // Handle cases where courses is not an array
+    }
   }, [searchQuery, courses]);
+  
 
   return (
     <div className="max-w-screen-lg w-full">

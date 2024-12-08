@@ -53,8 +53,8 @@ const Dashboard = () => {
   }, [user, dispatch]);
 
   return (
-    <div className="bg-white min-h-screen">
-      <div className="max-w-screen-lg mt-4 mx-auto p-6 font-poppins">
+    <div className="bg-white min-h-screen max-w-screen-lg w-full">
+      <div className=" mt-4 mx-auto p-6 font-poppins">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-3xl font-semibold text-customBlue2">Dashboard</p>
@@ -98,9 +98,13 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="mt-12">
-          <LearningHeatmap />
-        </div>
+        {user?.activityLog?
+          <div className="mt-12">
+            <LearningHeatmap activityLog={user.activityLog}/>
+          </div>
+          :
+          <></>
+        }
 
         <div className="mt-8">
           <p className="text-lg font-semibold text-customDarkBlue">Learning</p>

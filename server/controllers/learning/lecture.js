@@ -65,7 +65,6 @@ export const lectureCompleted = async (req, res, next) => {
 
     const course = await Course.findById(courseId);
     const user = await User.findById(userId);
-
     if (!user || !course) {
       return res.status(404).json({ message: "User or course not found" });
     }
@@ -87,16 +86,24 @@ export const lectureCompleted = async (req, res, next) => {
     }
 
     enrolledCourse.lectureCompleted.push(lecture.index);
-    enrolledCourse.progress = (enrolledCourse.lectureCompleted.length / course.totalLectures) * 100;
+    enrolledCourse.progress =
+      (enrolledCourse.lectureCompleted.length / course.totalLectures) * 100;
+
+    if (user.totalPoints === 0) {
+      user.totalPoints = 50;
+    } else {
+      user.totalPoints += 50;
+    }
 
     if (enrolledCourse.progress === 100) {
       enrolledCourse.completed = true;
     }
 
-    if (!user.totalPoints || typeof user.totalPoints !== "number") {
-      user.totalPoints = 50; // Initialize totalPoints if missing or invalid
+    const currentDate = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
+    if (user.activityLog.has(currentDate)) {
+      user.activityLog.set(currentDate, user.activityLog.get(currentDate) + 1);
     } else {
-      user.totalPoints += 50; // Increment totalPoints
+      user.activityLog.set(currentDate, 1);
     }
 
     await user.save();
