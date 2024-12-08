@@ -1,19 +1,20 @@
-import CalendarHeatmap from 'react-calendar-heatmap';
-import 'react-calendar-heatmap/dist/styles.css';
-import { subDays, format } from 'date-fns';
+import CalendarHeatmap from "react-calendar-heatmap";
+import "react-calendar-heatmap/dist/styles.css";
+import { subDays, format } from "date-fns";
 
-const LearningHeatmap = () => {
+const LearningHeatmap = ({ activityLog }) => {
   const today = new Date();
   const endDate = today;
   const startDate = subDays(today, 365);
 
-  const randomValues = [];
-  for (let i = 0; i <= 365; i++) {
-    randomValues.push({
-      date: format(subDays(today, i), 'yyyy-MM-dd'),
-      count: Math.floor(Math.random() * 5),
-    });
-  }
+  // Convert activityLog into the required format
+  const heatmapData = Array.from({ length: 366 }, (_, i) => {
+    const date = format(subDays(today, i), "yyyy-MM-dd");
+    return {
+      date,
+      count: activityLog[date] || 0, // Use the count from activityLog, or 0 if no data exists for the date
+    };
+  });
 
   return (
     <div className="p-5 border shadow-lg rounded-lg">
@@ -21,21 +22,18 @@ const LearningHeatmap = () => {
       <CalendarHeatmap
         startDate={startDate}
         endDate={endDate}
-        values={randomValues}
+        values={heatmapData}
         classForValue={(value) => {
-          if (!value) {
-            return 'color-empty';
+          if (!value || value.count === 0) {
+            return "color-empty";
           }
-          return `color-gitlab-${value.count}`;
+          return `color-gitlab-${Math.min(value.count, 4)}`; // Limit count to a max scale of 4 for consistent styling
         }}
-        tooltipDataAttrs={(value) => {
-          return {
-            'data-tip': value.date
-              ? `${value.date}: ${value.count} contributions`
-              : 'No contributions',
-          };
-        }}
-        
+        tooltipDataAttrs={(value) => ({
+          "data-tip": value.date
+            ? `${value.date}: ${value.count} activities`
+            : "No activity",
+        })}
       />
     </div>
   );

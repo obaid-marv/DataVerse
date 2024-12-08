@@ -27,6 +27,8 @@ const Courses = () => {
         dispatch(fetchUserProgress)
             
     },[dispatch])
+
+    console.log(enrolledCourses)
     return (
         <div >
             {/* <Navbar/> */}

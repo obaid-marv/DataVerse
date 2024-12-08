@@ -79,7 +79,12 @@ const UserSchema = new mongoose.Schema({
   
   totalPoints: {
     type: Number
-  }
+  },
+  activityLog: {
+    type: Map,
+    of: Number, // Tracks activities per day
+    default: {},
+  },
 
 }, { timestamps: true });
 

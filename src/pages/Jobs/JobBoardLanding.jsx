@@ -3,10 +3,10 @@ import { FiSearch, FiBriefcase, FiSend } from 'react-icons/fi'; // Icons from re
 
 export default function JobBoardLanding() {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen max-w-screen-lg">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-customDarkBlue to-theme text-white py-20 px-8">
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="mx-auto text-center">
           <h1 className="text-4xl font-bold mb-4">Find Your Dream Job in Data Science</h1>
           <p className="text-lg mb-6">Explore thousands of job listings from top companies worldwide.</p>
           <div className="flex justify-center space-x-4">
