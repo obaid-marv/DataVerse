@@ -23,12 +23,12 @@ const JobSchema = new mongoose.Schema(
     level: {
       type: String,
       enum: ["beginner", "intermediate", "advanced"],
-      required: true,
+      // required: true,
     },
     workingMode: {
       type: String,
       enum: ["onsite", "hybrid", "remote"],
-      required: true,
+      // required: true,
     },
     skills: [
       {
@@ -38,7 +38,7 @@ const JobSchema = new mongoose.Schema(
     ],
     applicationDeadline: {
       type: Date,
-      required: true,
+      // required: true,
     },
     applications: [
       {
