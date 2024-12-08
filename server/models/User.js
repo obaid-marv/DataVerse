@@ -19,9 +19,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phone: {
-    type: String,
-  },
   isAdmin: {
     type: Boolean,
     default: false,
@@ -78,7 +75,11 @@ const UserSchema = new mongoose.Schema({
   title:{
     type: String,
   },
-  skills : [String]
+  skills : [String],
+  
+  totalPoints: {
+    type: Number
+  }
 
 }, { timestamps: true });
 

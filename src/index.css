@@ -45,3 +45,22 @@
     border-radius: 5px;
     font-weight: 600;
   }
+
+  .trophy-icon {
+    color: gold;
+    font-size: 5rem;
+    animation: shine 3s infinite;
+  }
+  
+  @keyframes shine {
+    0% {
+      filter: brightness(1);
+    }
+    50% {
+      filter: brightness(1.5);
+    }
+    100% {
+      filter: brightness(1);
+    }
+  }
+  

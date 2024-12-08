@@ -8,20 +8,34 @@ import tutor from '../assets/tutoricon.svg';
 import timelapse from '../assets/timelapse.svg';
 import CourseProgress from "../components/courseprogress";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchUserProgress } from "../redux/course/ProgressSlice";
+import Loader from "../components/Loader";
+import { NoCoursesEnrolled } from "./dashboard";
 
 
 const Courses = () => {
-
+    const enrolledCourses = useSelector((state) => state.progress.enrolledCourses);
     const navigate = useNavigate(); 
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        if(enrolledCourses)
+            return
+
+        dispatch(fetchUserProgress)
+            
+    },[dispatch])
     return (
         <div >
             {/* <Navbar/> */}
-            <div className="container max-w-6xl mx-auto h-max font-poppins mt-8 ">
+            <div className="container max-w-screen-lg mx-auto h-max font-poppins mt-8 ">
                 <p className="text-2xl font-medium ml-6">MY LEARNING</p>
                 <div className="flex">
                     <div className="w-2/3 p-4">
                         <div className="flex flex-col">
-                            <div className="flex flex-col text-white p-8 bg-themeblack rounded-xl shadow-lg">
+                            {/* <div className="flex flex-col text-white p-8 bg-themeblack rounded-xl shadow-lg">
                                 <p className="font-semibold">Weekly Goal</p>
                                 <ProgressBar progress={30} label={true} width="50%" containerWidth='100%' containerHeight='50px'/>                   
                             </div>
@@ -42,17 +56,23 @@ const Courses = () => {
                                     </div>
 
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="flex flex-col w-full h-max p-2 mt-8">
                                 <div className="flex items-center justify-between">
                                     <p className="text-xl font-semibold">Enrolled Courses</p>
                                     <button className="py-2 px-4 text-sm font-medium w-max bg-theme text-white items-center justify-between hover:scale-105 transform-all duration-200 rounded shadow-md flex" onClick={()=>navigate('/app/courses/catalog')}><span><img src={hat} alt="icon" className="w-6 h-6 mr-2"/></span>COURSE CATALOG</button>
                                 </div>
                                 <div className="flex flex-col">
-                                    <CourseProgress title="Introduction to Data Science" progress={30}/>
-                                    <CourseProgress title="AI Fundamentals" progress={100}/>
-                                    <CourseProgress title="Machine Learning" progress={70}/>
-                                    <CourseProgress title="Python" progress={100}/>
+                                    {enrolledCourses==null?
+                                        <span><Loader/></span>
+                                        :
+                                        enrolledCourses.length==0?
+                                            <NoCoursesEnrolled/>
+                                            :
+                                            enrolledCourses.map((item, i)=>
+                                                <CourseProgress key={i} id={item.courseId._id} progress={item.progress} title={item.courseId.title} totalLectures={item.courseId.totalLectures}/>
+                                            )
+                                    }
                                 </div>
                             </div>
                         </div>

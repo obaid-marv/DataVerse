@@ -58,7 +58,7 @@ const YourDiscussions = () => {
   }, []);  
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8 font-poppins">
+    <div className="min-h-screen bg-gray-100 p-8 w-full font-poppins">
       {/* Header */}
       <div className="bg-customBlue2 text-white p-6 rounded-lg shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Your Discussions</h1>

@@ -58,14 +58,13 @@ export const lectureCompleted = async (req, res, next) => {
   const { lectureId, courseId } = req.params;
 
   try {
-    const lecture = await Lecture.findById(lectureId);
+    const lecture = await Lecture.findById(lectureId).populate("quiz");
     if (!lecture) {
       return res.status(404).json({ message: "Lecture not found!" });
     }
 
     const course = await Course.findById(courseId);
     const user = await User.findById(userId);
-
 
     if (!user || !course) {
       return res.status(404).json({ message: "User or course not found" });
@@ -76,7 +75,9 @@ export const lectureCompleted = async (req, res, next) => {
       return res.status(404).json({ message: "Lecture not found in this course" });
     }
 
-    let enrolledCourse = user.enrolledCourses.find((courseDetails) => courseDetails.courseId.toString() === courseId);
+    let enrolledCourse = user.enrolledCourses.find(
+      (courseDetails) => courseDetails.courseId.toString() === courseId
+    );
     if (!enrolledCourse) {
       return res.status(404).json({ message: "User not enrolled in this course" });
     }
@@ -92,14 +93,20 @@ export const lectureCompleted = async (req, res, next) => {
       enrolledCourse.completed = true;
     }
 
+    if (!user.totalPoints || typeof user.totalPoints !== "number") {
+      user.totalPoints = 50; // Initialize totalPoints if missing or invalid
+    } else {
+      user.totalPoints += 50; // Increment totalPoints
+    }
+
     await user.save();
 
     return res.status(200).json({ message: "Lecture completed successfully!", user });
-    
   } catch (err) {
     next(err);
   }
 };
+
 
 
 export const getLecture = async (req, res, next) => {

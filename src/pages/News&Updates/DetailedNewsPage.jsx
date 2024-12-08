@@ -12,7 +12,7 @@ const DetailedNewsPage = () => {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen max-w-screen-lg w-full">
       {/* Header */}
       <header className="bg-customBlue text-white py-4 rounded-2xl">
         <div className="container mx-auto flex justify-between items-center px-3">

@@ -20,6 +20,10 @@ const LectureSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Quiz",
       }], 
+      transcript: {
+        type: String,
+        required: true
+      }
     },
     { timestamps: true }
   );

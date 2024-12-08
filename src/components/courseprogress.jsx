@@ -2,10 +2,19 @@ import book from '../assets/book.svg'
 import ProgressBar from './progressbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH} from '@fortawesome/free-solid-svg-icons';
+import { FaTrophy } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
-const CourseProgress = ({progress, title}) =>{
+const CourseProgress = ({id, progress, title, totalLectures}) =>{
+    const navigate = useNavigate();
+    const handleNavigate = () => {
+        navigate(`/app/courses/course-screen/${id}`)
+    }      
     return(
-        <div className="flex items-center w-full px-4 py-2 border-b border-grey-300 text-textgrey">
+        <div 
+            className="flex items-center w-full px-4 py-2 border-b cursor-pointer hover:scale-105 transition-all duration-200 border-grey-300 text-textgrey"
+            onClick={() => handleNavigate()}
+        >
             <div className="w-20 h-20 bg-themeblack flex items-center justify-center rounded">
                 <img src={book} alt="" className=''/>
             </div>
@@ -25,7 +34,11 @@ const CourseProgress = ({progress, title}) =>{
                 }
             </div>
             <div className='flex items-center0 pl-48'>
-                <FontAwesomeIcon icon={faEllipsisH} className='w-6 h-6 hover:scale-125 transform-all duration-200 cursor-pointer'/>
+                <div className='flex w-16 items-center justify-around rounded-full bg-gray-100'>
+                    <FaTrophy className="trophy-icon" size={15}/>
+                    <p>{parseInt(totalLectures)*50}</p>
+
+                </div>
             </div>
         </div>
     )
