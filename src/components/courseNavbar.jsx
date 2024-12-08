@@ -67,32 +67,29 @@ const CourseNavbar = () => {
         </div>
       </div>
       <div className="flex flex-1 items-center">
-        <button className="mr-2 border-2 border-gray-500 hover:bg-gray-300 px-2 py-1">
+        {/* <button className="mr-2 border-2 border-gray-500 hover:bg-gray-300 px-2 py-1">
           <FontAwesomeIcon icon={faChevronLeft} className="text-gray-700" />
-        </button>
+        </button> */}
         <button
-          className="px-2 py-1 border-2 border-gray-500 bg-gray-100 hover:bg-gray-300 transition"
+          className="px-2 py-1 border-2 border-gray-500 bg-gray-100 hover:bg-gray-300 transition rounded"
           onClick={() => handleOpen()}
         >
           <span className="mx-2 font-medium text-gray-700">
             Course Overview
           </span>
         </button>
-        <button className="ml-2 border-2 border-gray-500 hover:bg-gray-300 px-2 py-1">
+        {/* <button className="ml-2 border-2 border-gray-500 hover:bg-gray-300 px-2 py-1">
           <FontAwesomeIcon icon={faChevronRight} className="text-gray-700" />
-        </button>
+        </button> */}
       </div>
 
       <div className="flex flex-row space-x-4 items-center">
         <div className="flex flex-row space-x-2 items-center bg-gray-200 p-2 rounded-2xl">
-          <FaTrophy />
+          <FaTrophy className="trophy-icon" size={15}/>
           <p className="font-medium text-sm">
-            Daily XP <span className="text-theme font-semibold text-sm">50</span>
+            Quiz XP <span className="text-theme font-semibold text-sm">50</span>
           </p>
         </div>
-        <FaVideo className="cursor-pointer" />
-        <FaPen size={15} className="cursor-pointer"/>
-        <RiFeedbackFill className="cursor-pointer"/>
       </div>
 
       <Dialog size="lg" open={open} handler={handleOpen}>

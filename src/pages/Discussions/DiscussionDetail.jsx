@@ -6,32 +6,6 @@ import { AddReplyToDiscussion, getDiscussionById } from '../../api/discussion';
 import { toast } from 'react-toastify';
 import { formatDistanceToNow } from 'date-fns';
 
-const initialReplies = [
-  {
-    id: 1,
-    user: 'Jane Smith',
-    avatar: IMAGES.avatar4, 
-    content: 'I recommend using pandas for data cleaning!',
-    upvotes: 10,
-    timestamp: '1 hour ago',
-    badge: 'Top Contributor',
-    hasUpvoted: false,
-    hasDownvoted: false,
-  },
-  {
-    id: 2,
-    user: 'John Doe',
-    avatar: IMAGES.avatar3, 
-    content: 'Numpy can be quite helpful too!',
-    upvotes: 7,
-    timestamp: '2 hours ago',
-    badge: 'Frequent Helper',
-    hasUpvoted: false,
-    hasDownvoted: false,
-  },
-  // Add more replies as needed
-];
-
 const DiscussionDetail = () => {
   const [replyText, setReplyText] = useState('');
   const [sortedBy, setSortedBy] = useState('upvotes');

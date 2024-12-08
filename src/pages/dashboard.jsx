@@ -9,8 +9,10 @@ import { fetchUserProgress } from "../redux/course/ProgressSlice";
 import Loader from "../components/Loader";
 import illustration from "../assets/dashboard-learning.svg";
 import { Link } from "react-router-dom";
+import { FaTrophy } from "react-icons/fa6";
 
-const NoCoursesEnrolled = () => {
+
+export const NoCoursesEnrolled = () => {
   return (
     <div className="flex flex-col items-center justify-center text-center space-y-4 p-6">
       <img src={illustration} alt="Start Learning" className="w-64 h-64" />
@@ -35,6 +37,7 @@ const Dashboard = () => {
   const user = useSelector((state) => state.auth.user);
   const progress = useSelector((state) => state.progress.enrolledCourses);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,12 +55,22 @@ const Dashboard = () => {
   return (
     <div className="bg-white min-h-screen">
       <div className="max-w-screen-lg mt-4 mx-auto p-6 font-poppins">
-        <p className="text-3xl font-semibold text-customBlue2">Dashboard</p>
-        {user ? (
-          <p className="text-xl font-medium text-customDarkBlue mt-2">
-            {`Hey, ${user.username}!`}
-          </p>
-        ) : null}
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-3xl font-semibold text-customBlue2">Dashboard</p>
+            {user ? (
+              <p className="text-xl font-medium text-customDarkBlue mt-2">
+                {`Hey, ${user.username}!`}
+              </p>
+            ) : null}
+          </div>
+          <div className="flex w-28 px-4 py-4 items-center justify-around rounded-full border border-gray-50 bg-theme">
+            <FaTrophy className="trophy-icon" size={25}/>
+            <p className="bg-white rounded px-1">{user?.totalPoints}</p>
+          </div>
+          
+        </div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           <div className="bg-white border border-gray-200 shadow-lg p-6 rounded-xl text-center">
@@ -80,7 +93,7 @@ const Dashboard = () => {
             <img src={flag} alt="Weekly Points" className="w-10 h-10 mx-auto mb-4" />
             <p className="text-md font-medium text-gray-700">Weekly Points</p>
             <p className="text-4xl font-semibold text-theme mt-2">
-              {progress ? `${progress.length}00` : <Loader />}
+              {progress ? user.totalPoints : <Loader />}
             </p>
           </div>
         </div>

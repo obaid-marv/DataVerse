@@ -60,9 +60,9 @@ const DiscussionMainPage = () => {
 
 
   return (
-    <div className="max-h-max max-w-screen-lg bg-gray-100 p-6 font-poppins">
+    <div className="max-h-max max-w-screen-lg w-full bg-gray-100 p-6 font-poppins">
       {/* Header */}
-      <div className="flex justify-between items-center bg-customBlue2 text-white p-6 rounded-md shadow-lg mb-8">
+      <div className="flex justify-between items-center bg-theme text-white p-6 rounded-md shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Discussions</h1>
         <div className="flex items-center space-x-4">
           <input
@@ -81,7 +81,7 @@ const DiscussionMainPage = () => {
 
       {/* Trending Section */}
       <div className="bg-white p-6 rounded-md shadow-md mb-8">
-        <h2 className="text-2xl font-semibold text-customBlue mb-4 flex items-center">
+        <h2 className="text-2xl font-semibold text-customDarkBlue mb-4 flex items-center">
           <FaFire className="mr-2" /> Trending Discussions
         </h2>
         <div className="flex space-x-6 overflow-x-auto no-scrollbar p-2">
@@ -116,7 +116,7 @@ const DiscussionMainPage = () => {
 
       {/* Discussion List */}
       <div className="bg-white p-6 rounded-md shadow-md">
-        <h2 className="text-2xl font-semibold text-customBlue mb-4">All Discussions</h2>
+        <h2 className="text-2xl font-semibold text-customDarkBlue mb-4">All Discussions</h2>
         {loading && <Loader/>}
         {discussions?.map((discussion) => (
         <div

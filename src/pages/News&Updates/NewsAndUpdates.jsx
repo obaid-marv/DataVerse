@@ -40,7 +40,7 @@
 //   return (
 //     <div className="bg-gray-100 min-h-screen">
 //       {/* Header */}
-//       <header className="bg-customBlue2 text-white py-4 rounded-2xl">
+//       <header className="bg-customDarkBlue2 text-white py-4 rounded-2xl">
 //         <div className="container mx-auto flex justify-between items-center px-3">
 //           <h1 className="text-xl font-bold ml-2">News & Updates</h1>
 //           <nav>
@@ -91,7 +91,7 @@
 
 //         {/* News Grid Section */}
 //         <section className="mb-10">
-//           <h3 className="text-2xl font-bold text-customBlue mb-6">Latest Articles</h3>
+//           <h3 className="text-2xl font-bold text-customDarkBlue mb-6">Latest Articles</h3>
 //           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 //             {newsData?.map((item, index) => (
 //               <div key={index} onClick={() => handleNewsClick(item)} className="bg-white shadow-md rounded-md overflow-hidden cursor-pointer">
@@ -99,7 +99,7 @@
 //                 <div className="p-4">
 //                   <h3 className="font-bold text-lg">{item.title}</h3>
 //                   <p className="text-gray-600">{item.description}</p>
-//                   <p className="text-customBlue mt-2">{item.category}</p>
+//                   <p className="text-customDarkBlue mt-2">{item.category}</p>
 //                 </div>
 //               </div>
 //             ))}
@@ -107,7 +107,7 @@
 //         </section>
 
 //         {/* Upcoming Events Section */}
-//         <section className="bg-customBlue2 text-white p-6 rounded-md">
+//         <section className="bg-customDarkBlue2 text-white p-6 rounded-md">
 //           <h3 className="text-2xl font-bold mb-4">Upcoming Events</h3>
 //           <ul>
 //             <li className="mb-2">
@@ -161,7 +161,7 @@ const NewsAndUpdates = () => {
   return (
     <div className="bg-gray-100 min-h-screen max-w-screen-lg min-w-full">
       {/* Header */}
-      <header className="bg-customBlue2 text-white py-4 rounded-2xl">
+      <header className="bg-theme text-white py-4 rounded-2xl">
         <div className="container mx-auto flex justify-between items-center px-3 py-2">
           <h1 className="text-xl font-bold ml-2">News & Updates</h1>
           {/* <nav>
@@ -188,7 +188,7 @@ const NewsAndUpdates = () => {
       <main className="container mx-auto py-10 px-2">
         {/* News Grid Section */}
         <section className="mb-10">
-          <h3 className="text-2xl font-bold text-customBlue mb-6">
+          <h3 className="text-2xl font-bold text-customDarkBlue mb-6">
             Latest Articles
           </h3>
           {loading && <div className="text-blue-800 w-full h-full flex items-center justify-center"><Loader /> </div>}
@@ -213,7 +213,7 @@ const NewsAndUpdates = () => {
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-customBlue mt-2 block"
+                      className="text-customDarkBlue mt-2 block"
                     >
                       Read more
                     </a>

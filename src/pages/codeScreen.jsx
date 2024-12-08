@@ -28,7 +28,6 @@ const CodeExerciseScreen = () => {
   const navigate = useNavigate();
   const course = useSelector((state) => state.course.course);
   const currentLecture = useSelector((state)=>state.course.currentLecture);
-  console.log("current lec: ", currentLecture);
 
   const fetchQuiz = async () =>{
     const lecture = course?.lectures[index-1];
