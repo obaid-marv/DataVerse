@@ -12,7 +12,7 @@ import axiosInstance from "../config/api";
 import { toast, ToastContainer } from "react-toastify";
 import Loader from "../components/Loader";
 import { completeLecture, goToNextLecture, setCurrentLecture } from "../redux/course/CourseSlice";
-import { current } from "@reduxjs/toolkit";
+
 
 const CodeExerciseScreen = () => {
   const [isCorrect, setIsCorrect] = useState(null);
@@ -23,6 +23,8 @@ const CodeExerciseScreen = () => {
   const [dark, setDark] = useState(true);
   const [hints, setHints] = useState([]);
   const [hintCount, setHintCount] = useState(0);
+  const [hintDisable, setHintDisable] = useState(false);
+  
   const dispatch = useDispatch();
   const { courseId, index } = useParams();
   const navigate = useNavigate();
@@ -33,7 +35,6 @@ const CodeExerciseScreen = () => {
     const lecture = course?.lectures[index-1];
     try{
       const response = await axiosInstance.get(`/learning/quiz/${lecture.quiz}`)
-      console.log(response.data.quiz)
       setQuiz(response.data.quiz);
       setCode(response.data.quiz.codeTemplate);
     }
@@ -47,23 +48,6 @@ const CodeExerciseScreen = () => {
       fetchQuiz();
 
   },[course])
-
-  const normalizeCode = (code) => {
-    // Remove comments (single-line and multi-line)
-    const codeWithoutComments = code
-      .replace(/#.*$/gm, '') // Remove single-line comments
-      .replace(/""".*?"""/gs, '') // Remove multi-line comments (triple quotes)
-      .replace(/'''.*?'''/gs, ''); // Remove multi-line comments (single quotes)
-  
-    // Remove extra whitespace and newline characters
-    const normalized = codeWithoutComments
-      .split('\n')
-      .map(line => line.trim()) // Trim each line
-      .filter(line => line) // Remove empty lines
-      .join('\n'); // Join back into a single string
-  
-    return normalized;
-  };
   
 
   const handleSubmitAnswer = async () => {
@@ -71,13 +55,13 @@ const CodeExerciseScreen = () => {
     const userOutput = await handleExecuteCode(code);
     
     const correctOutput = await handleExecuteCode(quiz.correctCode);
+    console.log(correctOutput, userOutput)
   
     if (userOutput.trim() === correctOutput.trim()) {
       toast.success("Correct Answer!")
       const lecture = course.lectures.find(lecture=> lecture.index==index);
       const lectureId = lecture._id;
-      console.log("lectureid:", lectureId)
-      console.log("courseID:", courseId)
+      
       await dispatch(completeLecture({lectureId, courseId}))
       
       if(course.lectures.length==index){
@@ -118,7 +102,7 @@ const CodeExerciseScreen = () => {
    } ,[dispatch, currentLecture]);
 
   const handleRunCode = async () => {
-    console.log("running code")
+  
     try {
       const response = await axios.post("http://127.0.0.1:5000/execute", {
         code: code,
@@ -149,9 +133,13 @@ const CodeExerciseScreen = () => {
   };
 
   const addHint = () => {
-    const newHint = `This is hint #${hintCount + 1}. Add your hint content here.`;
-    setHints([...hints, newHint]);
-    setHintCount(hintCount + 1);
+    if(hintCount<quiz?.hints.length){
+      setHints([...hints, quiz?.hints[hintCount]]);
+      setHintCount(hintCount + 1);
+    }
+    else{
+      setHintDisable(true)
+    }
   };
 
   return (
@@ -197,7 +185,8 @@ const CodeExerciseScreen = () => {
         }
         <button
           onClick={addHint}
-          className="w-36 hover:scale-110 transform-all duration-200 h-10 p-2 flex items-center text-sm font-semibold justify-center rounded-md border-2 border-customDarkBlue"
+          className={`w-36 hover:scale-110 cursor-pointer transform-all duration-200 h-10 p-2 flex items-center text-sm font-semibold justify-center rounded-md border-2 border-customDarkBlue`}
+          disabled={hintDisable}
         >
           <span className="mr-2"><HiOutlineLightBulb size={20} /></span>Take Hint!
         </button>

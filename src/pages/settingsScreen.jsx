@@ -50,7 +50,7 @@ const SettingsScreen = () => {
               <img
                 src= {user.imgUrl}
                 alt="Avatar"
-                className={`w-32 h-32 rounded-full cursor-pointer block`}
+                className={`w-32 h-32 rounded-full object-cover cursor-pointer block`}
               />
             :
             <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">

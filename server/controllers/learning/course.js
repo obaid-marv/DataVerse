@@ -7,7 +7,8 @@ export const addCourse = async (req, res, next) => {
     const newCourse = new Course({
       title: req.body.title,
       description: req.body.description,
-      instructor: req.body.instructor
+      instructor: req.body.instructor,
+      type: req.body.type || null
     });
     
 

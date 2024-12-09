@@ -5,53 +5,60 @@ import User from "../../models/User.js";
 
 
 export const createLecture = async (req, res, next) => {
-  const { courseId, title, videoUrl, index, quizId , type } = req.body;
+  const { courseId, title, videoUrl, index, quizId, transcript } = req.body;
 
   try {
-    
-    if (!title || !videoUrl || index === undefined) {
+    // Validate required fields
+    if (!title || index === undefined) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-
+    // Check if the course exists
     const course = await Course.findById(courseId).populate("lectures");
-
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
     }
 
-    const quiz = await Quiz.findById(quizId)
-
-    if (!quiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+    // Check if a quiz exists for the provided quizId (if quizId is provided)
+    let quiz;
+    if (quizId) {
+      quiz = await Quiz.findById(quizId);
+      if (!quiz) {
+        return res.status(404).json({ message: "Quiz not found" });
+      }
     }
 
-    const existingLecture = course.lectures.find(lecture => lecture.index === index);
-
+    // Check if a lecture with the same index already exists
+    const existingLecture = course.lectures.find((lecture) => lecture.index === index);
     if (existingLecture) {
       return res.status(400).json({ message: "Lecture with this index already exists" });
     }
 
-    const newLecture = new Lecture({
+    // Create a new lecture
+    const newLectureData = {
       title,
-      videoUrl,
-      type,
       index,
-      quiz: quiz._id
-    });
+      ...(videoUrl && { videoUrl }), // Include videoUrl only if provided
+      ...(transcript && { transcript }), // Include transcript only if provided
+      ...(quiz && { quiz: quiz._id }), // Include quiz if provided
+    };
 
+    const newLecture = new Lecture(newLectureData);
+
+    // Save the lecture
     const savedLecture = await newLecture.save();
-    
+
+    // Add the lecture to the course
     course.lectures.push(savedLecture._id);
-    course.totalLectures+=1
+    course.totalLectures += 1;
     await course.save();
 
-    res.status(201).json({ message: "Lecture saved successfully!", savedLecture});
-
+    res.status(201).json({ message: "Lecture saved successfully!", savedLecture });
   } catch (err) {
-    next(err); 
+    next(err);
   }
 };
+
 
 export const lectureCompleted = async (req, res, next) => {
   const userId = req.user.id;
@@ -119,7 +126,7 @@ export const lectureCompleted = async (req, res, next) => {
 export const getLecture = async (req, res, next) => {
   const lectureId = req.params.lectureId
   try{
-    const lecture = await Lecture.findById(lectureId);
+    const lecture = await Lecture.findById(lectureId).populate("quiz");
 
     if(!lecture)
       return res.status(404).json({ message: "Lecture not found!"});

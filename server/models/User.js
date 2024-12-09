@@ -78,7 +78,8 @@ const UserSchema = new mongoose.Schema({
   skills : [String],
   
   totalPoints: {
-    type: Number
+    type: Number,
+    default: 0
   },
   activityLog: {
     type: Map,
