@@ -66,6 +66,11 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: false
   },
+  isCompany:{
+    type: Boolean,
+    required: true,
+    default: false
+  },
   friends: [
     { 
       type: mongoose.Schema.Types.ObjectId,
@@ -78,7 +83,8 @@ const UserSchema = new mongoose.Schema({
   skills : [String],
   
   totalPoints: {
-    type: Number
+    type: Number,
+    default: 0
   },
   activityLog: {
     type: Map,

@@ -6,10 +6,6 @@ const LectureSchema = new mongoose.Schema(
       title: {
         type: String,
       },
-      type: {
-        type: String,
-        enum:["video", "text"],
-      },
       videoUrl: {
         type: String,
       },
@@ -21,9 +17,20 @@ const LectureSchema = new mongoose.Schema(
         ref: "Quiz",
       }], 
       transcript: {
-        type: String,
-        required: true
-      }
+        type: [
+          {
+            type: {
+              type: String,
+              enum: ["heading", "text"],
+              required: true,
+            },
+            content: {
+              type: String,
+              required: true, 
+            },
+          },
+        ],
+      },
     },
     { timestamps: true }
   );

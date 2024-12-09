@@ -87,7 +87,6 @@ const CourseScreen = () => {
 
       const filteredCourse = enrolledCourses.find(course => courseId === course.courseId._id);
       if(filteredCourse.completed===true){
-        console.log(filteredCourse)
         setCompleted(true);
         return
       }
@@ -98,7 +97,11 @@ const CourseScreen = () => {
       if(filteredCourse.lectureCompleted.length!=0)
         max = Math.max(...filteredCourse.lectureCompleted);
       dispatch(setCurrentLecture(max + 1));
-      navigate(`/course-started/video-screen/${courseId}/${max + 1}`); 
+      if(filteredCourse.courseId.type=="video")
+        navigate(`/course-started/video-screen/${courseId}/${max + 1}`);
+      else
+        navigate(`/course-started/notes-screen/${courseId}/${max + 1}`);
+
     } else {
       try {
         await dispatch(enrollCourse(courseId)).unwrap();
@@ -162,15 +165,14 @@ const CourseScreen = () => {
       {course?
       <div className="flex flex-col items-start bg-white md:items-center gap-8 p-6  text-customDarkBlue rounded-lg shadow-md">
       
-        <div className="flex flex-row">
+        <div className="flex flex-row w-full">
 
 
           
-          <div className="flex flex-col">
-            <h1 className="text-4xl font-bold">{course.title}</h1>
+          <div className="flex flex-col w-2/3">
+            <h1 className="text-4xl font-bold">{course?.title}</h1>
             <p className="text-md mt-4">
-              This course provides an in-depth introduction to machine learning techniques
-              and data analysis, focusing on real-world applications and projects.
+              {course?.description}
             </p>
             {completed?
             <div className="px-6 py-3 w-36 bg-customDarkBlue text-white rounded-lg font-semibold transition-all duration-200 transform-all hover:scale-105">
@@ -179,26 +181,26 @@ const CourseScreen = () => {
             :
             <div className="mt-6">
             
-            {enrolledCourses?.some(course=> course.courseId._id==courseId)?
-            <button
-              onClick={()=> handleContinue()}
-              className="px-6 py-3 bg-customDarkBlue text-white rounded-lg font-semibold transition-all duration-200 transform-all hover:scale-105"
-            >
-              Continue!
-            </button>:
-            <button
+              {enrolledCourses?.some(course=> course.courseId._id==courseId)?
+              <button
                 onClick={()=> handleContinue()}
                 className="px-6 py-3 bg-customDarkBlue text-white rounded-lg font-semibold transition-all duration-200 transform-all hover:scale-105"
-            >
-            Start Now!
-            </button>
-            }
-          </div>}
+              >
+                Continue!
+              </button>:
+              <button
+                  onClick={()=> handleContinue()}
+                  className="px-6 py-3 bg-customDarkBlue text-white rounded-lg font-semibold transition-all duration-200 transform-all hover:scale-105"
+              >
+              Start Now!
+              </button>
+              }
+            </div>}
           </div>
           
-          
-          <img src={courseIll} alt="Start Learning" className="w-48 h-48"/>
-          
+          <div className="flex items-center justify-center w-1/3">
+            <img src={courseIll} alt="Start Learning" className="w-48 h-48"/>
+          </div>
         </div>
         <div className="flex space-x-2 w-full">
             <div className="flex items-center h-5 px-2 py-3 space-x-1 bg-customDarkBlue text-white rounded-md shadow-md">

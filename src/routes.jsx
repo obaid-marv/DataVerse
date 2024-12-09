@@ -104,6 +104,8 @@ import NewDatasetScreen from "./pages/Datasets/NewDatasetScreen";
 import DatasetDetails from "./pages/Datasets/DatasetDetails";
 import ProjectBoard from "./pages/ProjectCollab/ProjectBoard";
 import DataverRankings from "./pages/Progression/DataverseRankings";
+import NotesScreen from "./pages/NotesScreen";
+import MCQScreen from "./pages/MCQscreen";
 
 
 
@@ -342,6 +344,14 @@ export const routes = createBrowserRouter([
       {
         path: "/course-started/code-screen/:courseId/:index",
         element: <CodeScreen />,
+      },
+      {
+        path: "/course-started/mcq-screen/:courseId/:index",
+        element: <MCQScreen />,
+      },
+      {
+        path: "/course-started/notes-screen/:courseId/:index",
+        element: <NotesScreen />,
       },
     ],
   },

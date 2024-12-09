@@ -23,7 +23,7 @@ export const NoCoursesEnrolled = () => {
         Start your learning journey by exploring our wide range of courses.
       </p>
       <Link
-        to="/courses"
+        to="/app/courses/catalog"
         className="mt-4 bg-theme text-white py-2 px-4 rounded-lg hover:bg-customBlue transition"
       >
         Browse Courses

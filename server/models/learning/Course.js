@@ -25,6 +25,10 @@ const CourseSchema = new mongoose.Schema(
       required: true,
       default:0
     },
+    type:{
+      type: String,
+      enum: ["video", "text"]
+    },
   },
   { timestamps: true }
 );

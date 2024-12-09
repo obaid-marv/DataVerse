@@ -20,6 +20,9 @@ const VideoScreen = () => {
     setShowTranscript(!showTranscript);
   };
 
+  console.log(course?.lectures[index-1].videoUrl)
+
+
   const handleGotIt = () => {
     navigate(`/course-started/code-screen/${courseId}/${index}`);
   };

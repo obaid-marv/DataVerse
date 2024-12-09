@@ -1,5 +1,6 @@
 // src/controllers/companyController.js
 import Company from "../models/Company.js";
+import User from "../models/User.js";
 import { createError } from "../utils/error.js";
 
 export const createCompany = async (req, res, next) => {
@@ -14,6 +15,12 @@ export const createCompany = async (req, res, next) => {
             profileUrl: req.body.profileUrl,
             websiteUrl: req.body.websiteUrl,
         });
+
+        const user = await User.findById(req.body.owner);
+
+        user.isCompany = true
+
+        await user.save();
         await newCompany.save();
         res.status(200).json("Company has been created successfully");
     } catch (err) {
@@ -44,6 +51,21 @@ export const getCompanyById = async (req, res, next) => {
         next(err);
     }
 };
+
+export const getCompanyByOwnerId = async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+
+        const company = await Company.findOne({ owner: userId });
+        if (!company) {
+            return next(createError(404, "Company not found"));
+        }
+        res.status(200).json(company);
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 export const updateCompany = async (req, res, next) => {
     try {

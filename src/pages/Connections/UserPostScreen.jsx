@@ -40,7 +40,7 @@ const UserPostScreen = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
 
-
+  console.log(profileDetails)
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedImage) {
@@ -88,6 +88,7 @@ const UserPostScreen = () => {
     navigate("/connection/messaging-screen");
   };
 
+
   const handleProfileClick = (id) => {
     navigate(`/connection/post-screen/user`);
   };
@@ -119,7 +120,7 @@ const UserPostScreen = () => {
         <div className="bg-gray-200 p-6 shadow-lg rounded-xl mx-10 flex-[2] mb-8">
           <div className="flex items-center mb-6 gap-4">
             <img
-              src={profileDetails.imageUrl || "https://robohash.org/placeholder-avatar"}
+              src={profileDetails?.imageUrl || "https://robohash.org/placeholder-avatar"}
               alt="avatar"
               className="w-24 h-24 rounded-full shadow-md bg-white"
             />
@@ -165,9 +166,11 @@ const UserPostScreen = () => {
             <div className="mb-2 flex-1 min-w-[200px]">
               <h2 className="text-lg font-bold mb-2">Skills</h2>
               <ul className="text-sm text-gray-600 space-y-1">
-                {profileDetails.skills.map((skill, index) => (
-                  <li key={index}>- {skill.trim()}</li>
-                ))}
+                {profileDetails?.skills
+                  ?.split(",") // Split by comma
+                  .map((skill, index) => (
+                    <li key={index}>- {skill.trim()}</li> // Trim spaces and display each skill
+                  ))}
               </ul>
             </div>
           </div>
