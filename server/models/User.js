@@ -66,6 +66,11 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: false
   },
+  isCompany:{
+    type: Boolean,
+    required: true,
+    default: false
+  },
   friends: [
     { 
       type: mongoose.Schema.Types.ObjectId,

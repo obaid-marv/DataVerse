@@ -5,7 +5,8 @@ import {
     getAllCompanies,
     getCompanyById,
     updateCompany,
-    deleteCompany
+    deleteCompany,
+    getCompanyByOwnerId
 } from "../controllers/company.js";
 
 const router = express.Router();
@@ -13,9 +14,10 @@ const router = express.Router();
 router.post("/create", verifyToken, createCompany);
 // router.get("/all", verifyToken, getAllCompanies);
 router.get("/allCompanies", getAllCompanies);
+router.get("/get-my-company",  verifyToken, getCompanyByOwnerId);
 router.get("/:id",  verifyToken, getCompanyById);
-router.put("/:id", verifyToken, updateCompany);
-// router.delete("/:id", verifyToken, deleteCompany);
+router.put("/:id", verifyToken, updateCompany); 
+// router.delete("/:id", verifyTokdeleteCompany);
 router.delete("/:id", deleteCompany);
 
 export default router;

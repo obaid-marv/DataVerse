@@ -16,6 +16,8 @@ export const register = async(req,res,next)=>{
             email:req.body.email,
             phoneNo:req.body.phoneNo,
             password:hash,
+            isCompany: req.body.isCompany || false,
+            isAdmin: req.body.isAdmin || false
         });
         await newUser.save();
         res.status(200).json("User has been created");
