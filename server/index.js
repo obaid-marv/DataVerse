@@ -16,7 +16,6 @@ import companyRoutes from "./routes/company.js";
 import postRoutes from "./routes/community/post.js";
 import connectionRoutes from "./routes/community/connection.js";
 import discussionRoutes from "./routes/discussion/discussion.js";
-import jobsRoutes from "./routes/job.js";
 
 
 import cors from "cors";
