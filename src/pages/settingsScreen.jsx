@@ -41,7 +41,7 @@ const SettingsScreen = () => {
       >
         <div className="flex flex-col w-full py-6 px-3 rounded-3xl font-semibold text-customDarkBlue font-poppins">
           {/* Heading  */}
-          <div className="flex text-4xl ml-2 mb-4 bg-customBlue2 text-white rounded-xl p-4 px-6 mt-6">My Profile</div>
+          <div className="flex text-4xl ml-2 mb-4 bg-customBlue text-white rounded-xl p-4 px-6 mt-6">My Profile</div>
 
           {/* Pic and Details */}
           <div className="flex flex-row justify-start space-x-8 p-8">

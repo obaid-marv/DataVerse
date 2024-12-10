@@ -51,7 +51,7 @@ const Catalog = () => {
   
 
   return (
-    <div className="max-w-screen-lg w-full">
+    <div className=" w-full">
       <div className="mx-auto h-max w-full font-poppins">
         <div className="flex items-center ml-2">
           <p className="text-2xl font-medium ml-4">Catalog</p>

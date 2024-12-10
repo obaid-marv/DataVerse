@@ -32,7 +32,7 @@ const Courses = () => {
     return (
         <div >
             {/* <Navbar/> */}
-            <div className="container max-w-screen-lg mx-auto h-max font-poppins mt-8 ">
+            <div className="container w-full mx-auto h-max font-poppins mt-8 ">
                 <p className="text-2xl font-medium ml-6">MY LEARNING</p>
                 <div className="flex">
                     <div className="w-2/3 p-4">
@@ -62,7 +62,7 @@ const Courses = () => {
                             <div className="flex flex-col w-full h-max p-2 mt-8">
                                 <div className="flex items-center justify-between">
                                     <p className="text-xl font-semibold">Enrolled Courses</p>
-                                    <button className="py-2 px-4 text-sm font-medium w-max bg-theme text-white items-center justify-between hover:scale-105 transform-all duration-200 rounded shadow-md flex" onClick={()=>navigate('/app/courses/catalog')}><span><img src={hat} alt="icon" className="w-6 h-6 mr-2"/></span>COURSE CATALOG</button>
+                                    <button className="py-2 px-4 text-sm font-medium w-max bg-customBlue text-white items-center justify-between hover:scale-105 transform-all duration-200 rounded shadow-md flex" onClick={()=>navigate('/app/courses/catalog')}><span><img src={hat} alt="icon" className="w-6 h-6 mr-2"/></span>COURSE CATALOG</button>
                                 </div>
                                 <div className="flex flex-col">
                                     {enrolledCourses==null?

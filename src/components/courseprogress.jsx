@@ -12,7 +12,7 @@ const CourseProgress = ({id, progress, title, totalLectures}) =>{
     }      
     return(
         <div 
-            className="flex items-center w-full px-4 py-2 border-b cursor-pointer hover:bg-customDarkBlue rounded mt-2 transition-all duration-200 border-grey-300 text-textgrey"
+            className="flex items-center w-full px-4 py-2 border-b cursor-pointer hover:bg-customLightBlueShade rounded mt-2 transition-all duration-200 border-grey-300 text-textgrey"
             onClick={() => handleNavigate()}
         >
             <div className="w-32 h-20 bg-themeblack flex items-center justify-center rounded">

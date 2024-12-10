@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FiSearch, FiBriefcase, FiSend } from "react-icons/fi";
 import axiosInstance from "../../config/api";
 import { useNavigate } from "react-router-dom";
+import { IMAGES } from "../../constants/images";
 
 export default function JobBoardLanding() {
   const [loading, setLoading] = useState(true);
@@ -45,7 +46,7 @@ export default function JobBoardLanding() {
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen w-full max-w-screen-lg">
+    <div className="bg-gray-50 min-h-screen w-full">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-customDarkBlue to-theme text-white py-20 px-8">
         <div className="mx-auto text-center">
@@ -55,7 +56,12 @@ export default function JobBoardLanding() {
           </p>
           <div className="flex justify-center space-x-4">
             <div className="relative">
-              <FiSearch className="absolute left-3 top-3 text-gray-400" />
+              {/* <FiSearch className="absolute left-3 top-3 text-gray-400" /> */}
+              <img
+                    src={IMAGES.search_icon1}
+                    alt="Search Icon"
+                    className="w-[20px]  h-[18px] absolute left-2 top-2.5"
+                  />
               <input
                 type="text"
                 placeholder="Search for jobs..."
@@ -73,7 +79,7 @@ export default function JobBoardLanding() {
 
       {/* Featured Jobs */}
       <div className="max-w-7xl mx-auto mt-16 px-8">
-        <h2 className="text-2xl font-bold text-customDarkBlue mb-6">Featured Jobs</h2>
+        <h2 className="text-2xl font-bold text-customDarkBlue mb-6">Posted Jobs</h2>
         {loading ? (
           <p>Loading jobs...</p>
         ) : (

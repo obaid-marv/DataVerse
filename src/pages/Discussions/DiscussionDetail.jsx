@@ -125,7 +125,7 @@ const DiscussionDetail = () => {
   }, [discussionId]);
 
   return (
-    <div className="p-8 bg-gray-100 max-h-max font-poppins">
+    <div className="p-8 bg-gray-100 max-h-max font-poppins w-full">
       {/* Header Section */}
       <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
         <h1 className="text-4xl font-bold text-customBlue">{discussion?.title}</h1>

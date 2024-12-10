@@ -10,7 +10,7 @@ const ConnectionScreen = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-customBlue to-customDarkBlue items-center justify-center text-white">
+    <div className="flex flex-col w-full h-screen bg-gradient-to-br from-customBlue to-customDarkBlue items-center justify-center text-white">
       {/* Intro Section */}
       <div className="text-center px-4">
         <h1 className="text-4xl font-bold mb-4">Welcome to Community & Networking</h1>
