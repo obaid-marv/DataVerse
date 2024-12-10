@@ -13,7 +13,7 @@ const DatasetDetails = () => {
     }
 
     return (
-        <div className="min-h-screen w-full bg-gray-100 p-8 w-full">
+        <div className="min-h-screen max-w-screen-lg bg-gray-100 p-8 w-full">
             <div className="bg-customBlue text-white p-6 rounded-lg shadow-lg mb-8 w-full">
                 <h1 className="text-3xl font-bold">Dataset Details</h1>
                 <p className="text-lg mt-2">View detailed information about the dataset.</p>
