@@ -42,12 +42,12 @@ const VideoScreen = () => {
 
         {/* Buttons */}
         <div className="mt-4 w-3/4 flex items-center justify-between">
-          <button
+          {/* <button
             onClick={handleShowTranscript}
             className="px-4 py-2 bg-white text-customDarkBlue border-2 border-gray-400 rounded-sm"
           >
             {showTranscript ? 'Hide Transcript' : 'Show Transcript'}
-          </button>
+          </button> */}
 
           <button
             onClick={handleGotIt}

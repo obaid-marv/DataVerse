@@ -13,7 +13,7 @@ const MCQScreen = ({ onQuizEnd }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const course = useSelector((state) => state.course.course);
-  const currentLecture = useSelector((state)=>state.course.currentLecture);
+  const currentLecture = useSelector((state) => state.course.currentLecture);
   const { courseId, index } = useParams();
 
   useEffect(() => {
@@ -46,38 +46,28 @@ const MCQScreen = ({ onQuizEnd }) => {
   const handleAnswerClick = async (optionIndex) => {
     setSelectedAnswer(optionIndex);
     const currentQuestion = quiz.questions[currentQuestionIndex];
-  
-    if (optionIndex === currentQuestion.correctAnswer) {
-      setFeedback("Correct!");
-      setTimeout(async () => {
-        setFeedback("");
-        setSelectedAnswer(null);
-  
-        if (currentQuestionIndex < quiz.questions.length - 1) {
-          setCurrentQuestionIndex((prev) => prev + 1);
-        } else {
-          const lecture = course.lectures.find((lecture) => lecture.index == index);
-          const lectureId = lecture._id;
-  
-          // Mark the current lecture as completed
-          await dispatch(completeLecture({ lectureId, courseId }));
-        console.log("here i am")
-          if (course.lectures.length === parseInt(index, 10)) {
 
-            toast.success("Course Completed Successfully");
-            navigate("/app/dashboard");
-          } else {
-            // Navigate to the next lecture
-            const nextLectureIndex = parseInt(index, 10) + 1;
-            dispatch(setCurrentLecture(nextLectureIndex));
-          }
-        }
-      }, 1000);
+    if (optionIndex === currentQuestion.correctAnswer) {
+      const lecture = course.lectures.find((lecture) => lecture.index == index);
+      const lectureId = lecture._id;
+
+      // Mark the current lecture as completed
+      await dispatch(completeLecture({ lectureId, courseId }));
+
+      if (course.lectures.length === parseInt(index, 10)) {
+        toast.success("Course Completed Successfully");
+        navigate("/app/dashboard");
+      } else {
+        // Navigate to the next lecture
+        const nextLectureIndex = parseInt(index, 10) + 1;
+        dispatch(setCurrentLecture(nextLectureIndex));
+        navigate(`/course-started/notes-screen/${courseId}/${nextLectureIndex}`);
+      }
     } else {
       setFeedback("Try Again!");
     }
   };
-  
+
   useEffect(() => {
     if (!currentLecture) {
       dispatch(setCurrentLecture(parseInt(index, 10))); // Set current lecture on load
@@ -86,7 +76,6 @@ const MCQScreen = ({ onQuizEnd }) => {
       navigate(`/course-started/notes-screen/${courseId}/${currentLecture}`);
     }
   }, [dispatch, currentLecture, index, courseId, navigate]);
-  
 
   const currentQuestion = quiz?.questions[currentQuestionIndex];
 
