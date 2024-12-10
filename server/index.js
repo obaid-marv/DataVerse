@@ -16,6 +16,7 @@ import companyRoutes from "./routes/company.js";
 import postRoutes from "./routes/community/post.js";
 import connectionRoutes from "./routes/community/connection.js";
 import discussionRoutes from "./routes/discussion/discussion.js";
+import jobsRoutes from "./routes/job.js";
 
 
 import cors from "cors";
@@ -68,6 +69,8 @@ app.use("/api/company", companyRoutes);
 app.use("/api/post", postRoutes); 
 app.use("/api/discussion", discussionRoutes);
 app.use("/api/connection", connectionRoutes); 
+app.use("/api/jobs", jobsRoutes); 
+
 
 
 app.get("/", (req, res) => {

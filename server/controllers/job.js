@@ -24,7 +24,7 @@ export const createJob = async (req, res, next) => {
 
 export const getAllJobs = async (req, res, next) => {
   try {
-    const jobs = await Job.find().populate("company");
+    const jobs = await Job.find().populate("company applications.userId");
     if (!jobs) return next(createError(404, "No jobs found"));
     res.status(200).json(jobs);
   } catch (err) {
@@ -68,7 +68,7 @@ export const deleteJob = async (req, res, next) => {
 
 export const applyForJob = async (req, res, next) => {
   try {
-    const { id } = req.params; // Job ID
+    const { id } = req.params; 
     const application = {
       userId: req.body.userId,
       docUrl: req.body.docUrl,

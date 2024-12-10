@@ -106,6 +106,7 @@ import ProjectBoard from "./pages/ProjectCollab/ProjectBoard";
 import DataverRankings from "./pages/Progression/DataverseRankings";
 import NotesScreen from "./pages/NotesScreen";
 import MCQScreen from "./pages/MCQscreen";
+import JobDetail from "./pages/Jobs/JobDetail";
 
 
 
@@ -271,6 +272,14 @@ export const routes = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <JobBoardLanding />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: `/app/jobs/detail/:jobId`,
+        element: (
+          <ProtectedRoute>
+            <JobDetail />
           </ProtectedRoute>
         ),
       },
