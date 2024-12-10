@@ -164,13 +164,13 @@ export default function StudentChatsPage() {
                   <div className="flex flex-row items-center -ml-1">
                     <GoDotFill className="text-customOnlineColor" />
                     <p className="text-customLightGrayShade text-xxs font-normal text-start">
-                      {selectedUser.status === "online" ? "Online" : "Offline"}
+                      {selectedUser.status === "online" ? "Online" : "Online"}
                     </p>
                   </div>
                 </div>
                 <div className="flex flex-row space-x-3 items-center">
-                  <FiPhone size={18} />
-                  <SlOptionsVertical size={16} />
+                  {/* <FiPhone size={18} />
+                  <SlOptionsVertical size={16} /> */}
                 </div>
               </div>
             </div>
@@ -247,8 +247,8 @@ export default function StudentChatsPage() {
                       }
                     }}
                   ></textarea>
-                  <BiSolidMicrophone className="text-customMsgIconsColor w-5 h-5" />
-                  <HiPaperClip className="text-customMsgIconsColor w-5 h-5" />
+                  {/* <BiSolidMicrophone className="text-customMsgIconsColor w-5 h-5" />
+                  <HiPaperClip className="text-customMsgIconsColor w-5 h-5" /> */}
                   <button type="submit" className="hidden"></button>
                 </form>
                 <div

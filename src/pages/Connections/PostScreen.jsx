@@ -238,7 +238,7 @@ const PostScreen = () => {
         <div className="bg-gray-100 p-6 shadow-lg rounded-md mx-10 flex-[2]">
           <div className="flex flex-col items-center mb-6">
             <img
-              src={IMAGES.avatar}
+              src={user?.imgUrl || "https://robohash.org/placeholder-avatar"}
               alt="avatar"
               className="w-20 h-20 rounded-full mb-3 shadow-md"
             />
@@ -248,12 +248,12 @@ const PostScreen = () => {
                 <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" />
                 <span>{profileDetails.location}</span>
               </div>
-            <button
+            {/* <button
               onClick={handleEditClick}
               className="px-3 py-1 bg-customBlue text-white rounded-full text-sm hover:bg-blue-600 transition"
             >
               Edit Profile
-            </button>
+            </button> */}
           </div>
 
           {/* Profile Summary */}
@@ -278,7 +278,7 @@ const PostScreen = () => {
             <p>{user?.friends.length}</p>
           </div>
 
-          <div className="flex flex-col gap-4 text-sm">
+          {/* <div className="flex flex-col gap-4 text-sm">
                 <p className="font-bold text-customBlue text-base">Socials</p>
                 <a href={profileDetails.linkedIn_Acc} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-theme hover:underline">
                   <FaLinkedin className="text-blue-700 text-xl hover:text-blue-800 transition" />
@@ -292,7 +292,7 @@ const PostScreen = () => {
                   <FaGithub className="text-gray-800 text-xl hover:text-gray-900 transition" />
                   <p>{profileDetails.github_Acc}</p>
                 </a>
-              </div>
+          </div> */}
         </div>
 
         {/* Main Content */}
@@ -523,7 +523,7 @@ const PostScreen = () => {
           </ul>
 
           {/* Recommended Connections */}
-          <h2 className="text-lg font-bold mb-4">Recommended Connections</h2>
+          {/* <h2 className="text-lg font-bold mb-4">Recommended Connections</h2>
           <div className="space-y-4">
             <div
               onClick={handleProfileClick}
@@ -558,7 +558,7 @@ const PostScreen = () => {
               />
               <p className="text-sm font-semibold">Alex Johnson</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

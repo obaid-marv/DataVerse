@@ -21,13 +21,13 @@ const ChatCard = ({ img, name, lastSeen, msgShown, status, onClick, isSelected }
       <div className="ml-3 flex-1">
         <div className="flex justify-between">
           <h5 className="text-sm font-semibold">{name}</h5>
-          <span className="text-xs text-gray-500">{lastSeen}</span>
+          {/* <span className="text-xs text-gray-500">{lastSeen}</span> */}
         </div>
         <div className="flex justify-between">
           <p className="text-xs text-gray-600 truncate">{msgShown}</p>
-          <span className={`text-xs ${status === "online" ? "text-green-500" : "text-red-500"}`}>
+          {/* <span className={`text-xs ${status === "online" ? "text-green-500" : "text-red-500"}`}>
             {status}
-          </span>
+          </span> */}
         </div>
       </div>
     </div>
