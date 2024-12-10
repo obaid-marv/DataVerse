@@ -161,7 +161,7 @@ const NewsAndUpdates = () => {
   return (
     <div className="bg-gray-100 min-h-screen max-w-screen-lg min-w-full">
       {/* Header */}
-      <header className="bg-theme text-white py-4 rounded-2xl">
+      <header className="bg-customBlue text-white py-4 rounded-2xl">
         <div className="container mx-auto flex justify-between items-center px-3 py-2">
           <h1 className="text-xl font-bold ml-2">News & Updates</h1>
           {/* <nav>
