@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Award, Zap, Brain, Users, User, Medal } from 'lucide-react'
 import { MdPerson3 } from "react-icons/md";
 import { GoPeople } from "react-icons/go";
 import { BiSolidMedal } from "react-icons/bi";
 import { TbMedal2 } from "react-icons/tb";
 import { PiMedalBold } from "react-icons/pi";
+import axiosInstance from '../../config/api';
+import Loader from '../../components/Loader';
+import { formatDistanceToNow } from 'date-fns';
 
 const categories = ['Competitions', 'Datasets']
 const tiers = [
@@ -29,7 +32,17 @@ const Avatar = ({ name, avatar }) => (
 )
 
 export default function DataverseRankings() {
-  const [activeCategory, setActiveCategory] = useState('Competitions')
+  // const [activeCategory, setActiveCategory] = useState('Competitions')
+  const [rankings, setRankings] = useState([]);
+
+  useEffect(()=>{
+    const fetchRankings = async () => {
+      const response = await axiosInstance.get("/auth/rankings");
+      setRankings(response.data);
+    }
+    fetchRankings();
+  }, [])
+
 
   return (
     <div className="w-full mx-auto px-4 py-8">
@@ -37,7 +50,7 @@ export default function DataverseRankings() {
       
       <div className="flex justify-between items-center mb-8">
         <div className="space-x-4">
-          {categories.map((category) => (
+          {/* {categories.map((category) => (
             <button
               key={category}
               className={`pb-2 ${activeCategory === category ? 'border-b-2 border-black font-semibold' : 'text-gray-500'}`}
@@ -45,12 +58,12 @@ export default function DataverseRankings() {
             >
               {category}
             </button>
-          ))}
+          ))} */}
         </div>
-        <a href="#" className="text-blue-600 hover:underline">Learn more about rankings</a>
+        {/* <a href="#" className="text-blue-600 hover:underline">Learn more about rankings</a> */}
       </div>
 
-      <div className="flex justify-between mb-8">
+      {/* <div className="flex justify-between mb-8">
         {tiers.map((tier) => (
           <div key={tier.name} className="flex items-center">
             <tier.Icon className="w-8 h-8 mr-2" />
@@ -60,36 +73,55 @@ export default function DataverseRankings() {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
 
       <div className="bg-white shadow rounded-lg overflow-hidden">
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tier</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Medals</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {users.map((user) => (
+            {rankings.length>0?
+            
+            rankings.map((user, i) => (
               <tr key={user.rank}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.rank}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <TbMedal2 className="w-6 h-6 text-yellow-400" />
-                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{i+1}</td>
+
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <Avatar name={user.name} avatar={user.avatar} />
-                    <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                      <div className="text-sm text-gray-500">joined {user.joinedYears} years ago</div>
+                    <Avatar name={user.username} avatar={user.username.at(0)} />
+                    <div className="ml-4 w-24">
+                      <div className="text-sm font-medium text-gray-900">{user.username}</div>
+                      <div className="text-sm text-gray-500">joined {user.createdAt
+                  ? formatDistanceToNow(new Date(user.createdAt), { addSuffix: true })
+                  : ''}</div>
+                      
+                    </div>
+                    <div className='w-10 ml-10 items-center'>
+                      {i==0?
+                      <PiMedalBold className="w-6 h-6 text-yellow-400" />
+                        :
+                      <></>
+                      }
+                      {i==1?
+                      <PiMedalBold className="w-6 h-6 text-gray-400" />
+                        :
+                      <></>
+                      }
+                      {i==2?
+                      <PiMedalBold className="w-6 h-6 text-yellow-700" />
+                        :
+                      <></>
+                      }
+
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                {/* <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex space-x-2">
                     <PiMedalBold className="w-6 h-6 text-yellow-400" />
                     <span>{user.goldMedals}</span>
@@ -98,10 +130,13 @@ export default function DataverseRankings() {
                     <PiMedalBold className="w-6 h-6 text-yellow-700" />
                     <span>{user.bronzeMedals}</span>
                   </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.points.toLocaleString()}</td>
+                </td> */}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.totalPoints}</td>
               </tr>
-            ))}
+            ))
+          :
+          <Loader/>  
+          }
           </tbody>
         </table>
       </div>

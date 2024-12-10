@@ -3,6 +3,7 @@ import { FaComments, FaSort, FaFilter, FaEye, FaThumbsUp } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom';
 import FollowedDiscussions from './FollowDiscussionPage'; // Import the FollowedDiscussions component
 import { getMyDiscussions } from '../../api/discussion';
+import { formatDistanceToNow } from 'date-fns';
 
 const yourDiscussionsData = [
   {
@@ -67,7 +68,7 @@ const YourDiscussions = () => {
 
       {/* Tabs */}
       <div className="flex justify-between items-center mb-6">
-        <div className="flex space-x-4">
+        {/* <div className="flex space-x-4">
           <button
             onClick={() => setView('yourDiscussions')}
             className={`px-4 py-2 rounded-md shadow ${view === 'yourDiscussions' ? 'bg-customBlue2 text-white' : 'bg-white text-customBlue2'}`}
@@ -80,7 +81,7 @@ const YourDiscussions = () => {
           >
             Followed Discussions
           </button>
-        </div>
+        </div> */}
         <button
           onClick={() => navigate('/app/new-discussion')}
           className="bg-customBlue2 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition"
@@ -93,7 +94,7 @@ const YourDiscussions = () => {
       {view === 'yourDiscussions' ? (
         <>
           {/* User Stats Section */}
-          <div className="bg-white p-6 rounded-lg shadow-md mb-8 grid grid-cols-3 gap-4">
+          {/* <div className="bg-white p-6 rounded-lg shadow-md mb-8 grid grid-cols-3 gap-4">
             <div className="text-center">
               <h2 className="text-2xl font-bold text-customBlue">10</h2>
               <p className="text-gray-500">Total Discussions</p>
@@ -106,11 +107,11 @@ const YourDiscussions = () => {
               <h2 className="text-2xl font-bold text-customBlue">40</h2>
               <p className="text-gray-500">Total Likes</p>
             </div>
-          </div>
+          </div> */}
 
           {/* Filter and Sort Section */}
           <div className="flex justify-between items-center mb-6">
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <div className="relative">
                 <select className="p-2 border rounded-md text-gray-700">
                   <option value="all">All Discussions</option>
@@ -127,7 +128,7 @@ const YourDiscussions = () => {
                 </select>
                 <FaSort className="absolute right-3 top-3 text-gray-500" />
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Discussions List */}
@@ -153,13 +154,18 @@ const YourDiscussions = () => {
                       </span>
                     ))}
                   </div>
-                  <p className="text-gray-400 mt-4">Last reply {discussion.lastReply}</p>
+                  {discussion.replies.length>0 && <p className="text-sm text-gray-400 mt-4">
+                 Last reply {discussion.lastReplyAt
+                  ? formatDistanceToNow(new Date(discussion.lastReplyAt), { addSuffix: true })
+                  : ''}
+              </p>
+              }
                 </div>
-                <div className="flex items-center space-x-4">
+                {/* <div className="flex items-center space-x-4">
                   <FaComments className="text-customBlue w-6 h-6 cursor-pointer" onClick={() => navigate(`/discussion/${discussion.id}`)} />
                   <FaEye className="text-gray-400 w-6 h-6" />
                   <FaThumbsUp className="text-gray-400 w-6 h-6" />
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
