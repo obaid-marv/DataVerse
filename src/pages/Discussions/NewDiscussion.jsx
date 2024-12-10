@@ -62,7 +62,7 @@ const StartNewDiscussion = () => {
   };
 
   return (
-    <div className="min-h-max bg-gray-100 p-8 font-poppins">
+    <div className="min-h-max max-w-screen-lg bg-gray-100 p-8 font-poppins">
       {/* Page Header */}
       <div className="bg-customBlue text-white p-6 rounded-lg shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Start a New Discussion</h1>
@@ -183,11 +183,11 @@ const StartNewDiscussion = () => {
       </div>
 
       {/* Related/Trending Discussions Section */}
-      <div className="bg-white p-6 rounded-lg shadow-lg mt-8">
+      {/* <div className="bg-white p-6 rounded-lg shadow-lg mt-8">
         <h2 className="text-xl font-bold mb-4">Similar/Trending Discussions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Placeholder discussions */}
-          <div className="p-4 bg-gray-100 rounded-lg shadow-sm">
+          {/* <div className="p-4 bg-gray-100 rounded-lg shadow-sm">
             <h3 className="font-bold text-customBlue">Hyperparameter Tuning Best Practices</h3>
             <p className="text-sm text-gray-600">Deep Learning • 10 replies • 200 views</p>
           </div>
@@ -199,8 +199,8 @@ const StartNewDiscussion = () => {
             <h3 className="font-bold text-customBlue">Best Practices for Model Evaluation</h3>
             <p className="text-sm text-gray-600">Data Science • 12 replies • 300 views</p>
           </div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */} 
     </div>
   );
 };

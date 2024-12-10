@@ -40,37 +40,19 @@ const DatasetCard = ({ item }) => {
                     </div> */}
                 </div>
                 <div className='flex justify-between items-center flex-1 border-t border-black/20 py-2 px-6'>
-                    <div className='flex gap-2 border rounded-3xl items-center w-20 h-8 '>
+                    {/* <div className='flex gap-2 border rounded-3xl items-center w-20 h-8 '>
                         <p className='flex-1 flex items-center justify-center cursor-pointer'>
                             <MdOutlineArrowDropUp />
                         </p>
                         <p className='h-8 w-[0.5px] bg-black'></p>
                         <p className='flex-1 flex text-center text-sm font-semibold'>5</p>
-                    </div>
+                    </div> */}
                     <div className='flex gap-4 items-center'>
                         <p className='cursor-pointer'>
                             <a href={item.url}>
                             <LuDownload size={24} />
                             </a>
                         </p>
-                        <img src={IMAGES.bronze} alt="medal" className='w-7 h-7 rounded-full' />
-                        <CircularProgressbarWithChildren value={60} styles={{
-                            path: {
-                                stroke: `rgba(62, 152, 199)`,
-                                strokeLinecap: 'butt',
-                                transition: 'stroke-dashoffset 0.5s ease 0s',
-                                transform: 'rotate(0.25turn)',
-                                transformOrigin: 'center center',
-                            },
-                            // trail: {
-                            //     stroke: '#fdfdfd',
-                            //     strokeLinecap: 'butt',
-                            //     transform: 'rotate(0.25turn)',
-                            //     transformOrigin: 'center center',
-                            // },
-                        }} className='w-8' >
-                            <img src={IMAGES.person} onClick={handleProfileClick} alt="person" className='w-7 h-7 rounded-full cursor-pointer' />
-                        </CircularProgressbarWithChildren>
                     </div>
                 </div>
             </div>

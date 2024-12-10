@@ -264,4 +264,21 @@ export const getUserById = async (req, res, next) => {
     }
   };
 
+
+  export const getAllUsersRankings = async (req, res, next) => {
+
+  
+    try {
+      const users = await User.find({}).sort("-totalPoints");
+  
+      if (!users) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+  
+      res.status(200).json(users);
+    } catch (err) {
+      next(err);
+    }
+  };
+
   

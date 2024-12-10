@@ -59,14 +59,12 @@ import User from "../../models/User.js";
     const { requestId } = req.params;
   
     try {
-      const connection = await Connection.findById(requestId);
+      const connection = await Connection.findByIdAndDelete(requestId);
   
-      if (!connection || connection.status !== "pending") {
+      if (!connection ) {
         return res.status(404).json({ message: "Friend request not found." });
       }
   
-      connection.status = "rejected";
-      await connection.save();
   
       res.status(200).json({ message: "Friend request rejected." });
     } catch (err) {

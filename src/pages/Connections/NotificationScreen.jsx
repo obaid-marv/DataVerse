@@ -6,6 +6,7 @@ import { notificationContent } from "../../constants/notificationContent";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getAllFriendRequest } from "../../api/connection";
+import { formatDistanceToNow } from "date-fns";
 
 const NotificationScreen = () => {
   const [notifications, setNotifications] = useState(notificationContent);
@@ -58,6 +59,8 @@ const NotificationScreen = () => {
     }
   };
 
+  console.log("pendingInvites: ", pendingInvites)
+
 
 
 
@@ -85,7 +88,7 @@ const NotificationScreen = () => {
         ) : (
           pendingInvites.map((notification) => (
             <div
-              key={notification.id}
+              key={notification._id}
               className={`flex items-center justify-between p-4 mb-4 border rounded-lg shadow-sm ${
                 notification.isRead ? "bg-gray-50" : "bg-white"
               } hover:bg-gray-100 transition duration-200`}
@@ -93,8 +96,8 @@ const NotificationScreen = () => {
               <div className="flex items-center">
                 <div className="relative">
                   <img
-                    src={notification.avatar}
-                    alt={notification.name}
+                    src={notification.sender.imgUrl || "https://robohash.org/placeholder-avatar"}
+                    alt={"user"}
                     className="w-12 h-12 rounded-full mr-4"
                   />
                   {!notification.isRead && (
@@ -103,13 +106,15 @@ const NotificationScreen = () => {
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-customBlack">
-                    {notification.name}
+                    {notification.sender.username}
                   </p>
                   <p className="text-gray-600 text-sm">
-                    {notification.message}
+                    {"New Friend Request"}
                   </p>
                   <span className="text-xs text-gray-400">
-                    {notification.timestamp}
+                  {notification.createdAt
+                  ? formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })
+                  : ''}
                   </span>
                 </div>
               </div>

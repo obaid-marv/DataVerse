@@ -132,23 +132,23 @@ const DiscussionDetail = () => {
         <div className="flex items-center mt-4 text-gray-500">
           <span>Posted by <span className="font-semibold">{discussion?.author.username}</span></span>
           <span className="ml-4 text-sm">{replies.length==0? "• Posted " : "• Last Replied "} {relativeTime} • {discussion?.replies.length} replies</span>
-          <FaShareAlt className="ml-auto text-xl cursor-pointer" />
+          {/* <FaShareAlt className="ml-auto text-xl cursor-pointer" /> */}
         </div>
         <p className="mt-4 text-gray-700 text-lg">
           {discussion?.content}
         </p>
-        <button
+        {/* <button
           onClick={handleFollow}
           className={`mt-4 px-4 py-2 rounded-md ${isFollowing ? 'bg-gray-400' : 'bg-customBlue'} text-white`}
         >
           {isFollowing ? 'Unfollow Discussion' : 'Follow Discussion'}
-        </button>
+        </button> */}
       </div>
 
       {/* Sorting and Interaction Section */}
       <div className="flex justify-between items-center bg-white p-4 rounded-md shadow-md mb-6">
         <h2 className="text-xl font-bold">Replies</h2>
-        <div className="flex items-center space-x-4">
+        {/* <div className="flex items-center space-x-4">
           <span className="text-gray-600">Sort by:</span>
           <select
             value={sortedBy}
@@ -158,7 +158,7 @@ const DiscussionDetail = () => {
             <option value="upvotes">Upvotes</option>
             <option value="newest">Newest</option>
           </select>
-        </div>
+        </div> */}
       </div>
 
       {/* Replies Section */}
@@ -176,7 +176,7 @@ const DiscussionDetail = () => {
                     </span>
                   )}
                 </div>
-                <div className="flex items-center space-x-2 text-gray-500">
+                {/* <div className="flex items-center space-x-2 text-gray-500">
                   <FaArrowUp
                     className={`cursor-pointer hover:text-green-600 ${reply.hasUpvoted && 'text-green-600'}`}
                     onClick={() => handleUpvote(reply.id)}
@@ -186,12 +186,12 @@ const DiscussionDetail = () => {
                     className={`cursor-pointer hover:text-red-600 ${reply.hasDownvoted && 'text-red-600'}`}
                     onClick={() => handleDownvote(reply.id)}
                   />
-                </div>
+                </div> */}
               </div>
               <p className="text-sm text-gray-600 mt-2">{reply.content}</p>
               <div className="flex items-center text-gray-500 mt-2">
                 <span className="text-xs">{reply.timestamp}</span>
-                <FaReply className="ml-4 text-customBlue cursor-pointer hover:text-blue-700" />
+                {/* <FaReply className="ml-4 text-customBlue cursor-pointer hover:text-blue-700" /> */}
               </div>
             </div>
           </div>
@@ -212,16 +212,6 @@ const DiscussionDetail = () => {
         </button>
       </div>
 
-      {/* Call to Action */}
-      <div className="mt-8 bg-blue-100 p-6 rounded-lg shadow-lg">
-        <h3 className="text-2xl font-bold text-customBlue">Join the Conversation!</h3>
-        <p className="mt-2 text-gray-700">
-          Have thoughts to share? Don't hesitate to participate in the discussion and help the community grow. Your insights could be invaluable to others!
-        </p>
-        <button className="mt-4 bg-customBlue text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition">
-          Post a Reply
-        </button>
-      </div>
     </div>
   );
 };
