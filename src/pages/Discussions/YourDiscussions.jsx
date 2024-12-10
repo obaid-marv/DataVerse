@@ -61,7 +61,7 @@ const YourDiscussions = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-8 w-full font-poppins">
       {/* Header */}
-      <div className="bg-customBlue2 text-white p-6 rounded-lg shadow-lg mb-8">
+      <div className="bg-customBlue text-white p-6 rounded-lg shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Your Discussions</h1>
         <p className="text-lg mt-2">Review, manage, and engage with the discussions you've started or followed.</p>
       </div>
@@ -71,20 +71,20 @@ const YourDiscussions = () => {
         {/* <div className="flex space-x-4">
           <button
             onClick={() => setView('yourDiscussions')}
-            className={`px-4 py-2 rounded-md shadow ${view === 'yourDiscussions' ? 'bg-customBlue2 text-white' : 'bg-white text-customBlue2'}`}
+            className={`px-4 py-2 rounded-md shadow ${view === 'yourDiscussions' ? 'bg-customBlue text-white' : 'bg-white text-customBlue'}`}
           >
             Your Discussions
           </button>
           <button
             onClick={() => setView('followedDiscussions')}
-            className={`px-4 py-2 rounded-md shadow ${view === 'followedDiscussions' ? 'bg-customBlue2 text-white' : 'bg-white text-customBlue2'}`}
+            className={`px-4 py-2 rounded-md shadow ${view === 'followedDiscussions' ? 'bg-customBlue text-white' : 'bg-white text-customBlue'}`}
           >
             Followed Discussions
           </button>
         </div> */}
         <button
           onClick={() => navigate('/app/new-discussion')}
-          className="bg-customBlue2 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition"
+          className="bg-customBlue text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition"
         >
           Start a New Discussion
         </button>

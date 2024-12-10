@@ -9,6 +9,7 @@ export const createJob = async (req, res, next) => {
       description: req.body.description,
       experienceRequired: req.body.experienceRequired,
       level: req.body.level,
+      type: req.body.type,
       workingMode: req.body.workingMode,
       skills: req.body.skills,
       applicationDeadline: req.body.applicationDeadline,

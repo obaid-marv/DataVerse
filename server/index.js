@@ -11,11 +11,11 @@ import quizRoute from "./routes/learning/quiz.js";
 import datasetRoute from "./routes/dataset.js";
 import messageRoutes from "./routes/community/message.js"; 
 import newsRoutes from "./routes/news.js";
+import jobsRoutes from "./routes/job.js";
 import companyRoutes from "./routes/company.js";
 import postRoutes from "./routes/community/post.js";
 import connectionRoutes from "./routes/community/connection.js";
 import discussionRoutes from "./routes/discussion/discussion.js";
-import jobsRoutes from "./routes/job.js";
 
 
 import cors from "cors";
@@ -63,6 +63,7 @@ app.use("/api/learning/lecture", lectureRoute);
 app.use("/api/learning/quiz", quizRoute);
 app.use("/api/messages", messageRoutes); 
 app.use("/api/news", newsRoutes); 
+app.use("/api/jobs", jobsRoutes); 
 app.use("/api/company", companyRoutes);
 app.use("/api/post", postRoutes); 
 app.use("/api/discussion", discussionRoutes);

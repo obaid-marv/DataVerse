@@ -53,7 +53,7 @@ const Dashboard = () => {
   }, [user, dispatch]);
 
   return (
-    <div className="bg-white min-h-screen max-w-screen-lg w-full">
+    <div className="bg-white min-h-screen  w-full">
       <div className=" mt-4 mx-auto p-6 font-poppins">
         <div className="flex items-center justify-between">
           <div>

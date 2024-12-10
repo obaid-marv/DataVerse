@@ -147,7 +147,7 @@ const CourseScreen = () => {
     }
   };
   return (
-    <div className="container max-w-screen-lg mx-auto mb-5 p-6 bg-gray-50 shadow-lg rounded-lg">
+    <div className="container w-full mx-auto mb-5 p-6 bg-gray-50 shadow-lg rounded-lg">
       {/* Back Button */}
       <div className="flex items-center mb-8">
         <FontAwesomeIcon

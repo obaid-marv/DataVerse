@@ -60,9 +60,9 @@ const DiscussionMainPage = () => {
 
 
   return (
-    <div className="max-h-max max-w-screen-lg w-full bg-gray-100 p-6 font-poppins">
+    <div className="max-h-max w-full bg-gray-100 p-6 font-poppins">
       {/* Header */}
-      <div className="flex justify-between items-center bg-theme text-white p-6 rounded-md shadow-lg mb-8">
+      <div className="flex justify-between items-center bg-customBlue text-white p-6 rounded-md shadow-lg mb-8">
         <h1 className="text-3xl font-bold">Discussions</h1>
         <div className="flex items-center space-x-4">
           {/* <input
