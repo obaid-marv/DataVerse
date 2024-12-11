@@ -90,15 +90,21 @@ const CodeExerciseScreen = () => {
     }
   };
   
+  console.log(course);
 
   useEffect(()=>{
 
     if(!currentLecture)
       dispatch(setCurrentLecture(index));
 
-    if(currentLecture>index)
-      navigate(`/course-started/video-screen/${courseId}/${currentLecture}`);
-
+    if(currentLecture>index){
+      if(course.type=="video"){
+        navigate(`/course-started/video-screen/${courseId}/${currentLecture}`);
+      }
+      else{
+        navigate(`/course-started/notes-screen/${courseId}/${currentLecture}`);
+      }
+    }
    } ,[dispatch, currentLecture]);
 
   const handleRunCode = async () => {
