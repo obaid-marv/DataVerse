@@ -126,7 +126,7 @@ def scrape_wired():
         soup = BeautifulSoup(response.text, "html.parser")
         articles = soup.find_all('div', class_='SummaryItemContent-eiDYMl')
 
-        for article in articles[:5]:
+        for article in articles[:8]:
             title_tag = article.find('h3', class_='SummaryItemHedBase-hiFYpQ')
             title = title_tag.get_text(strip=True) if title_tag else "No title"
 
@@ -151,11 +151,11 @@ def scrape_wired():
 
 @app.route('/api/news', methods=['GET'])
 def get_news():
-    techcrunch_news = scrape_techcrunch()
+    # techcrunch_news = scrape_techcrunch()
     wired_news = scrape_wired()
 
     # Combine both sources into one response
-    all_news = techcrunch_news + wired_news
+    all_news =  wired_news
 
     return jsonify(all_news)
 
